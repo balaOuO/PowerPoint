@@ -25,7 +25,7 @@ namespace WindowsFormsApp1
         public void SelectArea(int screenWidth , int screenHeight)
         {
             UpperLeftPoint = new Point(_random.Next(screenWidth), _random.Next(screenHeight));
-            LowerRightPoint = new Point(_random.Next(screenWidth - (int)UpperLeftPoint.X) + UpperLeftPoint.X, _random.Next(screenHeight - (int)UpperLeftPoint.Y) + UpperLeftPoint.Y);
+            LowerRightPoint = new Point(_random.Next(screenWidth), _random.Next(screenHeight));
         }
     }
 }

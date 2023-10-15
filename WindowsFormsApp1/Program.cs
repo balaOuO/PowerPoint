@@ -17,7 +17,8 @@ namespace WindowsFormsApp1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Model model = new Model();
-            Application.Run(new PowerPointForm(model));
+            PresentationModel presentationModel = new PresentationModel(model);
+            Application.Run(new PowerPointForm(model , presentationModel));
         }
     }
 }

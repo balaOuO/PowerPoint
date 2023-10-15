@@ -9,20 +9,16 @@ namespace WindowsFormsApp1
 {
     class Factory
     {
-        const string RECTANGLE = "矩形";
-        const string LINE = "線";
-        const string ELLIPSE = "圓";
-
         //creat shape
         public Shape CreateShapes(string shapeType)
         {
             switch (shapeType)
             {
-                case RECTANGLE:
+                case ShapeName.RECTANGLE:
                     return new Rectangle();
-                case LINE:
+                case ShapeName.LINE:
                     return new Line();
-                case ELLIPSE:
+                case ShapeName.ELLIPSE:
                     return new Ellipse();
             }
             return null;
