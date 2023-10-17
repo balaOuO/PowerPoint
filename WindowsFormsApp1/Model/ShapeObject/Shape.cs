@@ -56,7 +56,7 @@ namespace WindowsFormsApp1
         }
 
         //draw mathod interface
-        public virtual void Draw(Graphics graphics)
+        public virtual void Draw(IGraphics graphics)
         {
             return;
         }

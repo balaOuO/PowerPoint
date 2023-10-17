@@ -45,7 +45,7 @@ namespace WindowsFormsApp1
         }
 
         //draw method
-        public void Draw(Graphics graphics)
+        public void Draw(IGraphics graphics)
         {
             _shapes.Draw(graphics);
         }

@@ -83,7 +83,9 @@ namespace WindowsFormsApp1
         //canvas draw event method
         public void HandleCanvasPaint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            _model.Draw(e.Graphics);
+            //Let it smooth
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            _model.Draw(new WindowsFormsGraphicsAdaptor(e.Graphics));
         }
 
         //press canvas event method

@@ -46,8 +46,10 @@ namespace WindowsFormsApp1
         }
 
         //draw method
-        public void Draw(Graphics graphics)
+        public void Draw(IGraphics graphics)
         {
+            //減少鋸齒
+            //graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             foreach (Shape aShape in _shapeList)
             {
                 aShape.Draw(graphics);

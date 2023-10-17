@@ -25,9 +25,9 @@ namespace WindowsFormsApp1.ShapeObject
         }
 
         //draw self
-        public override void Draw(Graphics graphics)
+        public override void Draw(IGraphics graphics)
         {
-            graphics.DrawEllipse(Pens.Black, (float)StartPoint.X, (float)StartPoint.Y, (float)EndPoint.X - (float)StartPoint.X, (float)EndPoint.Y - (float)StartPoint.Y);
+            graphics.DrawEllipse(StartPoint , EndPoint);
         }
     }
 }

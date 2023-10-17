@@ -21,9 +21,9 @@ namespace WindowsFormsApp1
         }
 
         //draw self
-        public override void Draw(Graphics graphics)
+        public override void Draw(IGraphics graphics)
         {
-            graphics.DrawRectangle(Pens.Black, (float)Math.Min(StartPoint.X , EndPoint.X), (float)Math.Min(StartPoint.Y, EndPoint.Y), (float)Math.Abs(EndPoint.X - StartPoint.X), (float)Math.Abs(EndPoint.Y - StartPoint.Y));
+            graphics.DrawRectangle(StartPoint , EndPoint);
         }
     }
 }
