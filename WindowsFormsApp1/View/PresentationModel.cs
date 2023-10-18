@@ -33,6 +33,15 @@ namespace WindowsFormsApp1
             }
         }
 
+        //delete shape
+        public void DeleteShapeButton(DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0 && e.RowIndex != -1)
+            {
+                _model.DeleteShapeButton(e.RowIndex);
+            }
+        }
+
         //choose shape on toolbar
         public void ClickChooseShapeButton(string buttonName)
         {

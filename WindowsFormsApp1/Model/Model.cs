@@ -31,14 +31,14 @@ namespace WindowsFormsApp1
         }
 
         //add shape method
-        public void AddShape(string shapeType , Point upperLeftPoint , Point lowerRightPoint)
+        public void AddShapeButton(string shapeType , Point upperLeftPoint , Point lowerRightPoint)
         {
             _shapes.AddShape(shapeType, upperLeftPoint, lowerRightPoint);
             NotifyDataChange();
         }
 
         //delete shape
-        public void DeleteShape(int index)
+        public void DeleteShapeButton(int index)
         {
             _shapes.DeleteShape(index);
             NotifyDataChange();

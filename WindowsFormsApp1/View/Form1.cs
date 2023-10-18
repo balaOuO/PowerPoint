@@ -40,16 +40,13 @@ namespace WindowsFormsApp1
         {
             VirtualUser user = new VirtualUser();
             user.SelectArea(_canvas.Width, _canvas.Height);
-            _model.AddShape(_selectShape.Text, user.UpperLeftPoint, user.LowerRightPoint );
+            _model.AddShapeButton(_selectShape.Text, user.UpperLeftPoint, user.LowerRightPoint );
         }
         
         //click delete button in data grid view
         private void ShapeListCellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (_shapeList.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex != -1)
-            {
-                _model.DeleteShape(e.RowIndex);
-            }
+            _presentationModel.DeleteShapeButton(e);
         }
 
         //choose rectangle to draw
