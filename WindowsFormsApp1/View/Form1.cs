@@ -18,9 +18,18 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             _model = model;
+            _model._shapeListChanged += UpdateView;
+            _model._temporaryShapeChanged += UpdateCanvas;
+
             _presentationModel = presentationModel;
             _presentationModel._changeShapeButtonUpdate += ChooseShapeButtonUpdate;
-            _model._dataChange += UpdateView; 
+
+            _canvas.Paint += HandleCanvasPaint;
+            _canvas.MouseDown += HandleCanvasPressed;
+            _canvas.MouseUp += HandleCanvasReleased;
+            _canvas.MouseMove += HandleCanvasMoved;
+            _canvas.MouseEnter += EnterCanvas;
+            _canvas.MouseLeave += LeaveCanvas;
         }
 
         //update data grid view
@@ -35,12 +44,19 @@ namespace WindowsFormsApp1
             _canvas.Invalidate(true);
         }
 
+        //update canvas
+        private void UpdateCanvas()
+        {
+            _canvas.Invalidate(true);
+        }
+
         //clicl add btn
         private void ClickAddShape(object sender, EventArgs e)
         {
             VirtualUser user = new VirtualUser();
             user.SelectArea(_canvas.Width, _canvas.Height);
-            _model.AddShapeButton(_selectShape.Text, user.UpperLeftPoint, user.LowerRightPoint );
+            _model.AddShape(_selectShape.Text, user.UpperLeftPoint, user.LowerRightPoint );
+            _model.AddShapeToList();
         }
         
         //click delete button in data grid view
@@ -74,7 +90,19 @@ namespace WindowsFormsApp1
             _chooseShapeRectangleButton.Checked = state[ShapeName.RECTANGLE];
             _chooseShapeLineButton.Checked = state[ShapeName.LINE];
             _chooseShapeEllipseButton.Checked = state[ShapeName.ELLIPSE];
+            //Cursor = _presentationModel.GetCursorState();
+        }
+
+        //Entry canvas event
+        private void EnterCanvas(object sender , EventArgs e)
+        {
             Cursor = _presentationModel.GetCursorState();
+        }
+
+        //Leave canvas event
+        private void LeaveCanvas(object sender , EventArgs e)
+        {
+            Cursor = Cursors.Default;
         }
 
         //canvas draw event method

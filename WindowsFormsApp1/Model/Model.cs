@@ -9,8 +9,11 @@ namespace WindowsFormsApp1
 {
     public class Model
     {
-        public delegate void ModelDataChangeEventHandler();
-        public event ModelDataChangeEventHandler _dataChange;
+        public delegate void ShapeListChangedEventHandler();
+        public event ShapeListChangedEventHandler _shapeListChanged;
+
+        public delegate void TemporaryShapeChangedEventHandler();
+        public event TemporaryShapeChangedEventHandler _temporaryShapeChanged;
 
         private Shapes _shapes = new Shapes();
 
@@ -31,17 +34,31 @@ namespace WindowsFormsApp1
         }
 
         //add shape method
-        public void AddShapeButton(string shapeType , Point upperLeftPoint , Point lowerRightPoint)
+        public void AddShape(string shapeType , Point upperLeftPoint , Point lowerRightPoint)
         {
             _shapes.AddShape(shapeType, upperLeftPoint, lowerRightPoint);
-            NotifyDataChange();
+            NotifyDataChanged();
+        }
+
+        //modify shape
+        public void ModifyShape(Point pointer)
+        {
+            _shapes.ModifyShape(pointer);
+            NotifyTemporaryShapeChanged();
+        }
+
+        //add shape to list
+        public void AddShapeToList()
+        {
+            _shapes.AddShapeToList();
+            NotifyDataChanged();
         }
 
         //delete shape
         public void DeleteShapeButton(int index)
         {
             _shapes.DeleteShape(index);
-            NotifyDataChange();
+            NotifyDataChanged();
         }
 
         //draw method
@@ -50,33 +67,21 @@ namespace WindowsFormsApp1
             _shapes.Draw(graphics);
         }
 
-        //Pointer Pressed Canvas
-        public void PressedOnCanvas(Point pointer)
-        {
-            _shapes.PressedOnCanvas(pointer);
-            NotifyDataChange();
-        }
-
-        //Pointer Moved in Canvas
-        public void MovedOnCanvas(Point pointer)
-        {
-            _shapes.MovedOnCanvas(pointer);
-            NotifyDataChange();
-        }
-
-        //Pointer Released Canvas
-        public void ReleasedCanvas(Point pointer)
-        {
-            _shapes.ReleasedCanvas(pointer);
-            NotifyDataChange();
-        }
-
         //notify data change
-        private void NotifyDataChange()
+        private void NotifyDataChanged()
         {
-            if (_dataChange != null)
+            if (_shapeListChanged != null)
             {
-                _dataChange();
+                _shapeListChanged();
+            }
+        }
+
+        //notify Temporary Shape Changed
+        private void NotifyTemporaryShapeChanged()
+        {
+            if(_temporaryShapeChanged != null)
+            {
+                _temporaryShapeChanged();
             }
         }
     }

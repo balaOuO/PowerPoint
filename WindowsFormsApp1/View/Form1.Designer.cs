@@ -241,7 +241,7 @@ namespace WindowsFormsApp1
             this._pageList.Controls.Add(this._page1);
             this._pageList.Controls.Add(this._page2);
             this._pageList.Location = new System.Drawing.Point(0, 54);
-            this._pageList.Margin = new System.Windows.Forms.Padding(2);
+            this._pageList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this._pageList.Name = "_pageList";
             this._pageList.Size = new System.Drawing.Size(164, 559);
             this._pageList.TabIndex = 8;
@@ -257,10 +257,7 @@ namespace WindowsFormsApp1
             this._canvas.Name = "_canvas";
             this._canvas.Size = new System.Drawing.Size(742, 562);
             this._canvas.TabIndex = 7;
-            this._canvas.Paint += HandleCanvasPaint;
-            this._canvas.MouseDown += HandleCanvasPressed;
-            this._canvas.MouseUp += HandleCanvasReleased;
-            this._canvas.MouseMove += HandleCanvasMoved;
+            //this._canvas.Paint += new System.Windows.Forms.PaintEventHandler(this._canvas_Paint);
             // 
             // PowerPointForm
             // 

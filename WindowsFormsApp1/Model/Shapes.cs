@@ -35,6 +35,11 @@ namespace WindowsFormsApp1
         {
             _shape = _factory.CreateShapes(shapeType);
             _shape.SetPoint(upperLeftPoint, lowerRightPoint);
+        }
+
+        //add shape in shape list
+        public void AddShapeToList()
+        {
             _shapeList.Add(_shape);
             _shape = null;
         }
@@ -59,6 +64,12 @@ namespace WindowsFormsApp1
             {
                 _shape.Draw(graphics);
             }
+        }
+
+        //modify shape
+        public void ModifyShape(Point pointer)
+        {
+            _shape.SetEndPoint(pointer);
         }
 
         //Pointer Pressed Canvas

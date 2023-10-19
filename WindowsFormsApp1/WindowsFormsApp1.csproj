@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\IGraphics.cs" />
+    <Compile Include="View\CanvasState\CanvasState.cs" />
+    <Compile Include="View\CanvasState\DrawingState.cs" />
+    <Compile Include="View\CanvasState\PointerState.cs" />
     <Compile Include="View\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>

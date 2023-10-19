@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.View;
 
 namespace WindowsFormsApp1
 {
@@ -11,14 +12,16 @@ namespace WindowsFormsApp1
     {
         public delegate void ClickChangeShapeButtonEventHandler();
         public event ClickChangeShapeButtonEventHandler _changeShapeButtonUpdate;
-        private Model _model;
-        private Dictionary<string, bool> _chooseShapeButtonState = new Dictionary<string, bool>();
-        private string _lastChooseShape = null;
-        private bool _canDraw = false;
-        private bool _pointerPress = false;
+
+        public Model _model;
+        public CanvasState _canvasState;
+        public Dictionary<string, bool> _chooseShapeButtonState = new Dictionary<string, bool>();
+        public string _lastChooseShape = null;
+        public bool _pointerPress = false;
 
         public PresentationModel(Model model)
         {
+            _canvasState = new PointerState(this);
             _model = model;
             _chooseShapeButtonState.Add(ShapeName.RECTANGLE, false);
             _chooseShapeButtonState.Add(ShapeName.LINE, false);
@@ -45,7 +48,7 @@ namespace WindowsFormsApp1
         //choose shape on toolbar
         public void ClickChooseShapeButton(string buttonName)
         {
-            _canDraw = true;
+            _canvasState = new DrawingState(this);
             if (_lastChooseShape != buttonName)
             {
                 if (_lastChooseShape != null)
@@ -62,14 +65,7 @@ namespace WindowsFormsApp1
         //return cursor state
         public Cursor GetCursorState()
         {
-            if (_canDraw == true)
-            {
-                return Cursors.Cross;
-            }
-            else
-            {
-                return Cursors.Default;
-            }
+            return _canvasState.GetCursorState();
         }
 
         //Notify Change Shape Buton Status Change
@@ -84,34 +80,20 @@ namespace WindowsFormsApp1
         //Pointer Pressed Canvas
         public void PressedOnCanvas(Point pointer)
         {
-            if (_canDraw == true)
-            {
-                _pointerPress = true;
-                _model.PressedOnCanvas(pointer);
-            }            
+            _canvasState.Press(pointer);           
         }
 
         //Pointer Moved in Canvas
         public void MovedOnCanvas(Point pointer)
         {
-            if (_canDraw == true && _pointerPress == true)
-            {
-                _model.MovedOnCanvas(pointer);
-            }
+            _canvasState.Move(pointer);
         }
 
         //Pointer Released Canvas
         public void ReleasedCanvas(Point pointer)
         {
-            if (_canDraw == true && _pointerPress == true)
-            {
-                _pointerPress = false;
-                _canDraw = false;
-                _chooseShapeButtonState[_lastChooseShape] = false;
-                _lastChooseShape = null;
-                NotifyChangeShapeButtonStatusChange();
-                _model.ReleasedCanvas(pointer);
-            }
+            _canvasState.Release();
+            NotifyChangeShapeButtonStatusChange();
         }
     }
 }
