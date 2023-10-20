@@ -79,7 +79,7 @@ namespace WindowsFormsApp1
         //notify Temporary Shape Changed
         private void NotifyTemporaryShapeChanged()
         {
-            if(_temporaryShapeChanged != null)
+            if (_temporaryShapeChanged != null)
             {
                 _temporaryShapeChanged();
             }

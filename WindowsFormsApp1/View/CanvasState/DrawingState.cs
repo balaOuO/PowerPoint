@@ -11,23 +11,27 @@ namespace WindowsFormsApp1.View
     {
         private PresentationModel _presentationModel;
         private Model _model;
-        public DrawingState(PresentationModel presentationModel)
+        private Dictionary<string, bool> _chooseShapeButtonState;
+        private bool _pointerPress = false;
+        
+        public DrawingState(PresentationModel presentationModel , Model model , Dictionary<string , bool> chooseShapeButtonState)
         {
             _presentationModel = presentationModel;
-            _model = presentationModel._model;
+            _model = model;
+            _chooseShapeButtonState = chooseShapeButtonState;
         }
 
         //press method
         public void Press(Point pointer)
         {
-            _presentationModel._pointerPress = true;
-            _model.AddShape(_presentationModel._lastChooseShape , pointer , pointer);
+            _pointerPress = true;
+            _model.AddShape(_presentationModel.LastChooseShape , pointer , pointer);
         }
 
         //move method
         public void Move(Point pointer)
         {
-            if (_presentationModel._pointerPress == true)
+            if (_pointerPress == true)
             {
                 _model.ModifyShape(pointer);
             }
@@ -36,12 +40,12 @@ namespace WindowsFormsApp1.View
         //release method
         public void Release()
         {
-            if (_presentationModel._pointerPress == true)
+            if (_pointerPress == true)
             {
                 _model.AddShapeToList();
-                _presentationModel._pointerPress = false;
-                _presentationModel._canvasState = new PointerState(_presentationModel);
-                _presentationModel._chooseShapeButtonState[_presentationModel._lastChooseShape] = false;
+                _pointerPress = false;
+                _chooseShapeButtonState[_presentationModel.LastChooseShape] = false;
+                _presentationModel.CanvasState = new PointerState(_presentationModel);
             }
         }
 

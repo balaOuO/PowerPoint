@@ -13,11 +13,10 @@ namespace WindowsFormsApp1
         public delegate void ClickChangeShapeButtonEventHandler();
         public event ClickChangeShapeButtonEventHandler _changeShapeButtonUpdate;
 
-        public Model _model;
-        public CanvasState _canvasState;
-        public Dictionary<string, bool> _chooseShapeButtonState = new Dictionary<string, bool>();
-        public string _lastChooseShape = null;
-        public bool _pointerPress = false;
+        private Model _model;
+        private CanvasState _canvasState;
+        private Dictionary<string, bool> _chooseShapeButtonState = new Dictionary<string, bool>();
+        private string _lastChooseShape = null;
 
         public PresentationModel(Model model)
         {
@@ -26,6 +25,26 @@ namespace WindowsFormsApp1
             _chooseShapeButtonState.Add(ShapeName.RECTANGLE, false);
             _chooseShapeButtonState.Add(ShapeName.LINE, false);
             _chooseShapeButtonState.Add(ShapeName.ELLIPSE, false);
+        }
+
+        public string LastChooseShape
+        {
+            get
+            {
+                return _lastChooseShape;
+            }
+            set
+            {
+                LastChooseShape = value;
+            }
+        }
+
+        public CanvasState CanvasState
+        {
+            set
+            {
+                _canvasState = value;
+            }
         }
 
         public Dictionary<string, bool> ChooseShapeButtonState
@@ -48,13 +67,13 @@ namespace WindowsFormsApp1
         //choose shape on toolbar
         public void ClickChooseShapeButton(string buttonName)
         {
-            _canvasState = new DrawingState(this);
             if (_lastChooseShape != buttonName)
             {
                 if (_lastChooseShape != null)
                 {
                     _chooseShapeButtonState[_lastChooseShape] = false;
                 }
+                _canvasState = new DrawingState(this, _model, _chooseShapeButtonState);
                 _chooseShapeButtonState[buttonName] = true;
                 _lastChooseShape = buttonName;
                 _model.DrawingShapeType = buttonName;

@@ -90,7 +90,6 @@ namespace WindowsFormsApp1
             _chooseShapeRectangleButton.Checked = state[ShapeName.RECTANGLE];
             _chooseShapeLineButton.Checked = state[ShapeName.LINE];
             _chooseShapeEllipseButton.Checked = state[ShapeName.ELLIPSE];
-            //Cursor = _presentationModel.GetCursorState();
         }
 
         //Entry canvas event
@@ -123,6 +122,7 @@ namespace WindowsFormsApp1
         public void HandleCanvasReleased(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             _presentationModel.ReleasedCanvas(new Point(e.X, e.Y));
+            Cursor = _presentationModel.GetCursorState();
         }
 
         //press and move on canvas event method
