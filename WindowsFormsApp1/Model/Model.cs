@@ -40,6 +40,13 @@ namespace WindowsFormsApp1
             NotifyDataChanged();
         }
 
+        //add shape random
+        public void AddShapeRandom(string shapeType , int screenWidth , int screenHeight)
+        {
+            _shapes.AddShapeRandom(shapeType , screenWidth, screenHeight);
+            NotifyDataChanged();
+        }
+
         //modify shape
         public void ModifyShape(Point pointer)
         {

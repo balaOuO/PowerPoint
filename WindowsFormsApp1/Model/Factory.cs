@@ -9,6 +9,7 @@ namespace WindowsFormsApp1
 {
     class Factory
     {
+        Random _random = new Random();
         //creat shape
         public Shape CreateShapes(string shapeType)
         {
@@ -22,6 +23,12 @@ namespace WindowsFormsApp1
                     return new Ellipse();
             }
             return null;
+        }
+
+        //give random point
+        public Point CreateRandomPoint(int screenWidth , int screenHeight)
+        {
+            return new Point(_random.Next(screenWidth), _random.Next(screenHeight));
         }
     }
 }

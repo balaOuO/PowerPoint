@@ -67,18 +67,15 @@ namespace WindowsFormsApp1
         //choose shape on toolbar
         public void ClickChooseShapeButton(string buttonName)
         {
-            if (_lastChooseShape != buttonName)
+            if (_lastChooseShape != null)
             {
-                if (_lastChooseShape != null)
-                {
-                    _chooseShapeButtonState[_lastChooseShape] = false;
-                }
-                _canvasState = new DrawingState(this, _model, _chooseShapeButtonState);
-                _chooseShapeButtonState[buttonName] = true;
-                _lastChooseShape = buttonName;
-                _model.DrawingShapeType = buttonName;
-                NotifyChangeShapeButtonStatusChange();
+                _chooseShapeButtonState[_lastChooseShape] = false;
             }
+            _canvasState = new DrawingState(this, _model, _chooseShapeButtonState);
+            _chooseShapeButtonState[buttonName] = true;
+            _lastChooseShape = buttonName;
+            _model.DrawingShapeType = buttonName;
+            NotifyChangeShapeButtonStatusChange();
         }
 
         //return cursor state

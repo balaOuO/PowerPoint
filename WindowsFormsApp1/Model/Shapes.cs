@@ -37,6 +37,13 @@ namespace WindowsFormsApp1
             _shape.SetPoint(upperLeftPoint, lowerRightPoint);
         }
 
+        //add shape random
+        public void AddShapeRandom(string shapeType , int screenWidth, int screenHeight)
+        {
+            AddShape(shapeType, _factory.CreateRandomPoint(screenWidth, screenHeight), _factory.CreateRandomPoint(screenWidth, screenHeight));
+            AddShapeToList();
+        }
+
         //add shape in shape list
         public void AddShapeToList()
         {

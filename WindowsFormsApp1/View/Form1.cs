@@ -17,9 +17,9 @@ namespace WindowsFormsApp1
         public PowerPointForm(Model model , PresentationModel presentationModel)
         {
             InitializeComponent();
-            _model = model;
-            _model._shapeListChanged += UpdateView;
-            _model._temporaryShapeChanged += UpdateCanvas;
+            this._model = model;
+            this._model._shapeListChanged += UpdateView;
+            this._model._temporaryShapeChanged += UpdateCanvas;
 
             _presentationModel = presentationModel;
             _presentationModel._changeShapeButtonUpdate += ChooseShapeButtonUpdate;
@@ -53,10 +53,7 @@ namespace WindowsFormsApp1
         //clicl add btn
         private void ClickAddShape(object sender, EventArgs e)
         {
-            VirtualUser user = new VirtualUser();
-            user.SelectArea(_canvas.Width, _canvas.Height);
-            _model.AddShape(_selectShape.Text, user.UpperLeftPoint, user.LowerRightPoint );
-            _model.AddShapeToList();
+            _model.AddShapeRandom(_selectShape.Text , _canvas.Width, _canvas.Height);
         }
         
         //click delete button in data grid view
