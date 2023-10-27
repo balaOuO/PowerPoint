@@ -11,10 +11,10 @@ namespace WindowsFormsApp1.View
     {
         private PresentationModel _presentationModel;
         private Model _model;
-        private Dictionary<string, bool> _chooseShapeButtonState;
+        private Dictionary<string, ButtonState> _chooseShapeButtonState;
         private bool _pointerPress = false;
         
-        public DrawingState(PresentationModel presentationModel , Model model , Dictionary<string , bool> chooseShapeButtonState)
+        public DrawingState(PresentationModel presentationModel , Model model , Dictionary<string , ButtonState> chooseShapeButtonState)
         {
             _presentationModel = presentationModel;
             _model = model;
@@ -44,8 +44,8 @@ namespace WindowsFormsApp1.View
             {
                 _model.AddShapeToList();
                 _pointerPress = false;
-                _chooseShapeButtonState[_presentationModel.LastChooseShape] = false;
-                _presentationModel.CanvasState = new PointerState(_presentationModel);
+                _presentationModel.ClickChooseShapeButton(ShapeName.POINTER);
+                _presentationModel.CreateCanvasState();
             }
         }
 

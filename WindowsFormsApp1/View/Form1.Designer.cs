@@ -43,11 +43,12 @@ namespace WindowsFormsApp1
             this._page1 = new System.Windows.Forms.Button();
             this._page2 = new System.Windows.Forms.Button();
             this._chooseShape = new System.Windows.Forms.ToolStrip();
-            this._chooseShapeLineButton = new System.Windows.Forms.ToolStripButton();
-            this._chooseShapeRectangleButton = new System.Windows.Forms.ToolStripButton();
-            this._chooseShapeEllipseButton = new System.Windows.Forms.ToolStripButton();
+            this._chooseShapeLineButton = new WindowsFormsApp1.ToolStripBindAbleButton();
+            this._chooseShapeRectangleButton = new WindowsFormsApp1.ToolStripBindAbleButton();
+            this._chooseShapeEllipseButton = new WindowsFormsApp1.ToolStripBindAbleButton();
             this._pageList = new System.Windows.Forms.Panel();
             this._canvas = new WindowsFormsApp1.DoubleBufferedPanel();
+            this._chooseShapePointerButton = new ToolStripBindAbleButton();
             this._menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._shapeList)).BeginInit();
             this._groupBox1.SuspendLayout();
@@ -62,8 +63,8 @@ namespace WindowsFormsApp1
             this._directionsToolStripMenuItem});
             this._menuStrip.Location = new System.Drawing.Point(0, 0);
             this._menuStrip.Name = "_menuStrip";
-            this._menuStrip.Padding = new System.Windows.Forms.Padding(5, 1, 0, 1);
-            this._menuStrip.Size = new System.Drawing.Size(1126, 24);
+            this._menuStrip.Padding = new System.Windows.Forms.Padding(7, 1, 0, 1);
+            this._menuStrip.Size = new System.Drawing.Size(1501, 25);
             this._menuStrip.TabIndex = 0;
             this._menuStrip.Text = "menuStrip1";
             // 
@@ -72,13 +73,13 @@ namespace WindowsFormsApp1
             this._directionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._aboutToolStripMenuItem});
             this._directionsToolStripMenuItem.Name = "_directionsToolStripMenuItem";
-            this._directionsToolStripMenuItem.Size = new System.Drawing.Size(43, 22);
+            this._directionsToolStripMenuItem.Size = new System.Drawing.Size(53, 23);
             this._directionsToolStripMenuItem.Text = "說明";
             // 
             // _aboutToolStripMenuItem
             // 
             this._aboutToolStripMenuItem.Name = "_aboutToolStripMenuItem";
-            this._aboutToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this._aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this._aboutToolStripMenuItem.Text = "關於";
             // 
             // _shapeList
@@ -92,13 +93,13 @@ namespace WindowsFormsApp1
             this._shapeName,
             this._information});
             this._shapeList.Cursor = System.Windows.Forms.Cursors.Default;
-            this._shapeList.Location = new System.Drawing.Point(0, 65);
-            this._shapeList.Margin = new System.Windows.Forms.Padding(2, 3, 0, 3);
+            this._shapeList.Location = new System.Drawing.Point(0, 81);
+            this._shapeList.Margin = new System.Windows.Forms.Padding(3, 4, 0, 4);
             this._shapeList.Name = "_shapeList";
             this._shapeList.RowHeadersVisible = false;
             this._shapeList.RowHeadersWidth = 51;
             this._shapeList.RowTemplate.Height = 27;
-            this._shapeList.Size = new System.Drawing.Size(217, 497);
+            this._shapeList.Size = new System.Drawing.Size(289, 621);
             this._shapeList.TabIndex = 2;
             this._shapeList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShapeListCellContentClick);
             // 
@@ -137,11 +138,11 @@ namespace WindowsFormsApp1
             this._groupBox1.Controls.Add(this._selectShape);
             this._groupBox1.Controls.Add(this._addShape);
             this._groupBox1.Controls.Add(this._shapeList);
-            this._groupBox1.Location = new System.Drawing.Point(909, 58);
-            this._groupBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this._groupBox1.Location = new System.Drawing.Point(1212, 72);
+            this._groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this._groupBox1.Name = "_groupBox1";
-            this._groupBox1.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this._groupBox1.Size = new System.Drawing.Size(217, 562);
+            this._groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this._groupBox1.Size = new System.Drawing.Size(289, 702);
             this._groupBox1.TabIndex = 3;
             this._groupBox1.TabStop = false;
             this._groupBox1.Text = "資料顯示";
@@ -153,19 +154,19 @@ namespace WindowsFormsApp1
             "矩形",
             "線",
             "圓"});
-            this._selectShape.Location = new System.Drawing.Point(77, 31);
-            this._selectShape.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this._selectShape.Location = new System.Drawing.Point(103, 39);
+            this._selectShape.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this._selectShape.Name = "_selectShape";
-            this._selectShape.Size = new System.Drawing.Size(92, 20);
+            this._selectShape.Size = new System.Drawing.Size(121, 23);
             this._selectShape.TabIndex = 4;
             this._selectShape.Text = "矩形";
             // 
             // _addShape
             // 
-            this._addShape.Location = new System.Drawing.Point(5, 19);
-            this._addShape.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this._addShape.Location = new System.Drawing.Point(7, 24);
+            this._addShape.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this._addShape.Name = "_addShape";
-            this._addShape.Size = new System.Drawing.Size(53, 40);
+            this._addShape.Size = new System.Drawing.Size(71, 50);
             this._addShape.TabIndex = 3;
             this._addShape.Text = "新增";
             this._addShape.UseVisualStyleBackColor = true;
@@ -173,17 +174,19 @@ namespace WindowsFormsApp1
             // 
             // _page1
             // 
-            this._page1.Location = new System.Drawing.Point(5, 102);
+            this._page1.Location = new System.Drawing.Point(7, 128);
+            this._page1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this._page1.Name = "_page1";
-            this._page1.Size = new System.Drawing.Size(154, 93);
+            this._page1.Size = new System.Drawing.Size(205, 116);
             this._page1.TabIndex = 4;
             this._page1.UseVisualStyleBackColor = true;
             // 
             // _page2
             // 
-            this._page2.Location = new System.Drawing.Point(5, 3);
+            this._page2.Location = new System.Drawing.Point(7, 4);
+            this._page2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this._page2.Name = "_page2";
-            this._page2.Size = new System.Drawing.Size(154, 93);
+            this._page2.Size = new System.Drawing.Size(205, 116);
             this._page2.TabIndex = 5;
             this._page2.UseVisualStyleBackColor = true;
             // 
@@ -193,10 +196,11 @@ namespace WindowsFormsApp1
             this._chooseShape.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._chooseShapeLineButton,
             this._chooseShapeRectangleButton,
-            this._chooseShapeEllipseButton});
-            this._chooseShape.Location = new System.Drawing.Point(0, 24);
+            this._chooseShapeEllipseButton,
+            this._chooseShapePointerButton});
+            this._chooseShape.Location = new System.Drawing.Point(0, 25);
             this._chooseShape.Name = "_chooseShape";
-            this._chooseShape.Size = new System.Drawing.Size(1126, 32);
+            this._chooseShape.Size = new System.Drawing.Size(1501, 44);
             this._chooseShape.TabIndex = 6;
             this._chooseShape.Text = "toolStrip1";
             // 
@@ -204,10 +208,9 @@ namespace WindowsFormsApp1
             // 
             this._chooseShapeLineButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this._chooseShapeLineButton.Font = new System.Drawing.Font("Microsoft JhengHei UI", 15F);
-            this._chooseShapeLineButton.Image = ((System.Drawing.Image)(resources.GetObject("_chooseShapeLineButton.Image")));
             this._chooseShapeLineButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._chooseShapeLineButton.Name = "_chooseShapeLineButton";
-            this._chooseShapeLineButton.Size = new System.Drawing.Size(28, 29);
+            this._chooseShapeLineButton.Size = new System.Drawing.Size(34, 41);
             this._chooseShapeLineButton.Text = "╱";
             this._chooseShapeLineButton.Click += new System.EventHandler(this.ClickChooseShapeLineButton);
             // 
@@ -215,10 +218,9 @@ namespace WindowsFormsApp1
             // 
             this._chooseShapeRectangleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this._chooseShapeRectangleButton.Font = new System.Drawing.Font("Microsoft JhengHei UI", 15F);
-            this._chooseShapeRectangleButton.Image = ((System.Drawing.Image)(resources.GetObject("_chooseShapeRectangleButton.Image")));
             this._chooseShapeRectangleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._chooseShapeRectangleButton.Name = "_chooseShapeRectangleButton";
-            this._chooseShapeRectangleButton.Size = new System.Drawing.Size(29, 29);
+            this._chooseShapeRectangleButton.Size = new System.Drawing.Size(37, 41);
             this._chooseShapeRectangleButton.Text = "☐";
             this._chooseShapeRectangleButton.Click += new System.EventHandler(this.ClickChooseShapeRectangleButton);
             // 
@@ -226,10 +228,9 @@ namespace WindowsFormsApp1
             // 
             this._chooseShapeEllipseButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this._chooseShapeEllipseButton.Font = new System.Drawing.Font("Microsoft JhengHei UI", 15F);
-            this._chooseShapeEllipseButton.Image = ((System.Drawing.Image)(resources.GetObject("_chooseShapeEllipseButton.Image")));
             this._chooseShapeEllipseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._chooseShapeEllipseButton.Name = "_chooseShapeEllipseButton";
-            this._chooseShapeEllipseButton.Size = new System.Drawing.Size(36, 29);
+            this._chooseShapeEllipseButton.Size = new System.Drawing.Size(44, 41);
             this._chooseShapeEllipseButton.Text = "○";
             this._chooseShapeEllipseButton.Click += new System.EventHandler(this.ClickChooseShapeEllipseButton);
             // 
@@ -240,10 +241,10 @@ namespace WindowsFormsApp1
             this._pageList.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this._pageList.Controls.Add(this._page1);
             this._pageList.Controls.Add(this._page2);
-            this._pageList.Location = new System.Drawing.Point(0, 54);
-            this._pageList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this._pageList.Location = new System.Drawing.Point(0, 68);
+            this._pageList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this._pageList.Name = "_pageList";
-            this._pageList.Size = new System.Drawing.Size(164, 559);
+            this._pageList.Size = new System.Drawing.Size(219, 699);
             this._pageList.TabIndex = 8;
             // 
             // _canvas
@@ -252,25 +253,37 @@ namespace WindowsFormsApp1
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this._canvas.BackColor = System.Drawing.SystemColors.Control;
-            this._canvas.Location = new System.Drawing.Point(164, 54);
+            this._canvas.Location = new System.Drawing.Point(219, 68);
             this._canvas.Margin = new System.Windows.Forms.Padding(0);
             this._canvas.Name = "_canvas";
-            this._canvas.Size = new System.Drawing.Size(742, 562);
+            this._canvas.Size = new System.Drawing.Size(989, 702);
             this._canvas.TabIndex = 7;
-            //this._canvas.Paint += new System.Windows.Forms.PaintEventHandler(this._canvas_Paint);
+            // 
+            // _chooseShapePointerButton
+            // 
+            this._chooseShapePointerButton.Checked = true;
+            this._chooseShapePointerButton.CheckState = System.Windows.Forms.CheckState.Checked;
+            this._chooseShapePointerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._chooseShapePointerButton.Font = new System.Drawing.Font("Microsoft JhengHei UI", 17F);
+            this._chooseShapePointerButton.Image = ((System.Drawing.Image)(resources.GetObject("_chooseShapePointerButton.Image")));
+            this._chooseShapePointerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._chooseShapePointerButton.Name = "_chooseShapePointerButton";
+            this._chooseShapePointerButton.Size = new System.Drawing.Size(50, 41);
+            this._chooseShapePointerButton.Text = " ➛";
+            this._chooseShapePointerButton.Click += new System.EventHandler(this.ClickChooseShapePointerButton);
             // 
             // PowerPointForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1126, 611);
+            this.ClientSize = new System.Drawing.Size(1501, 764);
             this.Controls.Add(this._pageList);
             this.Controls.Add(this._canvas);
             this.Controls.Add(this._chooseShape);
             this.Controls.Add(this._groupBox1);
             this.Controls.Add(this._menuStrip);
             this.MainMenuStrip = this._menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "PowerPointForm";
             this.Text = "PowerPoint";
             this._menuStrip.ResumeLayout(false);
@@ -300,11 +313,11 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.DataGridViewTextBoxColumn _shapeName;
         private System.Windows.Forms.DataGridViewTextBoxColumn _information;
         private System.Windows.Forms.ToolStrip _chooseShape;
-        private System.Windows.Forms.ToolStripButton _chooseShapeRectangleButton;
-        private System.Windows.Forms.ToolStripButton _chooseShapeEllipseButton;
-        private System.Windows.Forms.ToolStripButton _chooseShapeLineButton;
+        private ToolStripBindAbleButton _chooseShapeRectangleButton;
+        private ToolStripBindAbleButton _chooseShapeEllipseButton;
+        private ToolStripBindAbleButton _chooseShapeLineButton;
         private System.Windows.Forms.Panel _pageList;
         private DoubleBufferedPanel _canvas;
+        private ToolStripBindAbleButton _chooseShapePointerButton;
     }
 }
-

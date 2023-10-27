@@ -12,21 +12,12 @@ namespace WindowsFormsApp1
         private List<Shape> _shapeList = new List<Shape>();
         private Factory _factory = new Factory();
         private Shape _shape;
-        private string _drawingShapeType = null;
 
         public List<Shape> ShapeList
         {
             get
             {
                 return _shapeList;
-            }
-        }
-
-        public string DrawingShapeType
-        {
-            set
-            {
-                _drawingShapeType = value;
             }
         }
 
@@ -77,28 +68,6 @@ namespace WindowsFormsApp1
         public void ModifyShape(Point pointer)
         {
             _shape.SetEndPoint(pointer);
-        }
-
-        //Pointer Pressed Canvas
-        public void PressedOnCanvas(Point pointer)
-        {
-            _shape = _factory.CreateShapes(_drawingShapeType);
-            _shape.SetPoint(pointer, pointer);
-        }
-
-        //Pointer Moved in Canvas
-        public void MovedOnCanvas(Point pointer)
-        {
-            _shape.SetEndPoint(pointer);
-
-        }
-
-        //Pointer Released Canvas
-        public void ReleasedCanvas(Point pointer)
-        {
-            _shape.SetEndPoint(pointer);
-            _shapeList.Add(_shape);
-            _shape = null;
         }
     }
 }

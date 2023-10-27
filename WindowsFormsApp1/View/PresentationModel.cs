@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,21 +11,23 @@ namespace WindowsFormsApp1
 {
     public class PresentationModel
     {
-        public delegate void ClickChangeShapeButtonEventHandler();
-        public event ClickChangeShapeButtonEventHandler _changeShapeButtonUpdate;
+        private delegate void ClickChangeShapeButtonEventHandler();
+        private event ClickChangeShapeButtonEventHandler _changeShapeButtonUpdate;
 
         private Model _model;
         private CanvasState _canvasState;
-        private Dictionary<string, bool> _chooseShapeButtonState = new Dictionary<string, bool>();
-        private string _lastChooseShape = null;
+        private Dictionary<string, ButtonState> _chooseShapeButtonState = new Dictionary<string, ButtonState>();
+        private string _lastChooseShape = ShapeName.POINTER;
 
         public PresentationModel(Model model)
         {
             _canvasState = new PointerState(this);
             _model = model;
-            _chooseShapeButtonState.Add(ShapeName.RECTANGLE, false);
-            _chooseShapeButtonState.Add(ShapeName.LINE, false);
-            _chooseShapeButtonState.Add(ShapeName.ELLIPSE, false);
+            _chooseShapeButtonState.Add(ShapeName.RECTANGLE, new ButtonState(false));
+            _chooseShapeButtonState.Add(ShapeName.LINE, new ButtonState(false));
+            _chooseShapeButtonState.Add(ShapeName.ELLIPSE, new ButtonState(false));
+            _chooseShapeButtonState.Add(ShapeName.POINTER, new ButtonState(true));
+            _changeShapeButtonUpdate += _chooseShapeButtonState[ShapeName.POINTER].ResetState;
         }
 
         public string LastChooseShape
@@ -39,15 +42,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        public CanvasState CanvasState
-        {
-            set
-            {
-                _canvasState = value;
-            }
-        }
-
-        public Dictionary<string, bool> ChooseShapeButtonState
+        public Dictionary<string, ButtonState> ChooseShapeButtonState
         {
             get
             {
@@ -67,30 +62,33 @@ namespace WindowsFormsApp1
         //choose shape on toolbar
         public void ClickChooseShapeButton(string buttonName)
         {
-            if (_lastChooseShape != null)
-            {
-                _chooseShapeButtonState[_lastChooseShape] = false;
-            }
-            _canvasState = new DrawingState(this, _model, _chooseShapeButtonState);
-            _chooseShapeButtonState[buttonName] = true;
-            _lastChooseShape = buttonName;
-            _model.DrawingShapeType = buttonName;
             NotifyChangeShapeButtonStatusChange();
+            _chooseShapeButtonState[buttonName].State = true;
+            _changeShapeButtonUpdate += _chooseShapeButtonState[buttonName].ResetState;
+            _lastChooseShape = buttonName;
+            CreateCanvasState();
+            
+            //_model.DrawingShapeType = buttonName;
+        }
+
+        //Create State
+        public void CreateCanvasState()
+        {
+            switch (_lastChooseShape)
+            {
+                case ShapeName.POINTER:
+                    _canvasState = new PointerState(this);
+                    break;
+                default:
+                    _canvasState = new DrawingState(this, _model, _chooseShapeButtonState);
+                    break;
+            }
         }
 
         //return cursor state
         public Cursor GetCursorState()
         {
             return _canvasState.GetCursorState();
-        }
-
-        //Notify Change Shape Buton Status Change
-        private void NotifyChangeShapeButtonStatusChange()
-        {
-            if (_changeShapeButtonUpdate != null)
-            {
-                _changeShapeButtonUpdate();
-            }
         }
 
         //Pointer Pressed Canvas
@@ -109,7 +107,16 @@ namespace WindowsFormsApp1
         public void ReleasedCanvas(Point pointer)
         {
             _canvasState.Release();
-            NotifyChangeShapeButtonStatusChange();
+        }
+
+        //Notify Change Shape Buton Status Change
+        private void NotifyChangeShapeButtonStatusChange()
+        {
+            if (_changeShapeButtonUpdate != null)
+            {
+                _changeShapeButtonUpdate();
+                _changeShapeButtonUpdate = null;
+            }
         }
     }
 }

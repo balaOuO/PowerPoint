@@ -22,14 +22,31 @@ namespace WindowsFormsApp1
             this._model._temporaryShapeChanged += UpdateCanvas;
 
             _presentationModel = presentationModel;
-            _presentationModel._changeShapeButtonUpdate += ChooseShapeButtonUpdate;
 
+            InitializeCanvasEvent();
+            InitializeDataBinding();
+        }
+
+        //Initialize Canvas event
+        public void InitializeCanvasEvent()
+        {
             _canvas.Paint += HandleCanvasPaint;
             _canvas.MouseDown += HandleCanvasPressed;
             _canvas.MouseUp += HandleCanvasReleased;
             _canvas.MouseMove += HandleCanvasMoved;
             _canvas.MouseEnter += EnterCanvas;
             _canvas.MouseLeave += LeaveCanvas;
+        }
+
+        //Initialize data binding
+        public void InitializeDataBinding()
+        {
+            const string CHECK = "Checked";
+            const string STATE = "State";
+            _chooseShapeLineButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.LINE], STATE);
+            _chooseShapeRectangleButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.RECTANGLE], STATE);
+            _chooseShapeEllipseButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.ELLIPSE], STATE);
+            _chooseShapePointerButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.POINTER], STATE);
         }
 
         //update data grid view
@@ -80,15 +97,6 @@ namespace WindowsFormsApp1
             _presentationModel.ClickChooseShapeButton(ShapeName.ELLIPSE);
         }
 
-        //update the choose shape tool bar
-        private void ChooseShapeButtonUpdate()
-        {
-            Dictionary<string, bool> state = _presentationModel.ChooseShapeButtonState;
-            _chooseShapeRectangleButton.Checked = state[ShapeName.RECTANGLE];
-            _chooseShapeLineButton.Checked = state[ShapeName.LINE];
-            _chooseShapeEllipseButton.Checked = state[ShapeName.ELLIPSE];
-        }
-
         //Entry canvas event
         private void EnterCanvas(object sender , EventArgs e)
         {
@@ -126,6 +134,11 @@ namespace WindowsFormsApp1
         public void HandleCanvasMoved(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             _presentationModel.MovedOnCanvas(new Point(e.X, e.Y));
+        }
+
+        private void ClickChooseShapePointerButton(object sender, EventArgs e)
+        {
+            _presentationModel.ClickChooseShapeButton(ShapeName.POINTER);
         }
     }
 }

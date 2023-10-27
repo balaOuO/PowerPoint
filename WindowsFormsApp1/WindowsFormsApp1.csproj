@@ -71,8 +71,11 @@
     <Compile Include="Model\ShapeObject\Rectangle.cs" />
     <Compile Include="Model\ShapeObject\Shape.cs" />
     <Compile Include="Model\Shapes.cs" />
+    <Compile Include="View\ToolStripBindAbleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="View\WindowsFormsGraphicsAdaptor.cs" />
-    <Compile Include="VirtualUser.cs" />
+    <Compile Include="View\ButtonState.cs" />
     <EmbeddedResource Include="View\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

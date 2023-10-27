@@ -25,14 +25,6 @@ namespace WindowsFormsApp1
             }
         }
 
-        public string DrawingShapeType
-        {
-            set
-            {
-                _shapes.DrawingShapeType = value;
-            }
-        }
-
         //add shape method
         public void AddShape(string shapeType , Point upperLeftPoint , Point lowerRightPoint)
         {

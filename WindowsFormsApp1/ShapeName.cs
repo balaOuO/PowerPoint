@@ -11,5 +11,6 @@ namespace WindowsFormsApp1
         public const string RECTANGLE = "矩形";
         public const string LINE = "線";
         public const string ELLIPSE = "圓";
+        public const string POINTER = "pointer";
     }
 }
