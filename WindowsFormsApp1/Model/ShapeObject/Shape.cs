@@ -31,15 +31,21 @@ namespace WindowsFormsApp1
         }
 
         // GetInfo method
-        public virtual string GetInfo()
+        public virtual string Info
         {
-            return INFO;
+            get
+            {
+                return INFO;
+            }
         }
 
         // GetShapeName method
-        public virtual string GetShapeName()
+        public virtual string ShapeName
         {
-            return SHAPE;
+            get
+            {
+                return SHAPE;
+            }
         }
 
         //set point method

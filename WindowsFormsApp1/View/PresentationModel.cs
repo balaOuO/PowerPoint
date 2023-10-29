@@ -67,8 +67,6 @@ namespace WindowsFormsApp1
             _changeShapeButtonUpdate += _chooseShapeButtonState[buttonName].ResetState;
             _lastChooseShape = buttonName;
             CreateCanvasState();
-            
-            //_model.DrawingShapeType = buttonName;
         }
 
         //Create State

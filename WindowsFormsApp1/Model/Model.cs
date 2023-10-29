@@ -4,20 +4,18 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace WindowsFormsApp1
 {
     public class Model
     {
-        public delegate void ShapeListChangedEventHandler();
-        public event ShapeListChangedEventHandler _shapeListChanged;
-
-        public delegate void TemporaryShapeChangedEventHandler();
-        public event TemporaryShapeChangedEventHandler _temporaryShapeChanged;
+        public delegate void ShapeDataChangedEventHandler();
+        public event ShapeDataChangedEventHandler _shapeDataChanged;
 
         private Shapes _shapes = new Shapes();
 
-        public List<Shape> ShapeList
+        public BindingList<Shape> ShapeList
         {
             get
             {
@@ -43,7 +41,7 @@ namespace WindowsFormsApp1
         public void ModifyShape(Point pointer)
         {
             _shapes.ModifyShape(pointer);
-            NotifyTemporaryShapeChanged();
+            NotifyDataChanged();
         }
 
         //add shape to list
@@ -69,18 +67,9 @@ namespace WindowsFormsApp1
         //notify data change
         private void NotifyDataChanged()
         {
-            if (_shapeListChanged != null)
+            if (_shapeDataChanged != null)
             {
-                _shapeListChanged();
-            }
-        }
-
-        //notify Temporary Shape Changed
-        private void NotifyTemporaryShapeChanged()
-        {
-            if (_temporaryShapeChanged != null)
-            {
-                _temporaryShapeChanged();
+                _shapeDataChanged();
             }
         }
     }

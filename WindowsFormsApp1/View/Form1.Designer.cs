@@ -102,6 +102,7 @@ namespace WindowsFormsApp1
             this._shapeList.Size = new System.Drawing.Size(289, 621);
             this._shapeList.TabIndex = 2;
             this._shapeList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShapeListCellContentClick);
+            this._shapeList.AutoGenerateColumns = false;
             // 
             // _deleteButton
             // 
@@ -122,6 +123,7 @@ namespace WindowsFormsApp1
             this._shapeName.Name = "_shapeName";
             this._shapeName.ReadOnly = true;
             this._shapeName.Width = 60;
+            this._shapeName.DataPropertyName = "ShapeName";
             // 
             // _information
             // 
@@ -130,6 +132,7 @@ namespace WindowsFormsApp1
             this._information.MinimumWidth = 6;
             this._information.Name = "_information";
             this._information.ReadOnly = true;
+            this._information.DataPropertyName = "Info";
             // 
             // _groupBox1
             // 

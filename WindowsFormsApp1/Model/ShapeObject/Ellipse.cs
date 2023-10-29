@@ -12,16 +12,22 @@ namespace WindowsFormsApp1.ShapeObject
         private const string SHAPE = "Ellipse";
 
         //get info method
-        public override string GetInfo()
+        public override string Info
         {
-            const string COMMA = ",";
-            return StartPoint.ToString() + COMMA + EndPoint.ToString();
+            get
+            {
+                const string COMMA = ",";
+                return StartPoint.ToString() + COMMA + EndPoint.ToString();
+            }
         }
 
         //Rectangle get shape name method
-        public override string GetShapeName()
+        public override string ShapeName
         {
-            return SHAPE;
+            get
+            {
+                return SHAPE;
+            }
         }
 
         //draw self

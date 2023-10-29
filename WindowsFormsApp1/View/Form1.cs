@@ -18,8 +18,7 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             this._model = model;
-            this._model._shapeListChanged += UpdateView;
-            this._model._temporaryShapeChanged += UpdateCanvas;
+            this._model._shapeDataChanged += UpdateCanvas;
 
             _presentationModel = presentationModel;
 
@@ -47,18 +46,8 @@ namespace WindowsFormsApp1
             _chooseShapeRectangleButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.RECTANGLE], STATE);
             _chooseShapeEllipseButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.ELLIPSE], STATE);
             _chooseShapePointerButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.POINTER], STATE);
-        }
-
-        //update data grid view
-        private void UpdateView()
-        {
-            _shapeList.Rows.Clear();
-            List<Shape> shapeList = _model.ShapeList;
-            for (int i = 0; i < shapeList.Count; i++)
-            {
-                _shapeList.Rows.Add(0, shapeList[i].GetShapeName(), shapeList[i].GetInfo());
-            }
-            _canvas.Invalidate(true);
+            
+            _shapeList.DataSource = _model.ShapeList;
         }
 
         //update canvas
@@ -95,6 +84,12 @@ namespace WindowsFormsApp1
         private void ClickChooseShapeEllipseButton(object sender, EventArgs e)
         {
             _presentationModel.ClickChooseShapeButton(ShapeName.ELLIPSE);
+        }
+
+        //Click Choose Shape Pointer Button
+        private void ClickChooseShapePointerButton(object sender, EventArgs e)
+        {
+            _presentationModel.ClickChooseShapeButton(ShapeName.POINTER);
         }
 
         //Entry canvas event
@@ -134,11 +129,6 @@ namespace WindowsFormsApp1
         public void HandleCanvasMoved(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             _presentationModel.MovedOnCanvas(new Point(e.X, e.Y));
-        }
-
-        private void ClickChooseShapePointerButton(object sender, EventArgs e)
-        {
-            _presentationModel.ClickChooseShapeButton(ShapeName.POINTER);
         }
     }
 }

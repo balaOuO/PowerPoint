@@ -4,16 +4,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace WindowsFormsApp1
 {
     class Shapes
     {
-        private List<Shape> _shapeList = new List<Shape>();
+        private BindingList<Shape> _shapeList = new BindingList<Shape>();
         private Factory _factory = new Factory();
         private Shape _shape;
 
-        public List<Shape> ShapeList
+        public BindingList<Shape> ShapeList
         {
             get
             {
