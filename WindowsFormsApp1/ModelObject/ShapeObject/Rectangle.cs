@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace WindowsFormsApp1.ShapeObject
+namespace WindowsFormsApp1
 {
-    class Ellipse : Shape
+    class Rectangle : Shape
     {
-        private const string SHAPE = "Ellipse";
+        private const string SHAPE = "Rectangle";
 
-        //get info method
+        //Rectangle getinfo method
         public override string Info
         {
             get
@@ -33,7 +29,8 @@ namespace WindowsFormsApp1.ShapeObject
         //draw self
         public override void Draw(IGraphics graphics)
         {
-            graphics.DrawEllipse(StartPoint , EndPoint);
+            base.Draw(graphics);
+            graphics.DrawRectangle(UpperLeftPoint , LowerRightPoint);
         }
     }
 }

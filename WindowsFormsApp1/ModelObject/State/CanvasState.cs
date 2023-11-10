@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace WindowsFormsApp1.View
+namespace WindowsFormsApp1.ModelObject.State
 {
-    public interface CanvasState
+    interface CanvasState
     {
         //press method
         void Press(Point pointer);
@@ -17,8 +16,5 @@ namespace WindowsFormsApp1.View
 
         //release method
         void Release();
-
-        //get Cursor State
-        Cursor GetCursorState();
     }
 }

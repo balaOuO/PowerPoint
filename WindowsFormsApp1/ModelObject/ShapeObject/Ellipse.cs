@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1.ShapeObject
 {
-    class Line : Shape
+    class Ellipse : Shape
     {
-        private const string SHAPE = "Line";
+        private const string SHAPE = "Ellipse";
 
         //get info method
         public override string Info
@@ -33,7 +33,8 @@ namespace WindowsFormsApp1.ShapeObject
         //draw self
         public override void Draw(IGraphics graphics)
         {
-            graphics.DrawLine(StartPoint , EndPoint);
+            base.Draw(graphics);
+            graphics.DrawEllipse(StartPoint , EndPoint);
         }
     }
 }

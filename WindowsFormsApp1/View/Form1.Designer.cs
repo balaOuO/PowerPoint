@@ -41,14 +41,13 @@ namespace WindowsFormsApp1
             this._selectShape = new System.Windows.Forms.ComboBox();
             this._addShape = new System.Windows.Forms.Button();
             this._page1 = new System.Windows.Forms.Button();
-            this._page2 = new System.Windows.Forms.Button();
             this._chooseShape = new System.Windows.Forms.ToolStrip();
             this._chooseShapeLineButton = new WindowsFormsApp1.ToolStripBindAbleButton();
             this._chooseShapeRectangleButton = new WindowsFormsApp1.ToolStripBindAbleButton();
             this._chooseShapeEllipseButton = new WindowsFormsApp1.ToolStripBindAbleButton();
+            this._chooseShapePointerButton = new WindowsFormsApp1.ToolStripBindAbleButton();
             this._pageList = new System.Windows.Forms.Panel();
             this._canvas = new WindowsFormsApp1.DoubleBufferedPanel();
-            this._chooseShapePointerButton = new ToolStripBindAbleButton();
             this._menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._shapeList)).BeginInit();
             this._groupBox1.SuspendLayout();
@@ -79,11 +78,12 @@ namespace WindowsFormsApp1
             // _aboutToolStripMenuItem
             // 
             this._aboutToolStripMenuItem.Name = "_aboutToolStripMenuItem";
-            this._aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this._aboutToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
             this._aboutToolStripMenuItem.Text = "關於";
             // 
             // _shapeList
             // 
+            this._shapeList.AutoGenerateColumns = false;
             this._shapeList.AllowUserToAddRows = false;
             this._shapeList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
@@ -102,7 +102,6 @@ namespace WindowsFormsApp1
             this._shapeList.Size = new System.Drawing.Size(289, 621);
             this._shapeList.TabIndex = 2;
             this._shapeList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShapeListCellContentClick);
-            this._shapeList.AutoGenerateColumns = false;
             // 
             // _deleteButton
             // 
@@ -118,21 +117,21 @@ namespace WindowsFormsApp1
             // 
             // _shapeName
             // 
+            this._shapeName.DataPropertyName = "ShapeName";
             this._shapeName.HeaderText = "形狀";
             this._shapeName.MinimumWidth = 6;
             this._shapeName.Name = "_shapeName";
             this._shapeName.ReadOnly = true;
             this._shapeName.Width = 60;
-            this._shapeName.DataPropertyName = "ShapeName";
             // 
             // _information
             // 
             this._information.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this._information.DataPropertyName = "Info";
             this._information.HeaderText = "資訊";
             this._information.MinimumWidth = 6;
             this._information.Name = "_information";
             this._information.ReadOnly = true;
-            this._information.DataPropertyName = "Info";
             // 
             // _groupBox1
             // 
@@ -177,21 +176,12 @@ namespace WindowsFormsApp1
             // 
             // _page1
             // 
-            this._page1.Location = new System.Drawing.Point(7, 128);
-            this._page1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._page1.Location = new System.Drawing.Point(7, 4);
+            this._page1.Margin = new System.Windows.Forms.Padding(4);
             this._page1.Name = "_page1";
             this._page1.Size = new System.Drawing.Size(205, 116);
-            this._page1.TabIndex = 4;
+            this._page1.TabIndex = 5;
             this._page1.UseVisualStyleBackColor = true;
-            // 
-            // _page2
-            // 
-            this._page2.Location = new System.Drawing.Point(7, 4);
-            this._page2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this._page2.Name = "_page2";
-            this._page2.Size = new System.Drawing.Size(205, 116);
-            this._page2.TabIndex = 5;
-            this._page2.UseVisualStyleBackColor = true;
             // 
             // _chooseShape
             // 
@@ -237,13 +227,25 @@ namespace WindowsFormsApp1
             this._chooseShapeEllipseButton.Text = "○";
             this._chooseShapeEllipseButton.Click += new System.EventHandler(this.ClickChooseShapeEllipseButton);
             // 
+            // _chooseShapePointerButton
+            // 
+            this._chooseShapePointerButton.Checked = true;
+            this._chooseShapePointerButton.CheckState = System.Windows.Forms.CheckState.Checked;
+            this._chooseShapePointerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._chooseShapePointerButton.Font = new System.Drawing.Font("Microsoft JhengHei UI", 17F);
+            this._chooseShapePointerButton.Image = ((System.Drawing.Image)(resources.GetObject("_chooseShapePointerButton.Image")));
+            this._chooseShapePointerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._chooseShapePointerButton.Name = "_chooseShapePointerButton";
+            this._chooseShapePointerButton.Size = new System.Drawing.Size(50, 41);
+            this._chooseShapePointerButton.Text = " ➛";
+            this._chooseShapePointerButton.Click += new System.EventHandler(this.ClickChooseShapePointerButton);
+            // 
             // _pageList
             // 
             this._pageList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this._pageList.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this._pageList.Controls.Add(this._page1);
-            this._pageList.Controls.Add(this._page2);
             this._pageList.Location = new System.Drawing.Point(0, 68);
             this._pageList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this._pageList.Name = "_pageList";
@@ -261,19 +263,6 @@ namespace WindowsFormsApp1
             this._canvas.Name = "_canvas";
             this._canvas.Size = new System.Drawing.Size(989, 702);
             this._canvas.TabIndex = 7;
-            // 
-            // _chooseShapePointerButton
-            // 
-            this._chooseShapePointerButton.Checked = true;
-            this._chooseShapePointerButton.CheckState = System.Windows.Forms.CheckState.Checked;
-            this._chooseShapePointerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this._chooseShapePointerButton.Font = new System.Drawing.Font("Microsoft JhengHei UI", 17F);
-            this._chooseShapePointerButton.Image = ((System.Drawing.Image)(resources.GetObject("_chooseShapePointerButton.Image")));
-            this._chooseShapePointerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._chooseShapePointerButton.Name = "_chooseShapePointerButton";
-            this._chooseShapePointerButton.Size = new System.Drawing.Size(50, 41);
-            this._chooseShapePointerButton.Text = " ➛";
-            this._chooseShapePointerButton.Click += new System.EventHandler(this.ClickChooseShapePointerButton);
             // 
             // PowerPointForm
             // 
@@ -311,7 +300,6 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Button _addShape;
         private System.Windows.Forms.DataGridView _shapeList;
         private System.Windows.Forms.Button _page1;
-        private System.Windows.Forms.Button _page2;
         private System.Windows.Forms.DataGridViewButtonColumn _deleteButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn _shapeName;
         private System.Windows.Forms.DataGridViewTextBoxColumn _information;

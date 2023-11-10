@@ -46,36 +46,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\IGraphics.cs" />
-    <Compile Include="View\CanvasState\CanvasState.cs" />
-    <Compile Include="View\CanvasState\DrawingState.cs" />
-    <Compile Include="View\CanvasState\PointerState.cs" />
+    <Compile Include="ModelObject\IGraphics.cs" />
+    <Compile Include="ModelObject\Model.Canvas.cs" />
+    <Compile Include="ModelObject\State\CanvasState.cs" />
+    <Compile Include="ModelObject\State\DrawingState.cs" />
+    <Compile Include="ModelObject\State\PointerState.cs" />
     <Compile Include="View\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Model\Factory.cs" />
+    <Compile Include="ModelObject\Factory.cs" />
     <Compile Include="View\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Model.cs" />
+    <Compile Include="ModelObject\Model.cs" />
     <Compile Include="View\PresentationModel.cs" />
     <Compile Include="ShapeName.cs" />
-    <Compile Include="Model\ShapeObject\Ellipse.cs" />
-    <Compile Include="Model\ShapeObject\Point.cs" />
+    <Compile Include="ModelObject\ShapeObject\Ellipse.cs" />
+    <Compile Include="ModelObject\ShapeObject\Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\ShapeObject\Line.cs" />
-    <Compile Include="Model\ShapeObject\Rectangle.cs" />
-    <Compile Include="Model\ShapeObject\Shape.cs" />
-    <Compile Include="Model\Shapes.cs" />
+    <Compile Include="ModelObject\ShapeObject\Line.cs" />
+    <Compile Include="ModelObject\ShapeObject\Rectangle.cs" />
+    <Compile Include="ModelObject\ShapeObject\Shape.cs" />
+    <Compile Include="ModelObject\Shapes.cs" />
     <Compile Include="View\ToolStripBindAbleButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="View\WindowsFormsGraphicsAdaptor.cs" />
     <Compile Include="View\ButtonState.cs" />
+    <Compile Include="View\WindowsFormsPreviewGraphicsAdopter.cs" />
     <EmbeddedResource Include="View\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

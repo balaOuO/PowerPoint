@@ -5,41 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.View;
 
 namespace WindowsFormsApp1
 {
     public class PresentationModel
     {
-        private delegate void ClickChangeShapeButtonEventHandler();
-        private event ClickChangeShapeButtonEventHandler _changeShapeButtonUpdate;
+        private Action _changeShapeButtonReset = null;
 
         private Model _model;
-        private CanvasState _canvasState;
         private Dictionary<string, ButtonState> _chooseShapeButtonState = new Dictionary<string, ButtonState>();
-        private string _lastChooseShape = ShapeName.POINTER;
 
         public PresentationModel(Model model)
         {
-            _canvasState = new PointerState(this);
             _model = model;
+            _model._drawingFinish += InitializeChooseShapeButton;
             _chooseShapeButtonState.Add(ShapeName.RECTANGLE, new ButtonState(false));
             _chooseShapeButtonState.Add(ShapeName.LINE, new ButtonState(false));
             _chooseShapeButtonState.Add(ShapeName.ELLIPSE, new ButtonState(false));
             _chooseShapeButtonState.Add(ShapeName.POINTER, new ButtonState(true));
-            _changeShapeButtonUpdate += _chooseShapeButtonState[ShapeName.POINTER].ResetState;
-        }
-
-        public string LastChooseShape
-        {
-            get
-            {
-                return _lastChooseShape;
-            }
-            set
-            {
-                LastChooseShape = value;
-            }
+            _changeShapeButtonReset += _chooseShapeButtonState[ShapeName.POINTER].ResetState;
         }
 
         public Dictionary<string, ButtonState> ChooseShapeButtonState
@@ -48,6 +32,12 @@ namespace WindowsFormsApp1
             {
                 return _chooseShapeButtonState;
             }
+        }
+
+        //initialize choose shape button
+        private void InitializeChooseShapeButton()
+        {
+            SetChooseShapeButton(ShapeName.POINTER);
         }
 
         //delete shape
@@ -60,60 +50,43 @@ namespace WindowsFormsApp1
         }
 
         //choose shape on toolbar
-        public void ClickChooseShapeButton(string buttonName)
+        public void SetChooseShapeButton(string buttonName)
         {
-            NotifyChangeShapeButtonStatusChange();
+            InitializeButtonState();
             _chooseShapeButtonState[buttonName].State = true;
-            _changeShapeButtonUpdate += _chooseShapeButtonState[buttonName].ResetState;
-            _lastChooseShape = buttonName;
-            CreateCanvasState();
+            _changeShapeButtonReset += _chooseShapeButtonState[buttonName].ResetState;
+            _model.ChooseShape(buttonName);
         }
 
-        //Create State
-        public void CreateCanvasState()
+        //cursor state
+        public Cursor GetCursors()
         {
-            switch (_lastChooseShape)
+            if (ChooseShapeButtonState[ShapeName.POINTER].State)
             {
-                case ShapeName.POINTER:
-                    _canvasState = new PointerState(this);
-                    break;
-                default:
-                    _canvasState = new DrawingState(this, _model, _chooseShapeButtonState);
-                    break;
+                return Cursors.Default;
+            }
+            else
+            {
+                return Cursors.Cross;
             }
         }
 
-        //return cursor state
-        public Cursor GetCursorState()
+        //canvas keydown
+        public void CanvasKeyDown(Keys keyCode)
         {
-            return _canvasState.GetCursorState();
-        }
-
-        //Pointer Pressed Canvas
-        public void PressedOnCanvas(Point pointer)
-        {
-            _canvasState.Press(pointer);           
-        }
-
-        //Pointer Moved in Canvas
-        public void MovedOnCanvas(Point pointer)
-        {
-            _canvasState.Move(pointer);
-        }
-
-        //Pointer Released Canvas
-        public void ReleasedCanvas(Point pointer)
-        {
-            _canvasState.Release();
-        }
-
-        //Notify Change Shape Buton Status Change
-        private void NotifyChangeShapeButtonStatusChange()
-        {
-            if (_changeShapeButtonUpdate != null)
+            if (keyCode is Keys.Delete)
             {
-                _changeShapeButtonUpdate();
-                _changeShapeButtonUpdate = null;
+                _model.DeleteSelect();
+            }
+        }
+
+        //reset button state
+        private void InitializeButtonState()
+        {
+            if (_changeShapeButtonReset != null)
+            {
+                _changeShapeButtonReset();
+                _changeShapeButtonReset = null;
             }
         }
     }

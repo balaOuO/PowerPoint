@@ -22,19 +22,26 @@ namespace WindowsFormsApp1
 
             _presentationModel = presentationModel;
 
-            InitializeCanvasEvent();
+            _page1.Height = (int)((float)_page1.Width / (float)_canvas.Width * _canvas.Height);
+
+            InitializeEvent();
             InitializeDataBinding();
         }
 
         //Initialize Canvas event
-        public void InitializeCanvasEvent()
+        public void InitializeEvent()
         {
+            this.KeyPreview = true;
+            this.KeyDown += HandleKeyDown;
             _canvas.Paint += HandleCanvasPaint;
             _canvas.MouseDown += HandleCanvasPressed;
             _canvas.MouseUp += HandleCanvasReleased;
             _canvas.MouseMove += HandleCanvasMoved;
             _canvas.MouseEnter += EnterCanvas;
             _canvas.MouseLeave += LeaveCanvas;
+            _canvas.Resize += HandleCanvasResize;
+
+            _page1.Paint += PagePaint;
         }
 
         //Initialize data binding
@@ -54,12 +61,13 @@ namespace WindowsFormsApp1
         private void UpdateCanvas()
         {
             _canvas.Invalidate(true);
+            _page1.Invalidate(true);
         }
 
         //clicl add btn
         private void ClickAddShape(object sender, EventArgs e)
         {
-            _model.AddShapeRandom(_selectShape.Text , _canvas.Width, _canvas.Height);
+            _model.AddShape(_selectShape.Text , _canvas.Width, _canvas.Height);
         }
         
         //click delete button in data grid view
@@ -71,31 +79,31 @@ namespace WindowsFormsApp1
         //choose rectangle to draw
         private void ClickChooseShapeRectangleButton(object sender, EventArgs e)
         {
-            _presentationModel.ClickChooseShapeButton(ShapeName.RECTANGLE);
+            _presentationModel.SetChooseShapeButton(ShapeName.RECTANGLE);
         }
 
         //choose line to draw
         private void ClickChooseShapeLineButton(object sender, EventArgs e)
         {
-            _presentationModel.ClickChooseShapeButton(ShapeName.LINE);
+            _presentationModel.SetChooseShapeButton(ShapeName.LINE);
         }
 
         //choose ellipse to draw
         private void ClickChooseShapeEllipseButton(object sender, EventArgs e)
         {
-            _presentationModel.ClickChooseShapeButton(ShapeName.ELLIPSE);
+            _presentationModel.SetChooseShapeButton(ShapeName.ELLIPSE);
         }
 
         //Click Choose Shape Pointer Button
         private void ClickChooseShapePointerButton(object sender, EventArgs e)
         {
-            _presentationModel.ClickChooseShapeButton(ShapeName.POINTER);
+            _presentationModel.SetChooseShapeButton(ShapeName.POINTER);
         }
 
         //Entry canvas event
         private void EnterCanvas(object sender , EventArgs e)
         {
-            Cursor = _presentationModel.GetCursorState();
+            //Cursor = _presentationModel.GetCursorState();
         }
 
         //Leave canvas event
@@ -112,23 +120,43 @@ namespace WindowsFormsApp1
             _model.Draw(new WindowsFormsGraphicsAdaptor(e.Graphics));
         }
 
+        //page paing event
+        public void PagePaint(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+            //Let it smooth
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            _model.Draw(new WindowsFormsPreviewGraphicsAdopter(e.Graphics , (float)_page1.Width / (float)_canvas.Width));
+        }
+
         //press canvas event method
         public void HandleCanvasPressed(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            _presentationModel.PressedOnCanvas(new Point(e.X , e.Y));
+            _model.PressCanvas(new Point(e.X, e.Y));
         }
 
         //release canvas event method
         public void HandleCanvasReleased(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            _presentationModel.ReleasedCanvas(new Point(e.X, e.Y));
-            Cursor = _presentationModel.GetCursorState();
+            _model.ReleaseCanvas(new Point(e.X, e.Y));
         }
 
-        //press and move on canvas event method
+        //move on canvas event method
         public void HandleCanvasMoved(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            _presentationModel.MovedOnCanvas(new Point(e.X, e.Y));
+            _model.MoveOnCanvas(new Point(e.X, e.Y));
+            Cursor = _presentationModel.GetCursors();
+        }
+
+        //canvas key down event
+        public void HandleKeyDown(object sender , KeyEventArgs e)
+        {
+            _presentationModel.CanvasKeyDown(e.KeyCode);
+        }
+
+        //canvas resize
+        public void HandleCanvasResize(object sender, EventArgs e)
+        {
+            _page1.Height = (int)((float)_page1.Width / (float)_canvas.Width * _canvas.Height) + 1;
         }
     }
 }
