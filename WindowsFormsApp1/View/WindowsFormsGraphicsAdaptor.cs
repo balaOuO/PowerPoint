@@ -58,7 +58,7 @@ namespace WindowsFormsApp1
         //draw select point
         public void DrawSelectPoint(Point upperLeftPoint , Point lowerRightPoint)
         {
-            _graphics.DrawEllipse(Pens.Blue, (float)upperLeftPoint.X - SIZE / TWO, (float)upperLeftPoint.Y - SIZE / TWO, SIZE , SIZE);
+            _graphics.DrawEllipse(Pens.Blue, (float)upperLeftPoint.X - SIZE / TWO, (float)upperLeftPoint.Y - SIZE / TWO, SIZE, SIZE);
             _graphics.DrawEllipse(Pens.Blue, (float)upperLeftPoint.X - SIZE / TWO, (float)lowerRightPoint.Y - SIZE / TWO, SIZE, SIZE);
             _graphics.DrawEllipse(Pens.Blue, (float)lowerRightPoint.X - SIZE / TWO, (float)upperLeftPoint.Y - SIZE / TWO, SIZE, SIZE);
             _graphics.DrawEllipse(Pens.Blue, (float)lowerRightPoint.X - SIZE / TWO, (float)lowerRightPoint.Y - SIZE / TWO, SIZE, SIZE);
@@ -68,7 +68,7 @@ namespace WindowsFormsApp1
             _graphics.DrawEllipse(Pens.Blue, (float)upperLeftPoint.X - SIZE / TWO, (float)(upperLeftPoint.Y + lowerRightPoint.Y) / TWO - SIZE / TWO, SIZE, SIZE);
             _graphics.DrawEllipse(Pens.Blue, (float)lowerRightPoint.X - SIZE / TWO, (float)(upperLeftPoint.Y + lowerRightPoint.Y) / TWO - SIZE / TWO, SIZE, SIZE);
 
-            _graphics.DrawRectangle(Pens.BlueViolet, (float)upperLeftPoint.X, (float)upperLeftPoint.Y, (float)(lowerRightPoint.X - upperLeftPoint.X), (float)(lowerRightPoint.Y - upperLeftPoint.Y) );
+            _graphics.DrawRectangle(Pens.BlueViolet, (float)upperLeftPoint.X, (float)upperLeftPoint.Y, (float)(lowerRightPoint.X - upperLeftPoint.X), (float)(lowerRightPoint.Y - upperLeftPoint.Y));
         }
     }
 }

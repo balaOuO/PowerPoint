@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1.ModelObject.State
 {
-    class DrawingState : CanvasState
+    public class DrawingState : ICanvasState
     {
         private Model _model;
         private bool _isPress = false;
         private string _shape = ShapeName.RECTANGLE;
+        private const string STATE = "DrawingState";
         public DrawingState(Model model)
         {
             _model = model;
@@ -22,6 +23,12 @@ namespace WindowsFormsApp1.ModelObject.State
             {
                 _shape = value;
             }
+        }
+
+        //GetStateName
+        public string GetStateName()
+        {
+            return STATE;
         }
 
         //move method
@@ -36,8 +43,11 @@ namespace WindowsFormsApp1.ModelObject.State
         //press method
         public void Press(Point pointer)
         {
-            _isPress = true;
-            _model.Shapes.AddShape(_shape , pointer , pointer);
+            if (!_isPress)
+            {
+                _isPress = true;
+                _model.Shapes.AddShape(_shape, pointer, pointer);
+            }            
         }
 
         //release method
@@ -47,7 +57,6 @@ namespace WindowsFormsApp1.ModelObject.State
             {
                 _isPress = false;
                 _model.Shapes.AddShapeToList();
-                _model.SwitchPointerState();
                 _model.NotifyDrawingFinish();
             }
         }

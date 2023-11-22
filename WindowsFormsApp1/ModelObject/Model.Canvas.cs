@@ -7,14 +7,14 @@ using WindowsFormsApp1.ModelObject.State;
 
 namespace WindowsFormsApp1
 {
-    partial class Model
+    public partial class Model
     {
         public delegate void DrawingFinishEventHandler();
         public event DrawingFinishEventHandler _drawingFinish;
 
         private PointerState _pointerState;
         private DrawingState _drawingState;
-        private CanvasState _canvasState;
+        private ICanvasState _canvasState;
 
         //initialize about canvas part
         private void InitializeCanvas()
@@ -39,12 +39,6 @@ namespace WindowsFormsApp1
             }
         }
 
-        //switch pointer state
-        public void SwitchPointerState()
-        {
-            _canvasState = _pointerState;
-        }
-
         //press canvas
         public void PressCanvas(Point pointer)
         {
@@ -66,6 +60,7 @@ namespace WindowsFormsApp1
         //notify drawing finish
         public void NotifyDrawingFinish()
         {
+            _canvasState = _pointerState;
             if (_drawingFinish != null)
             {
                 _drawingFinish();

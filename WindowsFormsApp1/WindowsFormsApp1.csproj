@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="ModelObject\IGraphics.cs" />
     <Compile Include="ModelObject\Model.Canvas.cs" />
-    <Compile Include="ModelObject\State\CanvasState.cs" />
+    <Compile Include="ModelObject\State\ICanvasState.cs" />
     <Compile Include="ModelObject\State\DrawingState.cs" />
     <Compile Include="ModelObject\State\PointerState.cs" />
     <Compile Include="View\DoubleBufferedPanel.cs">
@@ -63,7 +63,7 @@
     </Compile>
     <Compile Include="ModelObject\Model.cs" />
     <Compile Include="View\PresentationModel.cs" />
-    <Compile Include="ShapeName.cs" />
+    <Compile Include="ModelObject\ShapeName.cs" />
     <Compile Include="ModelObject\ShapeObject\Ellipse.cs" />
     <Compile Include="ModelObject\ShapeObject\Point.cs" />
     <Compile Include="Program.cs" />

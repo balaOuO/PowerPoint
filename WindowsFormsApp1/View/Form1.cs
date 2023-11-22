@@ -17,6 +17,8 @@ namespace WindowsFormsApp1
         public PowerPointForm(Model model , PresentationModel presentationModel)
         {
             InitializeComponent();
+            this._shapeList.AutoGenerateColumns = false;
+
             this._model = model;
             this._model._shapeDataChanged += UpdateCanvas;
 

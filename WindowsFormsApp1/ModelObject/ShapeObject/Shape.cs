@@ -8,15 +8,15 @@ using System.ComponentModel;
 
 namespace WindowsFormsApp1
 {
-    public class Shape : INotifyPropertyChanged
+    public abstract class Shape : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private const string FORMAT = "{0},{1}";
         private const string INFO = "Info";
-        private const string SHAPE = "None";
         private bool _isSelect = false;
-        protected Point _startPoint;
-        protected Point _endPoint;
+        protected Point _startPoint = new Point(0, 0);
+        protected Point _endPoint = new Point(0, 0);
 
         public Point StartPoint
         {
@@ -69,17 +69,14 @@ namespace WindowsFormsApp1
         {
             get
             {
-                return INFO;
+                return string.Format(FORMAT, StartPoint.ToString(), EndPoint.ToString());
             }
         }
 
         // GetShapeName method
-        public virtual string ShapeName
+        public abstract string ShapeName
         {
-            get
-            {
-                return SHAPE;
-            }
+            get;
         }
 
         //set point method
@@ -98,11 +95,17 @@ namespace WindowsFormsApp1
         //select
         public virtual void Select(Point startPoint , Point endPoint)
         {
-            double inputUpperLeftX = Math.Min(startPoint.X , endPoint.X);
-            double inputUpperLeftY = Math.Min(startPoint.Y, endPoint.Y);
-            double inputLowerRightX = Math.Max(startPoint.X, endPoint.X);
-            double inputLowerRightY = Math.Max(startPoint.Y, endPoint.Y);
-            if ((inputUpperLeftX < LowerRightPoint.X && inputLowerRightX > UpperLeftPoint.X) && (inputUpperLeftY < LowerRightPoint.Y && inputLowerRightY > UpperLeftPoint.Y))
+            double inputLeftX = Math.Min(startPoint.X , endPoint.X);
+            double inputUpperY = Math.Min(startPoint.Y, endPoint.Y);
+            double inputRightX = Math.Max(startPoint.X, endPoint.X);
+            double inputLowerY = Math.Max(startPoint.Y, endPoint.Y);
+            bool xIsSelect = false;
+            bool yIsSelect = false;
+            if (inputRightX >= UpperLeftPoint.X && inputLeftX <= LowerRightPoint.X)
+                xIsSelect = true;
+            if (inputUpperY <= LowerRightPoint.Y && inputLowerY >= UpperLeftPoint.Y)
+                yIsSelect = true;
+            if (xIsSelect && yIsSelect)
             {
                 _isSelect = true;
             }
@@ -111,11 +114,9 @@ namespace WindowsFormsApp1
         //move
         public virtual void Move(Point point)
         {
-            _startPoint.X += point.X;
-            _startPoint.Y += point.Y;
-            _endPoint.X += point.X;
-            _endPoint.Y += point.Y;
-            
+            _startPoint = new Point(_startPoint.X + point.X, _startPoint.Y + point.Y);
+            _endPoint = new Point(_endPoint.X + point.X, _endPoint.Y + point.Y);
+
             Notify(INFO);
         }
 
@@ -135,7 +136,7 @@ namespace WindowsFormsApp1
         }
 
         //data binding notify method
-        private void Notify(string propertyName)
+        protected void Notify(string propertyName)
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));

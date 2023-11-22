@@ -28,6 +28,11 @@ namespace WindowsFormsApp1
             {
                 return _shapes;
             }
+            set
+            {
+                _shapes = value;
+                _shapes._shapeDataChanged += NotifyDataChanged;
+            }
         }
 
         public BindingList<Shape> ShapeList

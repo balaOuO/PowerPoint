@@ -14,7 +14,7 @@ namespace WindowsFormsApp1
         public event ShapeDataChangedEventHandler _shapeDataChanged;
 
         private BindingList<Shape> _shapeList = new BindingList<Shape>();
-        private Factory _factory = new Factory();
+        protected Factory _factory = new Factory(new Random());
         private Shape _shape;
 
         private Action _cancelSelect;
@@ -29,22 +29,22 @@ namespace WindowsFormsApp1
         }
 
         //add shape method
-        public void AddShape(string shapeType, Point upperLeftPoint, Point lowerRightPoint)
+        public virtual void AddShape(string shapeType, Point upperLeftPoint, Point lowerRightPoint)
         {
-            _shape = _factory.CreateShapes(shapeType);
+            _shape = Factory.CreateShapes(shapeType);
             _shape.SetPoint(upperLeftPoint, lowerRightPoint);
             NotifyDataChanged();
         }
 
         //add shape random
-        public void AddShape(string shapeType , int screenWidth, int screenHeight)
+        public virtual void AddShape(string shapeType , int screenWidth, int screenHeight)
         {
             AddShape(shapeType, _factory.CreateRandomPoint(screenWidth, screenHeight), _factory.CreateRandomPoint(screenWidth, screenHeight));
             AddShapeToList();
         }
 
         //add shape in shape list
-        public void AddShapeToList()
+        public virtual void AddShapeToList()
         {
             _shapeList.Add(_shape);
             _shape = null;
@@ -52,27 +52,29 @@ namespace WindowsFormsApp1
         }
 
         //delete shape
-        public void DeleteShape(int index)
+        public virtual void DeleteShape(int index)
         {
-            _shapeList.RemoveAt(index);
-            NotifyDataChanged();
+            if (index < _shapeList.Count && index >= 0)
+            {
+                _shapeList.RemoveAt(index);
+                NotifyDataChanged();
+            }            
         }
 
         //delete shape
-        public void DeleteSelectShape()
+        public virtual void DeleteSelectShape()
         {
             for (int i = 0; i < _shapeList.Count; i++)
             {
                 if (_shapeList[i].IsSelect == true)
                 {
-                    _shapeList.RemoveAt(i);
-                    NotifyDataChanged();
+                    DeleteShape(i);
                 }
             }
         }
 
         //draw method
-        public void Draw(IGraphics graphics)
+        public virtual void Draw(IGraphics graphics)
         {
             foreach (Shape aShape in _shapeList)
             {
@@ -86,14 +88,14 @@ namespace WindowsFormsApp1
         }
 
         //modify shape
-        public void ModifyShape(Point point)
+        public virtual void ModifyShape(Point point)
         {
             _shape.SetEndPoint(point);
             NotifyDataChanged();
         }
 
         //select shape in point
-        public void SelectShape(Point point)
+        public virtual void SelectShape(Point point)
         {
             ClearSelect();
             for (int i = _shapeList.Count - 1; i >= 0; i--)
@@ -107,11 +109,10 @@ namespace WindowsFormsApp1
                     return;
                 }
             }
-            NotifyDataChanged();
         }
 
         //Move shape
-        public void MoveShape(Point point)
+        public virtual void MoveShape(Point point)
         {
             if (_moveSelectShape != null)
             {
@@ -121,7 +122,7 @@ namespace WindowsFormsApp1
         }
 
         //notify data change
-        private void NotifyDataChanged()
+        protected void NotifyDataChanged()
         {
             if (_shapeDataChanged != null)
             {
@@ -136,6 +137,7 @@ namespace WindowsFormsApp1
             {
                 _cancelSelect();
                 _cancelSelect = null;
+                NotifyDataChanged();
             }
             if (_moveSelectShape != null)
             {

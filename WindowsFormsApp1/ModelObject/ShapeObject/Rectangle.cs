@@ -3,34 +3,22 @@ using System.Drawing;
 
 namespace WindowsFormsApp1
 {
-    class Rectangle : Shape
+    public class Rectangle : Shape
     {
-        private const string SHAPE = "Rectangle";
-
-        //Rectangle getinfo method
-        public override string Info
-        {
-            get
-            {
-                const string COMMA = ",";
-                return StartPoint.ToString() + COMMA + EndPoint.ToString();
-            }
-        }
-
         //Rectangle get shape name method
         public override string ShapeName
         {
             get
             {
-                return SHAPE;
+                return WindowsFormsApp1.ShapeName.RECTANGLE;
             }
         }
 
         //draw self
         public override void Draw(IGraphics graphics)
-        {
-            base.Draw(graphics);
+        {            
             graphics.DrawRectangle(UpperLeftPoint , LowerRightPoint);
+            base.Draw(graphics);
         }
     }
 }

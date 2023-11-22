@@ -6,17 +6,24 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1.ModelObject.State
 {
-    class PointerState : CanvasState
+    public class PointerState : ICanvasState
     {
         private Model _model;
         private Point _startPoint;
         private Point _endPoint;
         private bool _isPress = false;
+        private const string STATE = "PointerState";
         public PointerState(Model model)
         {
             _model = model;
             _startPoint = new Point(0, 0);
             _endPoint = new Point(0, 0);
+        }
+
+        //GetStateName
+        public string GetStateName()
+        {
+            return STATE;
         }
 
         //move method
@@ -33,9 +40,12 @@ namespace WindowsFormsApp1.ModelObject.State
         //press method
         public void Press(Point pointer)
         {
-            _isPress = true;
-            _model.Shapes.SelectShape(pointer);
-            _startPoint = pointer;
+            if (!_isPress)
+            {
+                _isPress = true;
+                _model.Shapes.SelectShape(pointer);
+                _startPoint = pointer;
+            }
         }
 
         //release method

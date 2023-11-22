@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1.ModelObject.State
 {
-    interface CanvasState
+    public interface ICanvasState
     {
         //press method
         void Press(Point pointer);
@@ -16,5 +16,8 @@ namespace WindowsFormsApp1.ModelObject.State
 
         //release method
         void Release();
+
+        //GetStateName
+        string GetStateName();
     }
 }

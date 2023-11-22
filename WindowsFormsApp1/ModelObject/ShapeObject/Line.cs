@@ -5,36 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFormsApp1.ShapeObject
+namespace WindowsFormsApp1
 {
-    class Line : Shape
+    public class Line : Shape
     {
-        private const string SHAPE = "Line";
-
-        //get info method
-        public override string Info
-        {
-            get
-            {
-                const string COMMA = ",";
-                return StartPoint.ToString() + COMMA + EndPoint.ToString();
-            }
-        }
-
         //Rectangle get shape name method
         public override string ShapeName
         {
             get
             {
-                return SHAPE;
+                return WindowsFormsApp1.ShapeName.LINE;
             }
         }
 
         //draw self
         public override void Draw(IGraphics graphics)
         {
-            base.Draw(graphics);
             graphics.DrawLine(StartPoint , EndPoint);
+            base.Draw(graphics);
         }
     }
 }

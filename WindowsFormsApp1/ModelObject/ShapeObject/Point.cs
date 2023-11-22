@@ -8,6 +8,7 @@ namespace WindowsFormsApp1
 {
     public class Point
     {
+        private const string FORMAT = "({0},{1})";
         public Point(double xCoordinate , double yCoordinate)
         {
             this.X = xCoordinate;
@@ -29,22 +30,7 @@ namespace WindowsFormsApp1
         // return point in string
         override public string ToString()
         {
-            const string LEFT = "(";
-            const string RIGHT = ")";
-            const string COMMA = ",";
-            return LEFT + X + COMMA + Y + RIGHT;
+            return string.Format(FORMAT, X, Y);
         }
-
-        ////point + method
-        //public static Point operator +(Point point1 , Point point2)
-        //{
-        //    return new Point(point1.X + point2.X, point1.Y + point2.Y);
-        //}
-
-        ////point - method
-        //public static Point operator -(Point point1 , Point point2)
-        //{
-        //    return new Point(point1.X - point2.X, point1.Y - point2.Y);
-        //}
     }
 }

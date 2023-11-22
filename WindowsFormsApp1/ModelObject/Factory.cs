@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsFormsApp1.ShapeObject;
+using WindowsFormsApp1;
 
 namespace WindowsFormsApp1
 {
-    class Factory
+    public class Factory
     {
-        Random _random = new Random();
+        private Random _random;
+        public Factory(Random random)
+        {
+            _random = random;
+        }
+
         //creat shape
-        public Shape CreateShapes(string shapeType)
+        public static Shape CreateShapes(string shapeType)
         {
             switch (shapeType)
             {

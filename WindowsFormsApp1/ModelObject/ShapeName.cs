@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    public class ShapeName
+    public abstract class ShapeName
     {
         public const string RECTANGLE = "矩形";
         public const string LINE = "線";
