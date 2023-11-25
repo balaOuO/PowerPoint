@@ -12,14 +12,14 @@ namespace WindowsFormsApp1
     public partial class Model
     {
         public delegate void ShapeDataChangedEventHandler();
-        public event ShapeDataChangedEventHandler _shapeDataChanged;        
+        public event ShapeDataChangedEventHandler _shapeDataChanged;
 
-        private Shapes _shapes = new Shapes();
+        private Shapes _shapes;
 
         public Model()
         {
+            Shapes = new Shapes();
             InitializeCanvas();
-            _shapes._shapeDataChanged += NotifyDataChanged;
         }
 
         public Shapes Shapes

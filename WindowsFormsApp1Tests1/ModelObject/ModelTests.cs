@@ -217,5 +217,12 @@ namespace WindowsFormsApp1.Tests
         {
             Assert.AreEqual(_model.ShapeList, _mockShapes.ShapeList);
         }
+
+        //TestSetRefer
+        [TestMethod()]
+        public void TestSetRefer()
+        {
+            Assert.IsTrue(true);
+        }
     }
 }

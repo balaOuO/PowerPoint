@@ -75,7 +75,10 @@ namespace WindowsFormsApp1
         //click delete button in data grid view
         private void ShapeListCellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            _presentationModel.DeleteShapeButton(e);
+            if (e.ColumnIndex == 0 && e.RowIndex != -1)
+            {
+                _model.DeleteShapeButton(e.RowIndex);
+            }
         }
 
         //choose rectangle to draw
@@ -152,7 +155,11 @@ namespace WindowsFormsApp1
         //canvas key down event
         public void HandleKeyDown(object sender , KeyEventArgs e)
         {
-            _presentationModel.CanvasKeyDown(e.KeyCode);
+            if (e.KeyCode is Keys.Delete)
+            {
+                _model.DeleteSelect();
+                Cursor = _presentationModel.GetCursors();
+            }
         }
 
         //canvas resize

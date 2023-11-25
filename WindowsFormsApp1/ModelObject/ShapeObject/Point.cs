@@ -9,22 +9,27 @@ namespace WindowsFormsApp1
     public class Point
     {
         private const string FORMAT = "({0},{1})";
+        private const int TWO = 2;
         public Point(double xCoordinate , double yCoordinate)
         {
-            this.X = xCoordinate;
-            this.Y = yCoordinate;
+            X = xCoordinate;
+            Y = yCoordinate;
+        }
+
+        //Distance
+        public static double CalculateDistance(Point point1, Point point2)
+        {
+            return Math.Sqrt(Math.Pow(point1.X - point2.X, TWO) + Math.Pow(point1.Y - point2.Y, TWO));
         }
 
         public double X
         {
-            get;
-            set;
+            get; set;
         }
 
         public double Y
         {
-            get;
-            set;
+            get; set;
         }
 
         // return point in string

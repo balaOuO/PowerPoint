@@ -23,6 +23,8 @@ namespace WindowsFormsApp1Tests1
             IsMoveShape = false;
             IsModifyShape = false;
             IsAddShapeToList = false;
+            IsUpdateInfo = false;
+            IsReferSelectedShape = false;
         }
 
         public bool IsAddShape
@@ -75,6 +77,16 @@ namespace WindowsFormsApp1Tests1
         }
 
         public bool IsAddShapeToList
+        {
+            get; set;
+        }
+
+        public bool IsUpdateInfo
+        {
+            get; set;
+        }
+
+        public bool IsReferSelectedShape
         {
             get; set;
         }
@@ -143,6 +155,20 @@ namespace WindowsFormsApp1Tests1
         {
             IsAddShapeToList = true;
             base.AddShapeToList();
+        }
+
+        //UpdateInfo
+        public override void UpdateInfo()
+        {
+            IsUpdateInfo = true;
+            base.UpdateInfo();
+        }
+
+        //ReferSelectedShape
+        public override void ReferSelectedShape(Point point)
+        {
+            IsReferSelectedShape = true;
+            base.ReferSelectedShape(point);
         }
     }
 }

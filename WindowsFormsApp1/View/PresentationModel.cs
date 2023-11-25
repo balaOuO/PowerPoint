@@ -14,11 +14,14 @@ namespace WindowsFormsApp1
 
         private Model _model;
         private Dictionary<string, ButtonState> _chooseShapeButtonState = new Dictionary<string, ButtonState>();
+        private Cursor _pointerCursorState = Cursors.Default;
 
         public PresentationModel(Model model)
         {
             _model = model;
             _model._drawingFinish += InitializeChooseShapeButton;
+            _model._referOn += SetCursorState;
+            _model.SetRefer();
             _chooseShapeButtonState.Add(ShapeName.RECTANGLE, new ButtonState(false));
             _chooseShapeButtonState.Add(ShapeName.LINE, new ButtonState(false));
             _chooseShapeButtonState.Add(ShapeName.ELLIPSE, new ButtonState(false));
@@ -40,15 +43,6 @@ namespace WindowsFormsApp1
             SetChooseShapeButton(ShapeName.POINTER);
         }
 
-        //delete shape
-        public void DeleteShapeButton(DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 0 && e.RowIndex != -1)
-            {
-                _model.DeleteShapeButton(e.RowIndex);
-            }
-        }
-
         //choose shape on toolbar
         public void SetChooseShapeButton(string buttonName)
         {
@@ -58,25 +52,30 @@ namespace WindowsFormsApp1
             _model.ChooseShape(buttonName);
         }
 
+        //set cursor state
+        private void SetCursorState(string state)
+        {
+            switch (state)
+            {
+                case ShapePart.LOWER_RIGHT_POINT:
+                    _pointerCursorState = Cursors.SizeNWSE;
+                    break;
+                case ShapePart.ELSE:
+                    _pointerCursorState = Cursors.Default;
+                    break;
+            }
+        }
+
         //cursor state
         public Cursor GetCursors()
         {
             if (ChooseShapeButtonState[ShapeName.POINTER].State)
             {
-                return Cursors.Default;
+                return _pointerCursorState;
             }
             else
             {
                 return Cursors.Cross;
-            }
-        }
-
-        //canvas keydown
-        public void CanvasKeyDown(Keys keyCode)
-        {
-            if (keyCode is Keys.Delete)
-            {
-                _model.DeleteSelect();
             }
         }
 

@@ -20,6 +20,8 @@ namespace WindowsFormsApp1.Tests
         string _testPoint2String;
         bool _isDataChange;
         PrivateObject _shapesPrivateObject;
+        string _shapePropertyName;
+        string _referPart;
 
         //DataChangeHandler
         public void DataChangeHandler()
@@ -90,8 +92,11 @@ namespace WindowsFormsApp1.Tests
             _shapes = new Shapes();
             _isDataChange = false;
             _shapes._shapeDataChanged += DataChangeHandler;
+            _shapes._referOn += ReferSelectedShapeHandler;
             _shapesPrivateObject = new PrivateObject(_shapes);
             _shapesPrivateObject.SetFieldOrProperty("_factory", new Factory(new MockRandom()));
+            _shapePropertyName = string.Empty;
+            _referPart = string.Empty;
         }
 
         //TestAddShape
@@ -165,7 +170,7 @@ namespace WindowsFormsApp1.Tests
 
             Initialize();
             CreateShapeList();
-            shapeListString = GetShapeString(_shapes.ShapeList[1]) + GetShapeString(_shapes.ShapeList[2]);   
+            shapeListString = GetShapeString(_shapes.ShapeList[1]) + GetShapeString(_shapes.ShapeList[2]);
             _shapes.DeleteShape(0);
             Assert.AreEqual(GetShapeListString(_shapes.ShapeList), shapeListString);
 
@@ -234,7 +239,7 @@ namespace WindowsFormsApp1.Tests
             Assert.IsTrue(_shapes.ShapeList[2].IsSelect);
 
             _shapes.DeleteSelectShape();
-            Assert.AreEqual(GetShapeListString(_shapes.ShapeList), shapeListString);           
+            Assert.AreEqual(GetShapeListString(_shapes.ShapeList), shapeListString);
         }
 
         //TestDraw
@@ -281,14 +286,24 @@ namespace WindowsFormsApp1.Tests
             Initialize();
             CreateShapeList();
             _shapes.SelectShape(new Point(15, 15));
-            _shapes.MoveShape(new Point(8, 8));
+            _shapes.MoveShape(new Point(20, 20));
+            _shapes.ShapeList[0].Update("123");
 
             Assert.AreEqual(_shapesPrivateObject.GetFieldOrProperty("_shape"), null);
             CheckShape(_shapes.ShapeList[0], ShapeName.LINE, _testPoint1String, _testPoint2String, false);
             _isDataChange = true;
             CheckShape(_shapes.ShapeList[1], ShapeName.RECTANGLE, _testPoint2String, _testPoint1String, false);
             _isDataChange = true;
-            CheckShape(_shapes.ShapeList[2], ShapeName.ELLIPSE, "(18,18)", "(28,28)", true);
+            CheckShape(_shapes.ShapeList[2], ShapeName.ELLIPSE, "(30,30)", "(40,40)", true);
+
+            _shapes.SelectShape(new Point(40, 40));
+            _shapes.MoveShape(new Point(20, 20));
+
+            CheckShape(_shapes.ShapeList[0], ShapeName.LINE, _testPoint1String, _testPoint2String, false);
+            _isDataChange = true;
+            CheckShape(_shapes.ShapeList[1], ShapeName.RECTANGLE, _testPoint2String, _testPoint1String, false);
+            _isDataChange = true;
+            CheckShape(_shapes.ShapeList[2], ShapeName.ELLIPSE, "(30,30)", "(60,60)", true);
         }
 
         //TestClearSelect
@@ -311,6 +326,47 @@ namespace WindowsFormsApp1.Tests
             Shapes shapes = new Shapes();
             shapes.AddShape(ShapeName.LINE, 1, 2);
             Assert.IsFalse(_isDataChange);
+        }
+
+        //GetNotifyPropertyName
+        public void GetNotifyPropertyName(object nothing, PropertyChangedEventArgs e)
+        {
+            _shapePropertyName = e.PropertyName;
+        }
+
+        //TestUpdateInfo
+        [TestMethod()]
+        public void TestUpdateInfo()
+        {
+            Shape shape = new Line();
+            shape.SetPoint(new Point(10, 10), new Point(20, 20));
+            shape.PropertyChanged += GetNotifyPropertyName;
+            _shapesPrivateObject.SetFieldOrProperty("_shape", shape);
+            _shapes.AddShapeToList();
+            _shapes.SelectShape(new Point(15, 15));
+            _shapes.UpdateInfo();
+
+            Assert.AreEqual(_shapePropertyName, "Info");
+        }
+
+        //TestReferSelectedShape
+        [TestMethod()]
+        public void TestReferSelectedShape()
+        {
+            _shapes.AddShape(ShapeName.LINE, _testPoint1, _testPoint2);
+            _shapes.AddShapeToList();
+            _shapes.SelectShape(_testPoint1);
+            _shapes.ReferSelectedShape(_testPoint2);
+            Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
+
+            _shapes.ReferSelectedShape(_testPoint1);
+            Assert.AreEqual(_referPart, ShapePart.ELSE);
+        }
+
+        //ReferSelectedShapeHandler
+        public void ReferSelectedShapeHandler(string referPart)
+        {
+            _referPart = referPart;
         }
     }
 }

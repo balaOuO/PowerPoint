@@ -12,6 +12,9 @@ namespace WindowsFormsApp1
         public delegate void DrawingFinishEventHandler();
         public event DrawingFinishEventHandler _drawingFinish;
 
+        public delegate void ReferOnEventHandler(string referPart);
+        public event ReferOnEventHandler _referOn;
+
         private PointerState _pointerState;
         private DrawingState _drawingState;
         private ICanvasState _canvasState;
@@ -22,6 +25,13 @@ namespace WindowsFormsApp1
             _pointerState = new PointerState(this);
             _drawingState = new DrawingState(this);
             _canvasState = _pointerState;
+        }
+
+        //set _refer
+        public void SetRefer()
+        {
+            if (_referOn != null)
+                _shapes._referOn += _referOn.Invoke;
         }
 
         //choose shape

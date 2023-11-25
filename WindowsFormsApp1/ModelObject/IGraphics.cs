@@ -21,6 +21,6 @@ namespace WindowsFormsApp1
         void DrawEllipse(Point startPoint, Point endPoint);
 
         //draw select point
-        void DrawSelectPoint(Point startPoint, Point endPoint);
+        void DrawSelectPoint(Point startPoint, Point endPoint, float selectPointSize);
     }
 }

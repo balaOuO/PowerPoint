@@ -17,6 +17,7 @@ namespace WindowsFormsApp1.Tests
         Point _testPoint1;
         Point _testPoint2;
         string _propertyName;
+        string _referPart;
 
         PrivateObject _shapePrivateObject;
 
@@ -25,6 +26,7 @@ namespace WindowsFormsApp1.Tests
         public void Initialize()
         {
             _propertyName = string.Empty;
+            _referPart = string.Empty;
 
             _shape = new Line();
             _testPoint1 = new Point(10, 10);
@@ -70,7 +72,7 @@ namespace WindowsFormsApp1.Tests
                 new List<Point>(){ new Point(30 , 15) , new Point(30 , 15) },//F
             };
 
-            List<bool> xSelectTestAnswer = new List<bool>() { false, true, true, true, true, true, true, true, false};
+            List<bool> xSelectTestAnswer = new List<bool>() { false, true, true, true, true, true, true, true, false };
 
             List<List<Point>> ySelectTestData = new List<List<Point>>()
             {
@@ -137,14 +139,64 @@ namespace WindowsFormsApp1.Tests
         public void TestMove()
         {
             _shape.SetPoint(_testPoint1, _testPoint2);
-
             _shape.Move(new Point(10, 20));
-
             Assert.AreEqual(_shape.Info, "(20,30),(30,40)");
 
             _shape.Move(new Point(-100, -100));
-
             Assert.AreEqual(_shape.Info, "(-80,-70),(-70,-60)");
+        }
+
+        //TestMoveLowerRightPoint
+        [TestMethod()]
+        public void TestMoveLowerRightPoint()
+        {
+            Initialize();
+            _shape.SetPoint(_testPoint1, _testPoint2);
+            _shape.ReferPart(_testPoint2);
+            _shape.Move(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(10,10),(30,30)");
+
+            Initialize();
+            _shape.SetPoint(_testPoint2, _testPoint1);
+            _shape.ReferPart(_testPoint2);
+            _shape.Move(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(30,30),(10,10)");
+
+            Initialize();
+            _shape.SetPoint(new Point(10, 20), new Point(20, 10));
+            _shape.ReferPart(_testPoint2);
+            _shape.Move(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(10,30),(30,10)");
+
+            Initialize();
+            _shape.SetPoint(new Point(20, 10), new Point(10, 20));
+            _shape.ReferPart(_testPoint2);
+            _shape.Move(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(30,10),(10,30)");
+
+            Initialize();
+            _shape.SetPoint(_testPoint1, _testPoint2);
+            _shape.ReferPart(_testPoint2);
+            _shape.Move(new Point(-20, -20));
+            Assert.AreEqual(_shape.Info, "(10,10),(0,0)");
+
+            Initialize();
+            _shape.SetPoint(_testPoint2, _testPoint1);
+            _shape.ReferPart(_testPoint2);
+            _shape.Move(new Point(-20, -20));
+            Assert.AreEqual(_shape.Info, "(0,0),(10,10)");
+
+            Initialize();
+            _shape.SetPoint(new Point(10, 20), new Point(20, 10));
+            _shape.ReferPart(_testPoint2);
+            _shape.Move(new Point(-20, -20));
+            Assert.AreEqual(_shape.Info, "(10,0),(0,10)");
+
+            Initialize();
+            _shape.SetPoint(new Point(20, 10), new Point(10, 20));
+            _shape.ReferPart(_testPoint2);
+            _shape.Move(new Point(-20, -20));
+            Assert.AreEqual(_shape.Info, "(0,10),(10,0)");
         }
 
         //TestCancelSelect
@@ -174,10 +226,10 @@ namespace WindowsFormsApp1.Tests
 
         //test Notify
         [TestMethod()]
-        public void TestNotify()
+        public void TestUpdate()
         {
             _shape.PropertyChanged += GetNotifyPropertyName;
-            _shapePrivateObject.Invoke("Notify", new object[] {"Info"});
+            _shape.Update("Info");
 
             Assert.AreEqual(_propertyName, "Info");
         }
@@ -186,6 +238,89 @@ namespace WindowsFormsApp1.Tests
         public void GetNotifyPropertyName(object nothing, PropertyChangedEventArgs e)
         {
             _propertyName = e.PropertyName;
+        }
+
+        //TestReferPart
+        [TestMethod()]
+        public void TestReferPart()
+        {
+            _shape._referToThePart += ReferTOThePartHandler;
+
+            _shape.SetPoint(_testPoint1, _testPoint2);
+            _shape.Select(_testPoint2, _testPoint2);
+            _shape.ReferPart(_testPoint2);
+            Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
+
+            _shape.ReferPart(new Point(_testPoint2.X + 4, _testPoint2.Y));
+            Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
+
+            _shape.ReferPart(new Point(_testPoint2.X + 5, _testPoint2.Y));
+            Assert.AreEqual(_referPart, ShapePart.ELSE);
+
+            _shape.ReferPart(new Point(_testPoint2.X - 4, _testPoint2.Y));
+            Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
+
+            _shape.ReferPart(new Point(_testPoint2.X - 5, _testPoint2.Y));
+            Assert.AreEqual(_referPart, ShapePart.ELSE);
+
+            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y + 4));
+            Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
+
+            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y + 5));
+            Assert.AreEqual(_referPart, ShapePart.ELSE);
+
+            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y - 4));
+            Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
+
+            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y - 5));
+            Assert.AreEqual(_referPart, ShapePart.ELSE);
+        }
+
+        //ReferTOThePartHandler
+        public void ReferTOThePartHandler(string referPart)
+        {
+            _referPart = referPart;
+        }
+
+        //TestCompareCoordinateX
+        [TestMethod()]
+        public void TestCompareCoordinateX()
+        {
+            _shape.SetPoint(_testPoint1, _testPoint2);
+            _shape.CompareCoordinateX();
+            Assert.AreEqual(_shapePrivateObject.GetFieldOrProperty("_xBigPoint"), _shape.EndPoint);
+            Assert.AreEqual(_shapePrivateObject.GetFieldOrProperty("_xSmallPoint"), _shape.StartPoint);
+
+            _shape.SetPoint(_testPoint2, _testPoint1);
+            _shape.CompareCoordinateX();
+            Assert.AreEqual(_shapePrivateObject.GetFieldOrProperty("_xBigPoint"), _shape.StartPoint);
+            Assert.AreEqual(_shapePrivateObject.GetFieldOrProperty("_xSmallPoint"), _shape.EndPoint);
+        }
+
+        //TestCompareCoordinateY
+        [TestMethod()]
+        public void TestCompareCoordinateY()
+        {
+            _shape.SetPoint(_testPoint1, _testPoint2);
+            _shape.CompareCoordinateX();
+            Assert.AreEqual(_shapePrivateObject.GetFieldOrProperty("_yBigPoint"), _shape.EndPoint);
+            Assert.AreEqual(_shapePrivateObject.GetFieldOrProperty("_ySmallPoint"), _shape.StartPoint);
+
+            _shape.SetPoint(_testPoint2, _testPoint1);
+            _shape.CompareCoordinateY();
+            Assert.AreEqual(_shapePrivateObject.GetFieldOrProperty("_yBigPoint"), _shape.StartPoint);
+            Assert.AreEqual(_shapePrivateObject.GetFieldOrProperty("_ySmallPoint"), _shape.EndPoint);
+        }
+
+        //TestNotifyRefer
+        [TestMethod()]
+        public void TestNotifyRefer()
+        {
+            _shape.SetPoint(_testPoint1, _testPoint2);
+            _shape.ReferPart(_testPoint2);
+            _shape._referToThePart += ReferTOThePartHandler;
+            _shape.NotifyRefer();
+            Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
         }
     }
 }

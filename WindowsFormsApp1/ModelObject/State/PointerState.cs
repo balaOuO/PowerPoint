@@ -35,6 +35,10 @@ namespace WindowsFormsApp1.ModelObject.State
                 _model.Shapes.MoveShape(new Point(_endPoint.X - _startPoint.X, _endPoint.Y - _startPoint.Y));
                 _startPoint = pointer;
             }
+            else
+            {
+                _model.Shapes.ReferSelectedShape(pointer);
+            }
         }
 
         //press method
@@ -54,6 +58,7 @@ namespace WindowsFormsApp1.ModelObject.State
             if (_isPress)
             {
                 _isPress = false;
+                _model.Shapes.UpdateInfo();
             }
         }
     }

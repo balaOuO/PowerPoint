@@ -13,12 +13,17 @@ namespace WindowsFormsApp1
         public delegate void ShapeDataChangedEventHandler();
         public event ShapeDataChangedEventHandler _shapeDataChanged;
 
+        public delegate void ReferOnEventHandler(string referPart);
+        public event ReferOnEventHandler _referOn;
+
         private BindingList<Shape> _shapeList = new BindingList<Shape>();
         protected Factory _factory = new Factory(new Random());
         private Shape _shape;
 
         private Action _cancelSelect;
-        private Action<Point> _moveSelectShape; 
+        private Action<Point> _moveSelectShape;
+        private Action<string> _updateInfo;
+        private Action<Point> _referSelectShape;
 
         public BindingList<Shape> ShapeList
         {
@@ -46,6 +51,10 @@ namespace WindowsFormsApp1
         //add shape in shape list
         public virtual void AddShapeToList()
         {
+            if (_referOn != null)
+            {
+                _shape._referToThePart += _referOn.Invoke;
+            }
             _shapeList.Add(_shape);
             _shape = null;
             NotifyDataChanged();
@@ -57,8 +66,11 @@ namespace WindowsFormsApp1
             if (index < _shapeList.Count && index >= 0)
             {
                 _shapeList.RemoveAt(index);
+                ClearSelect();
                 NotifyDataChanged();
-            }            
+                if (_referOn != null)
+                    _referOn(ShapePart.ELSE);
+            }
         }
 
         //delete shape
@@ -67,7 +79,7 @@ namespace WindowsFormsApp1
             for (int i = 0; i < _shapeList.Count; i++)
             {
                 if (_shapeList[i].IsSelect == true)
-                {
+                {                    
                     DeleteShape(i);
                 }
             }
@@ -105,6 +117,8 @@ namespace WindowsFormsApp1
                 {
                     _cancelSelect += _shapeList[i].CancelSelect;
                     _moveSelectShape += _shapeList[i].Move;
+                    _updateInfo += _shapeList[i].Update;
+                    _referSelectShape += _shapeList[i].ReferPart;
                     NotifyDataChanged();
                     return;
                 }
@@ -137,11 +151,30 @@ namespace WindowsFormsApp1
             {
                 _cancelSelect();
                 _cancelSelect = null;
+                _moveSelectShape = null;
+                _updateInfo = null;
+                _referSelectShape = null;
                 NotifyDataChanged();
             }
-            if (_moveSelectShape != null)
+        }
+
+        const string INFO = "Info";
+
+        //updateInfo
+        public virtual void UpdateInfo()
+        {
+            if (_updateInfo != null)
             {
-                _moveSelectShape = null;
+                _updateInfo(INFO);
+            }
+        }
+
+        //ReferSelectedShape
+        public virtual void ReferSelectedShape(Point point)
+        {
+            if (_referSelectShape != null)
+            {
+                _referSelectShape(point);
             }
         }
     }

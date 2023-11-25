@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModelObject\ShapeObject\Shape.Method.cs" />
+    <Compile Include="ModelObject\ShapePart.cs" />
     <Compile Include="ModelObject\IGraphics.cs" />
     <Compile Include="ModelObject\Model.Canvas.cs" />
     <Compile Include="ModelObject\State\ICanvasState.cs" />

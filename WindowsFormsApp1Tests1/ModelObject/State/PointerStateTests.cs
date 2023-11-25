@@ -65,6 +65,7 @@ namespace WindowsFormsApp1.ModelObject.State.Tests
             _canvasState.Move(new Point(1, 2));
             Assert.IsFalse(_mockShapes.IsMoveShape);
             Assert.AreEqual(_mockShapes.MoveInput, string.Empty);
+            Assert.IsTrue(_mockShapes.IsReferSelectedShape);
             Assert.IsFalse(_isNotifyDataChange);
             Assert.IsFalse((bool)_canvasStatePrivateObject.GetFieldOrProperty("_isPress"));
             Assert.AreEqual(_canvasStatePrivateObject.GetFieldOrProperty("_startPoint").ToString(), "(0,0)");
@@ -134,6 +135,7 @@ namespace WindowsFormsApp1.ModelObject.State.Tests
             _canvasState.Press(new Point(30, 30));
             _canvasState.Release();
             Assert.IsFalse((bool)_canvasStatePrivateObject.GetFieldOrProperty("_isPress"));
+            Assert.IsTrue(_mockShapes.IsUpdateInfo);
             _canvasState.Move(new Point(1, 1));
             Assert.IsFalse(_mockShapes.IsMoveShape);
         }

@@ -57,7 +57,7 @@ namespace WindowsFormsApp1Tests1
         }
 
         //DrawSelectPoint
-        public void DrawSelectPoint(Point startPoint, Point endPoint)
+        public void DrawSelectPoint(Point startPoint, Point endPoint, float selectPointSize)
         {
             IsDrawSelectPoint = true;
         }

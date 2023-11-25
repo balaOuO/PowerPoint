@@ -56,7 +56,7 @@ namespace WindowsFormsApp1
         }
 
         //draw select point
-        public void DrawSelectPoint(Point upperLeftPoint, Point lowerRightPoint)
+        public void DrawSelectPoint(Point upperLeftPoint, Point lowerRightPoint, float selectPointSize)
         {
             //nothing
         }

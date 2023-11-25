@@ -8,15 +8,25 @@ using System.ComponentModel;
 
 namespace WindowsFormsApp1
 {
-    public abstract class Shape : INotifyPropertyChanged
+    public abstract partial class Shape : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public delegate void ReferPartEventHandler(string referPart);
+        public event ReferPartEventHandler _referToThePart;
 
         private const string FORMAT = "{0},{1}";
         private const string INFO = "Info";
         private bool _isSelect = false;
+        protected string _referArea = ShapePart.ELSE;
         protected Point _startPoint = new Point(0, 0);
         protected Point _endPoint = new Point(0, 0);
+        protected Point _xSmallPoint;
+        protected Point _xBigPoint;
+        protected Point _ySmallPoint;
+        protected Point _yBigPoint;
+        private const float SELECT_POINT_SIZE = 8;
+        private const float TWO = 2;
 
         public Point StartPoint
         {
@@ -77,69 +87,6 @@ namespace WindowsFormsApp1
         public abstract string ShapeName
         {
             get;
-        }
-
-        //set point method
-        public virtual void SetPoint(Point point1 , Point point2)
-        {
-            _startPoint = point1;
-            _endPoint = point2;
-        }
-
-        //set end point
-        public virtual void SetEndPoint(Point endPoint)
-        {
-            SetPoint(_startPoint, endPoint);
-        }
-
-        //select
-        public virtual void Select(Point startPoint , Point endPoint)
-        {
-            double inputLeftX = Math.Min(startPoint.X , endPoint.X);
-            double inputUpperY = Math.Min(startPoint.Y, endPoint.Y);
-            double inputRightX = Math.Max(startPoint.X, endPoint.X);
-            double inputLowerY = Math.Max(startPoint.Y, endPoint.Y);
-            bool xIsSelect = false;
-            bool yIsSelect = false;
-            if (inputRightX >= UpperLeftPoint.X && inputLeftX <= LowerRightPoint.X)
-                xIsSelect = true;
-            if (inputUpperY <= LowerRightPoint.Y && inputLowerY >= UpperLeftPoint.Y)
-                yIsSelect = true;
-            if (xIsSelect && yIsSelect)
-            {
-                _isSelect = true;
-            }
-        }
-
-        //move
-        public virtual void Move(Point point)
-        {
-            _startPoint = new Point(_startPoint.X + point.X, _startPoint.Y + point.Y);
-            _endPoint = new Point(_endPoint.X + point.X, _endPoint.Y + point.Y);
-
-            Notify(INFO);
-        }
-
-        //cancel select
-        public void CancelSelect()
-        {
-            _isSelect = false;
-        }
-
-        //draw mathod interface
-        public virtual void Draw(IGraphics graphics)
-        {
-            if (_isSelect)
-            {
-                graphics.DrawSelectPoint(UpperLeftPoint , LowerRightPoint);
-            }
-        }
-
-        //data binding notify method
-        protected void Notify(string propertyName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

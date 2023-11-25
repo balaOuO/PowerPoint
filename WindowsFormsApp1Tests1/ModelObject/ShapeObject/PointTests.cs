@@ -24,7 +24,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestPoint()
         {
-            Assert.AreEqual(_point.X , 1.2);
+            Assert.AreEqual(_point.X, 1.2);
             Assert.AreEqual(_point.Y, 3.456);
         }
 
@@ -51,6 +51,17 @@ namespace WindowsFormsApp1.Tests
         public void TestToString()
         {
             Assert.AreEqual(_point.ToString(), "(1.2,3.456)");
+        }
+
+        //TestDistance
+        [TestMethod()]
+        public void TestDistance()
+        {
+            Assert.AreEqual(Point.CalculateDistance(new Point(0, 0), new Point(3, 4)), 5);
+            Assert.AreEqual(Point.CalculateDistance(new Point(-2, -2), new Point(1, 2)), 5);
+            Assert.AreEqual(Point.CalculateDistance(new Point(5, 7), new Point(5, 7)), 0);
+            Assert.AreEqual(Point.CalculateDistance(new Point(-1, -1), new Point(-4, -5)), 5);
+            Assert.AreEqual(Point.CalculateDistance(new Point(0.5, 0.5), new Point(3.5, 4.5)), 5);
         }
     }
 }
