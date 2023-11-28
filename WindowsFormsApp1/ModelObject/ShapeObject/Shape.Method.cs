@@ -14,8 +14,6 @@ namespace WindowsFormsApp1
         {
             _startPoint = new Point(point1.X, point1.Y);
             _endPoint = new Point(point2.X, point2.Y);
-            //_startPoint = point1;
-            //_endPoint = point2;
             CompareCoordinateX();
             CompareCoordinateY();
         }
