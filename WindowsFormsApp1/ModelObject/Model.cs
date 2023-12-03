@@ -50,9 +50,9 @@ namespace WindowsFormsApp1
         }
 
         //delete shape
-        public void DeleteShapeButton(int index)
+        public void DeleteShapeByIndex(int index)
         {
-            _shapes.DeleteShape(index);
+            _shapes.DeleteShapeByIndex(index);
         }
 
         //delete select

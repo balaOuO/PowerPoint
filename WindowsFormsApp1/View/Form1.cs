@@ -25,8 +25,8 @@ namespace WindowsFormsApp1
             _presentationModel = presentationModel;
 
             _page1.Height = (int)((float)_page1.Width / (float)_canvas.Width * _canvas.Height);
-            _canvas.Width = splitContainer2.Panel1.Width;
-            _canvas.Height = (int)((float)_canvas.Width * SCREENSCALE);
+            _canvas.Width = _splitContainer2.Panel1.Width;
+            _canvas.Height = (int)((float)_canvas.Width * SCREEN_SCALE);
 
             InitializeEvent();
             InitializeDataBinding();
@@ -44,7 +44,7 @@ namespace WindowsFormsApp1
             _canvas.MouseEnter += EnterCanvas;
             _canvas.MouseLeave += LeaveCanvas;
             _canvas.Resize += HandleCanvasResize;
-            this.splitContainer2.Panel1.Resize += HandleCanvasContainerResize;
+            this._splitContainer2.Panel1.Resize += HandleCanvasContainerResize;
 
             _page1.Paint += PagePaint;
         }
@@ -80,7 +80,7 @@ namespace WindowsFormsApp1
         {
             if (e.ColumnIndex == 0 && e.RowIndex != -1)
             {
-                _model.DeleteShapeButton(e.RowIndex);
+                _model.DeleteShapeByIndex(e.RowIndex);
             }
         }
 
@@ -136,30 +136,28 @@ namespace WindowsFormsApp1
             _model.Draw(new WindowsFormsPreviewGraphicsAdaptor(e.Graphics , _page1.Width , _page1.Height));
         }
 
-        //
-        public Point MappingPoint(Point point)
+        //TransformPoint
+        public Point TransformPoint(Point point)
         {
-            const int Height = 900;
-            const int Width = 1600;
-            return new Point((point.X / _canvas.Width) * Width, (point.Y / _canvas.Height) * Height);
+            return new Point((point.X / _canvas.Width) * ScreenSize.WIDTH, (point.Y / _canvas.Height) * ScreenSize.HEIGHT);
         }
 
         //press canvas event method
         public void HandleCanvasPressed(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            _model.PressCanvas(MappingPoint(new Point(e.X, e.Y)));
+            _model.PressCanvas(TransformPoint(new Point(e.X, e.Y)));
         }
 
         //release canvas event method
         public void HandleCanvasReleased(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            _model.ReleaseCanvas(MappingPoint(new Point(e.X, e.Y)));
+            _model.ReleaseCanvas(TransformPoint(new Point(e.X, e.Y)));
         }
 
         //move on canvas event method
         public void HandleCanvasMoved(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            _model.MoveOnCanvas(MappingPoint(new Point(e.X, e.Y)));
+            _model.MoveOnCanvas(TransformPoint(new Point(e.X, e.Y)));
             Cursor = _presentationModel.GetCursors();
         }
 
@@ -180,12 +178,13 @@ namespace WindowsFormsApp1
             _canvas.Invalidate();
         }
 
-        const float SCREENSCALE = (float)9 / (float)16; 
+        const float SCREEN_SCALE = (float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH;
+
         //canvas container resize
         public void HandleCanvasContainerResize(object sender, EventArgs e)
         {
-            _canvas.Width = splitContainer2.Panel1.Width;
-            _canvas.Height = (int)((float)_canvas.Width * SCREENSCALE);
+            _canvas.Width = _splitContainer2.Panel1.Width;
+            _canvas.Height = (int)((float)_canvas.Width * SCREEN_SCALE);
         }
     }
 }

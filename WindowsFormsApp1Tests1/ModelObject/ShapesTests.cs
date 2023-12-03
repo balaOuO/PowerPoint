@@ -127,22 +127,22 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestAddShape1()
         {
-            string testPointString = "(800,600)";
+            string testPointString = "(1600,900)";
             Shape shape;
 
-            _shapes.AddShape(ShapeName.LINE, 800, 600);
+            _shapes.AddShape(ShapeName.LINE);
             shape = (Shape)_shapesPrivateObject.GetFieldOrProperty("_shape");
             Assert.AreEqual(shape, null);
             Assert.AreEqual(_shapes.ShapeList.Count, 1);
             CheckShape(_shapes.ShapeList[0], ShapeName.LINE, testPointString, testPointString);
 
-            _shapes.AddShape(ShapeName.RECTANGLE, 800, 600);
+            _shapes.AddShape(ShapeName.RECTANGLE);
             shape = (Shape)_shapesPrivateObject.GetFieldOrProperty("_shape");
             Assert.AreEqual(shape, null);
             Assert.AreEqual(_shapes.ShapeList.Count, 2);
             CheckShape(_shapes.ShapeList[1], ShapeName.RECTANGLE, testPointString, testPointString);
 
-            _shapes.AddShape(ShapeName.ELLIPSE, 800, 600);
+            _shapes.AddShape(ShapeName.ELLIPSE);
             shape = (Shape)_shapesPrivateObject.GetFieldOrProperty("_shape");
             Assert.AreEqual(shape, null);
             Assert.AreEqual(_shapes.ShapeList.Count, 3);
@@ -165,31 +165,31 @@ namespace WindowsFormsApp1.Tests
             Initialize();
             CreateShapeList();
             shapeListString = GetShapeListString(_shapes.ShapeList);
-            _shapes.DeleteShape(-1);
+            _shapes.DeleteShapeByIndex(-1);
             Assert.AreEqual(GetShapeListString(_shapes.ShapeList), shapeListString);
 
             Initialize();
             CreateShapeList();
             shapeListString = GetShapeString(_shapes.ShapeList[1]) + GetShapeString(_shapes.ShapeList[2]);
-            _shapes.DeleteShape(0);
+            _shapes.DeleteShapeByIndex(0);
             Assert.AreEqual(GetShapeListString(_shapes.ShapeList), shapeListString);
 
             Initialize();
             CreateShapeList();
             shapeListString = GetShapeString(_shapes.ShapeList[0]) + GetShapeString(_shapes.ShapeList[2]);
-            _shapes.DeleteShape(1);
+            _shapes.DeleteShapeByIndex(1);
             Assert.AreEqual(GetShapeListString(_shapes.ShapeList), shapeListString);
 
             Initialize();
             CreateShapeList();
             shapeListString = GetShapeString(_shapes.ShapeList[0]) + GetShapeString(_shapes.ShapeList[1]);
-            _shapes.DeleteShape(2);
+            _shapes.DeleteShapeByIndex(2);
             Assert.AreEqual(GetShapeListString(_shapes.ShapeList), shapeListString);
 
             Initialize();
             CreateShapeList();
             shapeListString = GetShapeListString(_shapes.ShapeList);
-            _shapes.DeleteShape(3);
+            _shapes.DeleteShapeByIndex(3);
             Assert.AreEqual(GetShapeListString(_shapes.ShapeList), shapeListString);
         }
 
@@ -324,7 +324,7 @@ namespace WindowsFormsApp1.Tests
         public void TestNotifyDataChanged()
         {
             Shapes shapes = new Shapes();
-            shapes.AddShape(ShapeName.LINE, 1, 2);
+            shapes.AddShape(ShapeName.LINE);
             Assert.IsFalse(_isDataChange);
         }
 

@@ -63,7 +63,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestAddShape()
         {
-            _model.AddShape(ShapeName.LINE, 1, 1);
+            _model.AddShape(ShapeName.LINE);
 
             Assert.IsTrue(_mockShapes.IsAddShapeRandom);
             Assert.IsTrue(_isNotifyDataChange);
@@ -71,10 +71,10 @@ namespace WindowsFormsApp1.Tests
 
         //TestDeleteShapeButton
         [TestMethod()]
-        public void TestDeleteShapeButton()
+        public void TestDeleteShapeByIndex()
         {
-            _model.AddShape(ShapeName.LINE, 1, 1);
-            _model.DeleteShapeButton(0);
+            _model.AddShape(ShapeName.LINE);
+            _model.DeleteShapeByIndex(0);
 
             Assert.IsTrue(_mockShapes.IsDeleteShape);
             Assert.IsTrue(_isNotifyDataChange);
@@ -84,8 +84,8 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestDeleteSelect()
         {
-            _model.AddShape(ShapeName.LINE, 1, 1);
-            _mockShapes.SelectShape(new Point(1, 1));
+            _model.AddShape(ShapeName.LINE);
+            _mockShapes.SelectShape(new Point(1600 , 900));
             Assert.IsTrue(_isNotifyDataChange);
             _isNotifyDataChange = false;
 

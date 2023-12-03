@@ -72,20 +72,20 @@ namespace WindowsFormsApp1.Tests
             CheckShape(_model.ShapeList[3], ShapeName.ELLIPSE, "(50,50),(80,80)");
 
             //test2
-            _model.DeleteShapeButton(2);
-            _model.DeleteShapeButton(1);
+            _model.DeleteShapeByIndex(2);
+            _model.DeleteShapeByIndex(1);
 
             Assert.AreEqual(_model.ShapeList.Count, 2);
             CheckShape(_model.ShapeList[0], ShapeName.ELLIPSE, "(10,10),(40,40)");
             CheckShape(_model.ShapeList[1], ShapeName.ELLIPSE, "(50,50),(80,80)");
 
             //test3
-            _model.AddShape(ShapeName.LINE, 50, 10);
-            _model.AddShape(ShapeName.RECTANGLE, 10, 50);
+            _model.AddShape(ShapeName.LINE);
+            _model.AddShape(ShapeName.RECTANGLE);
 
             Assert.AreEqual(_model.ShapeList.Count, 4);
-            CheckShape(_model.ShapeList[2], ShapeName.LINE, "(50,10),(50,10)");
-            CheckShape(_model.ShapeList[3], ShapeName.RECTANGLE, "(10,50),(10,50)");
+            CheckShape(_model.ShapeList[2], ShapeName.LINE, "(1600,900),(1600,900)");
+            CheckShape(_model.ShapeList[3], ShapeName.RECTANGLE, "(1600,900),(1600,900)");
 
             //test4
             _model.ChooseShape(ShapeName.POINTER);
@@ -95,8 +95,8 @@ namespace WindowsFormsApp1.Tests
 
             CheckShape(_model.ShapeList[0], ShapeName.ELLIPSE, "(70,70),(100,100)", true);
             CheckShape(_model.ShapeList[1], ShapeName.ELLIPSE, "(50,50),(80,80)");
-            CheckShape(_model.ShapeList[2], ShapeName.LINE, "(50,10),(50,10)");
-            CheckShape(_model.ShapeList[3], ShapeName.RECTANGLE, "(10,50),(10,50)");
+            CheckShape(_model.ShapeList[2], ShapeName.LINE, "(1600,900),(1600,900)");
+            CheckShape(_model.ShapeList[3], ShapeName.RECTANGLE, "(1600,900),(1600,900)");
 
             //test5
             _model.PressCanvas(new Point(20, 20));
@@ -105,8 +105,8 @@ namespace WindowsFormsApp1.Tests
 
             CheckShape(_model.ShapeList[0], ShapeName.ELLIPSE, "(70,70),(100,100)");
             CheckShape(_model.ShapeList[1], ShapeName.ELLIPSE, "(50,50),(80,80)");
-            CheckShape(_model.ShapeList[2], ShapeName.LINE, "(50,10),(50,10)");
-            CheckShape(_model.ShapeList[3], ShapeName.RECTANGLE, "(10,50),(10,50)");
+            CheckShape(_model.ShapeList[2], ShapeName.LINE, "(1600,900),(1600,900)");
+            CheckShape(_model.ShapeList[3], ShapeName.RECTANGLE, "(1600,900),(1600,900)");
 
             //test6
             _model.PressCanvas(new Point(50, 50));
@@ -115,8 +115,8 @@ namespace WindowsFormsApp1.Tests
 
             Assert.AreEqual(_model.ShapeList.Count, 3);
             CheckShape(_model.ShapeList[0], ShapeName.ELLIPSE, "(70,70),(100,100)");
-            CheckShape(_model.ShapeList[1], ShapeName.LINE, "(50,10),(50,10)");
-            CheckShape(_model.ShapeList[2], ShapeName.RECTANGLE, "(10,50),(10,50)");
+            CheckShape(_model.ShapeList[1], ShapeName.LINE, "(1600,900),(1600,900)");
+            CheckShape(_model.ShapeList[2], ShapeName.RECTANGLE, "(1600,900),(1600,900)");
         }
 
         //TestOverlapModify

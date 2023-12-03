@@ -43,8 +43,8 @@ namespace WindowsFormsApp1
             this._page1 = new System.Windows.Forms.Button();
             this._chooseShape = new System.Windows.Forms.ToolStrip();
             this._pageList = new System.Windows.Forms.Panel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this._splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this._splitContainer2 = new System.Windows.Forms.SplitContainer();
             this._canvas = new WindowsFormsApp1.DoubleBufferedPanel();
             this._chooseShapeLineButton = new WindowsFormsApp1.ToolStripBindAbleButton();
             this._chooseShapeRectangleButton = new WindowsFormsApp1.ToolStripBindAbleButton();
@@ -55,14 +55,14 @@ namespace WindowsFormsApp1
             this._groupBox1.SuspendLayout();
             this._chooseShape.SuspendLayout();
             this._pageList.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._splitContainer1)).BeginInit();
+            this._splitContainer1.Panel1.SuspendLayout();
+            this._splitContainer1.Panel2.SuspendLayout();
+            this._splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._splitContainer2)).BeginInit();
+            this._splitContainer2.Panel1.SuspendLayout();
+            this._splitContainer2.Panel2.SuspendLayout();
+            this._splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // _menuStrip
@@ -221,41 +221,41 @@ namespace WindowsFormsApp1
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 60);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.splitContainer1.Name = "splitContainer1";
+            this._splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._splitContainer1.Location = new System.Drawing.Point(0, 60);
+            this._splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this._splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this._pageList);
+            this._splitContainer1.Panel1.Controls.Add(this._pageList);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1075, 484);
-            this.splitContainer1.SplitterDistance = 132;
-            this.splitContainer1.SplitterWidth = 3;
-            this.splitContainer1.TabIndex = 9;
+            this._splitContainer1.Panel2.Controls.Add(this._splitContainer2);
+            this._splitContainer1.Size = new System.Drawing.Size(1075, 484);
+            this._splitContainer1.SplitterDistance = 132;
+            this._splitContainer1.SplitterWidth = 3;
+            this._splitContainer1.TabIndex = 9;
             // 
             // splitContainer2
             // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.splitContainer2.Name = "splitContainer2";
+            this._splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this._splitContainer2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this._splitContainer2.Name = "splitContainer2";
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this._canvas);
+            this._splitContainer2.Panel1.Controls.Add(this._canvas);
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this._groupBox1);
-            this.splitContainer2.Size = new System.Drawing.Size(940, 484);
-            this.splitContainer2.SplitterDistance = 640;
-            this.splitContainer2.SplitterWidth = 3;
-            this.splitContainer2.TabIndex = 4;
+            this._splitContainer2.Panel2.Controls.Add(this._groupBox1);
+            this._splitContainer2.Size = new System.Drawing.Size(940, 484);
+            this._splitContainer2.SplitterDistance = 640;
+            this._splitContainer2.SplitterWidth = 3;
+            this._splitContainer2.TabIndex = 4;
             // 
             // _canvas
             // 
@@ -315,7 +315,7 @@ namespace WindowsFormsApp1
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1075, 544);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this._splitContainer1);
             this.Controls.Add(this._chooseShape);
             this.Controls.Add(this._menuStrip);
             this.MainMenuStrip = this._menuStrip;
@@ -329,15 +329,15 @@ namespace WindowsFormsApp1
             this._chooseShape.ResumeLayout(false);
             this._chooseShape.PerformLayout();
             this._pageList.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            this.splitContainer2.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
+            this._splitContainer1.Panel1.ResumeLayout(false);
+            this._splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._splitContainer1)).EndInit();
+            this._splitContainer1.ResumeLayout(false);
+            this._splitContainer2.Panel1.ResumeLayout(false);
+            this._splitContainer2.Panel2.ResumeLayout(false);
+            this._splitContainer2.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._splitContainer2)).EndInit();
+            this._splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -363,7 +363,7 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Panel _pageList;
         private DoubleBufferedPanel _canvas;
         private ToolStripBindAbleButton _chooseShapePointerButton;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.SplitContainer _splitContainer1;
+        private System.Windows.Forms.SplitContainer _splitContainer2;
     }
 }

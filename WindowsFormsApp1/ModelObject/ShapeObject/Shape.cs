@@ -25,7 +25,7 @@ namespace WindowsFormsApp1
         protected Point _xBigPoint;
         protected Point _ySmallPoint;
         protected Point _yBigPoint;
-        private const float SELECT_POINT_SIZE = 8;
+        public const float SELECT_POINT_SIZE = 20;
         private const float TWO = 2;
 
         public Point StartPoint

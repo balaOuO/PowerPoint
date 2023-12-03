@@ -100,18 +100,18 @@ namespace WindowsFormsApp1Tests1
         }
 
         //AddShapeRandom
-        public override void AddShape(string shapeType, int screenWidth, int screenHeight)
+        public override void AddShape(string shapeType)
         {
             IsAddShapeRandom = true;
             _factory = new Factory(new MockRandom());
-            base.AddShape(shapeType, screenWidth, screenHeight);
+            base.AddShape(shapeType);
         }
 
         //DeleteShape
-        public override void DeleteShape(int index)
+        public override void DeleteShapeByIndex(int index)
         {
             IsDeleteShape = true;
-            base.DeleteShape(index);
+            base.DeleteShapeByIndex(index);
         }
 
         //DeleteSelectShape

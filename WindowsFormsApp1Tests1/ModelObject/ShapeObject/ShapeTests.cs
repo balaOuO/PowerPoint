@@ -251,28 +251,28 @@ namespace WindowsFormsApp1.Tests
             _shape.ReferPart(_testPoint2);
             Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
 
-            _shape.ReferPart(new Point(_testPoint2.X + 4, _testPoint2.Y));
+            _shape.ReferPart(new Point(_testPoint2.X + (Shape.SELECT_POINT_SIZE / 2), _testPoint2.Y));
             Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
 
-            _shape.ReferPart(new Point(_testPoint2.X + 5, _testPoint2.Y));
+            _shape.ReferPart(new Point(_testPoint2.X + (Shape.SELECT_POINT_SIZE / 2 + 1), _testPoint2.Y));
             Assert.AreEqual(_referPart, ShapePart.ELSE);
 
-            _shape.ReferPart(new Point(_testPoint2.X - 4, _testPoint2.Y));
+            _shape.ReferPart(new Point(_testPoint2.X - (Shape.SELECT_POINT_SIZE / 2), _testPoint2.Y));
             Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
 
-            _shape.ReferPart(new Point(_testPoint2.X - 5, _testPoint2.Y));
+            _shape.ReferPart(new Point(_testPoint2.X - (Shape.SELECT_POINT_SIZE / 2 + 1), _testPoint2.Y));
             Assert.AreEqual(_referPart, ShapePart.ELSE);
 
-            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y + 4));
+            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y + (Shape.SELECT_POINT_SIZE / 2)));
             Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
 
-            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y + 5));
+            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y + (Shape.SELECT_POINT_SIZE / 2 + 1)));
             Assert.AreEqual(_referPart, ShapePart.ELSE);
 
-            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y - 4));
+            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y - (Shape.SELECT_POINT_SIZE / 2)));
             Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
 
-            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y - 5));
+            _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y - (Shape.SELECT_POINT_SIZE / 2 + 1)));
             Assert.AreEqual(_referPart, ShapePart.ELSE);
         }
 
