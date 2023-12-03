@@ -11,10 +11,22 @@ namespace WindowsFormsApp1
     {
         Graphics _graphics;
         const int TWO = 2;
-        public WindowsFormsGraphicsAdaptor(Graphics graphics)
+        const int Width = 1600;
+        const int Height = 900;
+        private int _canvasWidth;
+        private int _canvasHeight;
+        public WindowsFormsGraphicsAdaptor(Graphics graphics, int canvasWidth, int canvasHeight) //, int canvasWidth , int canvasHeight
         {
             _graphics = graphics;
+            _canvasWidth = canvasWidth;
+            _canvasHeight = canvasHeight;
         }
+
+        public Point MappingReversePoint(Point point)
+        {
+            return new Point((point.X / Width) * _canvasWidth, (point.Y / Height) * _canvasHeight);
+        }
+
         //clear screen
         public void ClearAll()
         {
@@ -24,50 +36,60 @@ namespace WindowsFormsApp1
         //draw line
         public void DrawLine(Point startPoint , Point endPoint)
         {
+            Point realStartPoint = MappingReversePoint(startPoint);
+            Point realEndPoint = MappingReversePoint(endPoint);
             _graphics.DrawLine(Pens.Black, 
-                (float)startPoint.X, 
-                (float)startPoint.Y, 
-                (float)endPoint.X, 
-                (float)endPoint.Y);
+                (float)realStartPoint.X, 
+                (float)realStartPoint.Y, 
+                (float)realEndPoint.X, 
+                (float)realEndPoint.Y);
         }
 
         //draw rectangle
         public void DrawRectangle(Point upperLeftPoint , Point lowerRightPoint)
         {
+            Point realUpperLeftPoint = MappingReversePoint(upperLeftPoint);
+            Point realLowerRightPoint = MappingReversePoint(lowerRightPoint);
+
             _graphics.DrawRectangle(
                 Pens.Black, 
-                (float)upperLeftPoint.X, 
-                (float)upperLeftPoint.Y, 
-                (float)(lowerRightPoint.X - upperLeftPoint.X), 
-                (float)(lowerRightPoint.Y - upperLeftPoint.Y)
+                (float)realUpperLeftPoint.X, 
+                (float)realUpperLeftPoint.Y, 
+                (float)(realLowerRightPoint.X - realUpperLeftPoint.X), 
+                (float)(realLowerRightPoint.Y - realUpperLeftPoint.Y)
                 );
         }
 
         //draw ellipse
         public void DrawEllipse(Point startPoint , Point endPoint)
         {
+            Point realStartPoint = MappingReversePoint(startPoint);
+            Point realEndPoint = MappingReversePoint(endPoint);
             _graphics.DrawEllipse(Pens.Black, 
-                (float)startPoint.X, 
-                (float)startPoint.Y, 
-                (float)(endPoint.X - startPoint.X), 
-                (float)(endPoint.Y - startPoint.Y)
+                (float)realStartPoint.X, 
+                (float)realStartPoint.Y, 
+                (float)(realEndPoint.X - realStartPoint.X), 
+                (float)(realEndPoint.Y - realStartPoint.Y)
                 );
         }
 
         //draw select point
         public void DrawSelectPoint(Point upperLeftPoint , Point lowerRightPoint , float selectPointSize)
         {
-            _graphics.DrawEllipse(Pens.Blue, (float)upperLeftPoint.X - selectPointSize / TWO, (float)upperLeftPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
-            _graphics.DrawEllipse(Pens.Blue, (float)upperLeftPoint.X - selectPointSize / TWO, (float)lowerRightPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
-            _graphics.DrawEllipse(Pens.Blue, (float)lowerRightPoint.X - selectPointSize / TWO, (float)upperLeftPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
-            _graphics.DrawEllipse(Pens.Blue, (float)lowerRightPoint.X - selectPointSize / TWO, (float)lowerRightPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
+            Point realUpperLeftPoint = MappingReversePoint(upperLeftPoint);
+            Point realLowerRightPoint = MappingReversePoint(lowerRightPoint);
 
-            _graphics.DrawEllipse(Pens.Blue, (float)(upperLeftPoint.X + lowerRightPoint.X) / TWO - selectPointSize / TWO, (float)upperLeftPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
-            _graphics.DrawEllipse(Pens.Blue, (float)(upperLeftPoint.X + lowerRightPoint.X) / TWO - selectPointSize / TWO, (float)lowerRightPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
-            _graphics.DrawEllipse(Pens.Blue, (float)upperLeftPoint.X - selectPointSize / TWO, (float)(upperLeftPoint.Y + lowerRightPoint.Y) / TWO - selectPointSize / TWO, selectPointSize, selectPointSize);
-            _graphics.DrawEllipse(Pens.Blue, (float)lowerRightPoint.X - selectPointSize / TWO, (float)(upperLeftPoint.Y + lowerRightPoint.Y) / TWO - selectPointSize / TWO, selectPointSize, selectPointSize);
+            _graphics.DrawEllipse(Pens.Blue, (float)realUpperLeftPoint.X - selectPointSize / TWO, (float)realUpperLeftPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
+            _graphics.DrawEllipse(Pens.Blue, (float)realUpperLeftPoint.X - selectPointSize / TWO, (float)realLowerRightPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
+            _graphics.DrawEllipse(Pens.Blue, (float)realLowerRightPoint.X - selectPointSize / TWO, (float)realUpperLeftPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
+            _graphics.DrawEllipse(Pens.Blue, (float)realLowerRightPoint.X - selectPointSize / TWO, (float)realLowerRightPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
 
-            _graphics.DrawRectangle(Pens.BlueViolet, (float)upperLeftPoint.X, (float)upperLeftPoint.Y, (float)(lowerRightPoint.X - upperLeftPoint.X), (float)(lowerRightPoint.Y - upperLeftPoint.Y));
+            _graphics.DrawEllipse(Pens.Blue, (float)(realUpperLeftPoint.X + realLowerRightPoint.X) / TWO - selectPointSize / TWO, (float)realUpperLeftPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
+            _graphics.DrawEllipse(Pens.Blue, (float)(realUpperLeftPoint.X + realLowerRightPoint.X) / TWO - selectPointSize / TWO, (float)realLowerRightPoint.Y - selectPointSize / TWO, selectPointSize, selectPointSize);
+            _graphics.DrawEllipse(Pens.Blue, (float)realUpperLeftPoint.X - selectPointSize / TWO, (float)(realUpperLeftPoint.Y + realLowerRightPoint.Y) / TWO - selectPointSize / TWO, selectPointSize, selectPointSize);
+            _graphics.DrawEllipse(Pens.Blue, (float)realLowerRightPoint.X - selectPointSize / TWO, (float)(realUpperLeftPoint.Y + realLowerRightPoint.Y) / TWO - selectPointSize / TWO, selectPointSize, selectPointSize);
+
+            _graphics.DrawRectangle(Pens.BlueViolet, (float)realUpperLeftPoint.X, (float)realUpperLeftPoint.Y, (float)(realLowerRightPoint.X - realUpperLeftPoint.X), (float)(realLowerRightPoint.Y - realUpperLeftPoint.Y));
         }
     }
 }

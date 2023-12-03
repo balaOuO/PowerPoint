@@ -44,9 +44,9 @@ namespace WindowsFormsApp1
         }
 
         //add shape random
-        public void AddShape(string shapeType , int screenWidth , int screenHeight)
+        public void AddShape(string shapeType)
         {
-            _shapes.AddShape(shapeType , screenWidth, screenHeight);
+            _shapes.AddShape(shapeType);
         }
 
         //delete shape

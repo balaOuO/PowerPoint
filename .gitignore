@@ -2,4 +2,6 @@ BadSmell.smell
 WindowsFormsApp1/StyleCop.Cache
 WindowsFormsApp1/bin/
 WindowsFormsApp1/obj/
+WindowsFormsApp1Tests1/bin/
+WindowsFormsApp1Tests1/obj/
 *.doc

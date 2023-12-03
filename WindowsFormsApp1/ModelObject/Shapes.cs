@@ -25,6 +25,9 @@ namespace WindowsFormsApp1
         private Action<string> _updateInfo;
         private Action<Point> _referSelectShape;
 
+        const int ScreenHeight = 900;
+        const int ScreenWidth = 1600;
+
         public BindingList<Shape> ShapeList
         {
             get
@@ -42,9 +45,9 @@ namespace WindowsFormsApp1
         }
 
         //add shape random
-        public virtual void AddShape(string shapeType , int screenWidth, int screenHeight)
+        public virtual void AddShape(string shapeType)
         {
-            AddShape(shapeType, _factory.CreateRandomPoint(screenWidth, screenHeight), _factory.CreateRandomPoint(screenWidth, screenHeight));
+            AddShape(shapeType, _factory.CreateRandomPoint(ScreenWidth, ScreenHeight), _factory.CreateRandomPoint(ScreenWidth, ScreenHeight));
             AddShapeToList();
         }
 

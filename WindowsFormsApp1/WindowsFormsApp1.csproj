@@ -79,7 +79,7 @@
     </Compile>
     <Compile Include="View\WindowsFormsGraphicsAdaptor.cs" />
     <Compile Include="View\ButtonState.cs" />
-    <Compile Include="View\WindowsFormsPreviewGraphicsAdopter.cs" />
+    <Compile Include="View\WindowsFormsPreviewGraphicsAdaptor.cs" />
     <EmbeddedResource Include="View\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
