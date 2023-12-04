@@ -73,7 +73,7 @@ namespace WindowsFormsApp1
             this._menuStrip.Location = new System.Drawing.Point(0, 0);
             this._menuStrip.Name = "_menuStrip";
             this._menuStrip.Padding = new System.Windows.Forms.Padding(5, 1, 0, 1);
-            this._menuStrip.Size = new System.Drawing.Size(1075, 24);
+            this._menuStrip.Size = new System.Drawing.Size(1081, 24);
             this._menuStrip.TabIndex = 0;
             this._menuStrip.Text = "menuStrip1";
             // 
@@ -109,7 +109,7 @@ namespace WindowsFormsApp1
             this._shapeList.RowHeadersVisible = false;
             this._shapeList.RowHeadersWidth = 51;
             this._shapeList.RowTemplate.Height = 27;
-            this._shapeList.Size = new System.Drawing.Size(283, 407);
+            this._shapeList.Size = new System.Drawing.Size(366, 429);
             this._shapeList.TabIndex = 2;
             this._shapeList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShapeListCellContentClick);
             // 
@@ -154,7 +154,7 @@ namespace WindowsFormsApp1
             this._groupBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this._groupBox1.Name = "_groupBox1";
             this._groupBox1.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this._groupBox1.Size = new System.Drawing.Size(297, 484);
+            this._groupBox1.Size = new System.Drawing.Size(380, 506);
             this._groupBox1.TabIndex = 3;
             this._groupBox1.TabStop = false;
             this._groupBox1.Text = "資料顯示";
@@ -190,7 +190,7 @@ namespace WindowsFormsApp1
             | System.Windows.Forms.AnchorStyles.Right)));
             this._page1.Location = new System.Drawing.Point(5, 3);
             this._page1.Name = "_page1";
-            this._page1.Size = new System.Drawing.Size(119, 93);
+            this._page1.Size = new System.Drawing.Size(175, 93);
             this._page1.TabIndex = 5;
             this._page1.UseVisualStyleBackColor = true;
             // 
@@ -204,7 +204,7 @@ namespace WindowsFormsApp1
             this._chooseShapePointerButton});
             this._chooseShape.Location = new System.Drawing.Point(0, 24);
             this._chooseShape.Name = "_chooseShape";
-            this._chooseShape.Size = new System.Drawing.Size(1075, 36);
+            this._chooseShape.Size = new System.Drawing.Size(1081, 36);
             this._chooseShape.TabIndex = 6;
             this._chooseShape.Text = "toolStrip1";
             // 
@@ -216,44 +216,47 @@ namespace WindowsFormsApp1
             this._pageList.Location = new System.Drawing.Point(0, 0);
             this._pageList.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this._pageList.Name = "_pageList";
-            this._pageList.Size = new System.Drawing.Size(132, 484);
+            this._pageList.Size = new System.Drawing.Size(188, 506);
             this._pageList.TabIndex = 8;
             // 
-            // splitContainer1
+            // _splitContainer1
             // 
             this._splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this._splitContainer1.Location = new System.Drawing.Point(0, 60);
             this._splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this._splitContainer1.Name = "splitContainer1";
+            this._splitContainer1.Name = "_splitContainer1";
             // 
-            // splitContainer1.Panel1
+            // _splitContainer1.Panel1
             // 
             this._splitContainer1.Panel1.Controls.Add(this._pageList);
             // 
-            // splitContainer1.Panel2
+            // _splitContainer1.Panel2
             // 
             this._splitContainer1.Panel2.Controls.Add(this._splitContainer2);
-            this._splitContainer1.Size = new System.Drawing.Size(1075, 484);
-            this._splitContainer1.SplitterDistance = 132;
+            this._splitContainer1.Size = new System.Drawing.Size(1081, 506);
+            this._splitContainer1.SplitterDistance = 188;
             this._splitContainer1.SplitterWidth = 3;
             this._splitContainer1.TabIndex = 9;
             // 
-            // splitContainer2
+            // _splitContainer2
             // 
             this._splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this._splitContainer2.Location = new System.Drawing.Point(0, 0);
             this._splitContainer2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this._splitContainer2.Name = "splitContainer2";
+            this._splitContainer2.Name = "_splitContainer2";
             // 
-            // splitContainer2.Panel1
+            // _splitContainer2.Panel1
             // 
+            this._splitContainer2.Panel1.AutoScroll = true;
             this._splitContainer2.Panel1.Controls.Add(this._canvas);
             // 
-            // splitContainer2.Panel2
+            // _splitContainer2.Panel2
             // 
             this._splitContainer2.Panel2.Controls.Add(this._groupBox1);
-            this._splitContainer2.Size = new System.Drawing.Size(940, 484);
-            this._splitContainer2.SplitterDistance = 640;
+            this._splitContainer2.Size = new System.Drawing.Size(890, 506);
+            this._splitContainer2.SplitterDistance = 507;
             this._splitContainer2.SplitterWidth = 3;
             this._splitContainer2.TabIndex = 4;
             // 
@@ -264,7 +267,7 @@ namespace WindowsFormsApp1
             this._canvas.Location = new System.Drawing.Point(0, 0);
             this._canvas.Margin = new System.Windows.Forms.Padding(0);
             this._canvas.Name = "_canvas";
-            this._canvas.Size = new System.Drawing.Size(640, 393);
+            this._canvas.Size = new System.Drawing.Size(507, 331);
             this._canvas.TabIndex = 7;
             // 
             // _chooseShapeLineButton
@@ -314,7 +317,7 @@ namespace WindowsFormsApp1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1075, 544);
+            this.ClientSize = new System.Drawing.Size(1081, 566);
             this.Controls.Add(this._splitContainer1);
             this.Controls.Add(this._chooseShape);
             this.Controls.Add(this._menuStrip);
