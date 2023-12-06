@@ -165,6 +165,12 @@ namespace WindowsFormsApp1.Tests
             Initialize();
             CreateShapeList();
             shapeListString = GetShapeListString(_shapes.ShapeList);
+            _shapes.DeleteShapeByIndex(-2);
+            Assert.AreEqual(GetShapeListString(_shapes.ShapeList), shapeListString);
+
+            Initialize();
+            CreateShapeList();
+            shapeListString = GetShapeString(_shapes.ShapeList[0]) + GetShapeString(_shapes.ShapeList[1]);
             _shapes.DeleteShapeByIndex(-1);
             Assert.AreEqual(GetShapeListString(_shapes.ShapeList), shapeListString);
 

@@ -12,6 +12,8 @@ namespace WindowsFormsApp1.ModelObject.State
         private bool _isPress = false;
         private string _shape = ShapeName.RECTANGLE;
         private const string STATE = "DrawingState";
+        private Point _startPoint;
+        private Point _endPoint;
         public DrawingState(Model model)
         {
             _model = model;
@@ -47,16 +49,17 @@ namespace WindowsFormsApp1.ModelObject.State
             {
                 _isPress = true;
                 _model.Shapes.AddShape(_shape, pointer, pointer);
+                _startPoint = pointer;
             }            
         }
 
         //release method
-        public void Release()
+        public void Release(Point pointer)
         {
             if (_isPress)
             {
                 _isPress = false;
-                _model.Shapes.AddShapeToList();
+                _model.CommandManager.Execute(new AddShapeCommand(_model, _shape, _startPoint, pointer));
                 _model.NotifyDrawingFinish();
             }
         }

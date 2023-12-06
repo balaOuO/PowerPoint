@@ -64,7 +64,7 @@ namespace WindowsFormsApp1
         //release canvas
         public void ReleaseCanvas(Point pointer)
         {
-            _canvasState.Release();
+            _canvasState.Release(pointer);
         }
 
         //notify drawing finish

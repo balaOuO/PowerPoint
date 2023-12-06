@@ -53,12 +53,18 @@ namespace WindowsFormsApp1
         public void InitializeDataBinding()
         {
             const string CHECK = "Checked";
+            const string ENABLED = "Enabled";
             const string STATE = "State";
+            const string IS_UNDO_ENABLED = "IsUndoEnabled";
+            const string IS_REDO_ENABLE = "IsRedoEnabled";
             _chooseShapeLineButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.LINE], STATE);
             _chooseShapeRectangleButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.RECTANGLE], STATE);
             _chooseShapeEllipseButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.ELLIPSE], STATE);
             _chooseShapePointerButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.POINTER], STATE);
-            
+            _undoButton.DataBindings.Add(ENABLED , _model.CommandManager, IS_UNDO_ENABLED);
+            _redoButton.DataBindings.Add(ENABLED, _model.CommandManager, IS_REDO_ENABLE);
+
+
             _shapeList.DataSource = _model.ShapeList;
         }
 
@@ -185,6 +191,18 @@ namespace WindowsFormsApp1
         {
             _canvas.Width = _splitContainer2.Panel1.Width;
             _canvas.Height = (int)((float)_canvas.Width * SCREEN_SCALE);
+        }
+
+        //ClickUndoButton
+        private void ClickUndoButton(object sender, EventArgs e)
+        {
+            _model.Undo();
+        }
+
+        //ClickRedoButton
+        private void ClickRedoButton(object sender, EventArgs e)
+        {
+            _model.Redo();
         }
     }
 }

@@ -63,14 +63,18 @@ namespace WindowsFormsApp1
         //delete shape
         public virtual void DeleteShapeByIndex(int index)
         {
-            if (index < _shapeList.Count && index >= 0)
+            if (index == -1)
+            {
+                _shapeList.RemoveAt(_shapeList.Count - 1);
+            }
+            else if (index < _shapeList.Count && index >= 0)
             {
                 _shapeList.RemoveAt(index);
                 ClearSelect();
-                NotifyDataChanged();
                 if (_referOn != null)
                     _referOn(ShapePart.ELSE);
             }
+            NotifyDataChanged();
         }
 
         //delete shape

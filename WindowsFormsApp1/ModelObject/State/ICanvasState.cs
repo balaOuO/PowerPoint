@@ -15,7 +15,7 @@ namespace WindowsFormsApp1.ModelObject.State
         void Move(Point pointer);
 
         //release method
-        void Release();
+        void Release(Point pointer);
 
         //GetStateName
         string GetStateName();

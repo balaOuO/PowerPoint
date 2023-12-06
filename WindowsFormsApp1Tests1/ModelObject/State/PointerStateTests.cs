@@ -128,12 +128,12 @@ namespace WindowsFormsApp1.ModelObject.State.Tests
         [TestMethod()]
         public void TestRelease()
         {
-            _canvasState.Release();
+            _canvasState.Release(new Point(0, 0));
             Assert.IsFalse((bool)_canvasStatePrivateObject.GetFieldOrProperty("_isPress"));
 
             Initialize();
             _canvasState.Press(new Point(30, 30));
-            _canvasState.Release();
+            _canvasState.Release(new Point(30, 30));
             Assert.IsFalse((bool)_canvasStatePrivateObject.GetFieldOrProperty("_isPress"));
             Assert.IsTrue(_mockShapes.IsUpdateInfo);
             _canvasState.Move(new Point(1, 1));

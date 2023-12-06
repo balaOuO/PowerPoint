@@ -53,7 +53,7 @@ namespace WindowsFormsApp1.ModelObject.State
         }
 
         //release method
-        public void Release()
+        public void Release(Point pointer)
         {
             if (_isPress)
             {

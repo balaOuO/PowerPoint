@@ -108,7 +108,7 @@ namespace WindowsFormsApp1.ModelObject.State.Tests
         [TestMethod()]
         public void TestRelease()
         {
-            _canvasState.Release();
+            _canvasState.Release(new Point(0 , 0));
             Assert.IsFalse(_isNotifyDataChange);
             Assert.IsFalse(_mockShapes.IsAddShape);
             Assert.IsFalse(_isDrawingFinish);
@@ -118,7 +118,7 @@ namespace WindowsFormsApp1.ModelObject.State.Tests
             _canvasState.Press(new Point(4, 5));
             _canvasState.Move(new Point(40, 50));
             _isNotifyDataChange = false;
-            _canvasState.Release();
+            _canvasState.Release(new Point(40, 50));
             Assert.IsTrue(_isNotifyDataChange);
             Assert.IsTrue(_mockShapes.IsAddShapeToList);
             Assert.IsTrue(_isDrawingFinish);
