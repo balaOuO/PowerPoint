@@ -123,32 +123,6 @@ namespace WindowsFormsApp1.Tests
             Assert.AreEqual(_shapes.ShapeList.Count, 0);
         }
 
-        //TestAddShape1
-        [TestMethod()]
-        public void TestAddShape1()
-        {
-            string testPointString = "(1600,900)";
-            Shape shape;
-
-            _shapes.AddShape(ShapeName.LINE);
-            shape = (Shape)_shapesPrivateObject.GetFieldOrProperty("_shape");
-            Assert.AreEqual(shape, null);
-            Assert.AreEqual(_shapes.ShapeList.Count, 1);
-            CheckShape(_shapes.ShapeList[0], ShapeName.LINE, testPointString, testPointString);
-
-            _shapes.AddShape(ShapeName.RECTANGLE);
-            shape = (Shape)_shapesPrivateObject.GetFieldOrProperty("_shape");
-            Assert.AreEqual(shape, null);
-            Assert.AreEqual(_shapes.ShapeList.Count, 2);
-            CheckShape(_shapes.ShapeList[1], ShapeName.RECTANGLE, testPointString, testPointString);
-
-            _shapes.AddShape(ShapeName.ELLIPSE);
-            shape = (Shape)_shapesPrivateObject.GetFieldOrProperty("_shape");
-            Assert.AreEqual(shape, null);
-            Assert.AreEqual(_shapes.ShapeList.Count, 3);
-            CheckShape(_shapes.ShapeList[2], ShapeName.ELLIPSE, testPointString, testPointString);
-        }
-
         //TestAddShapeToList
         [TestMethod()]
         public void TestAddShapeToList()
@@ -230,22 +204,6 @@ namespace WindowsFormsApp1.Tests
             CheckShape(_shapes.ShapeList[1], ShapeName.RECTANGLE, _testPoint2String, _testPoint1String, false);
             _isDataChange = true;
             CheckShape(_shapes.ShapeList[2], ShapeName.ELLIPSE, _testPoint1String, _testPoint2String, false);
-        }
-
-        //TestDeleteSelectShape
-        [TestMethod()]
-        public void TestDeleteSelectShape()
-        {
-            string shapeListString;
-            CreateShapeList();
-            shapeListString = GetShapeString(_shapes.ShapeList[0]) + GetShapeString(_shapes.ShapeList[1]);
-            Assert.AreEqual(_shapes.ShapeList.Count, 3);
-
-            _shapes.SelectShape(new Point(15, 15));
-            Assert.IsTrue(_shapes.ShapeList[2].IsSelect);
-
-            _shapes.DeleteSelectShape();
-            Assert.AreEqual(GetShapeListString(_shapes.ShapeList), shapeListString);
         }
 
         //TestDraw
@@ -330,7 +288,8 @@ namespace WindowsFormsApp1.Tests
         public void TestNotifyDataChanged()
         {
             Shapes shapes = new Shapes();
-            shapes.AddShape(ShapeName.LINE);
+            shapes.AddShape(ShapeName.LINE , new Point(1,1) , new Point(1,1));
+            shapes.AddShapeToList();
             Assert.IsFalse(_isDataChange);
         }
 

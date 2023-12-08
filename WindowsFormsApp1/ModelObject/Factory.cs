@@ -29,11 +29,5 @@ namespace WindowsFormsApp1
             }
             return null;
         }
-
-        //give random point
-        public Point CreateRandomPoint(int screenWidth , int screenHeight)
-        {
-            return new Point(_random.Next(screenWidth), _random.Next(screenHeight));
-        }
     }
 }

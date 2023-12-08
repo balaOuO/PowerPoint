@@ -48,8 +48,10 @@
   <ItemGroup>
     <Compile Include="ModelObject\Command\AddShapeCommand.cs" />
     <Compile Include="ModelObject\Command\CommandManager.cs" />
+    <Compile Include="ModelObject\Command\DeleteShapeByIndexCommand.cs" />
     <Compile Include="ModelObject\Command\ICommand.cs" />
     <Compile Include="ModelObject\Model.Command.cs" />
+    <Compile Include="ModelObject\PointFactory.cs" />
     <Compile Include="ModelObject\ScreenSize.cs" />
     <Compile Include="ModelObject\ShapeObject\Shape.Method.cs" />
     <Compile Include="ModelObject\ShapePart.cs" />

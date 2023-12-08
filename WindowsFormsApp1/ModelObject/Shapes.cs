@@ -33,6 +33,18 @@ namespace WindowsFormsApp1
             }
         }
 
+        public int GetSelectedShapeIndex()
+        {
+            for (int i = 0; i < _shapeList.Count; i++)
+            {
+                if (_shapeList[i].IsSelect)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
         //add shape method
         public virtual void AddShape(string shapeType, Point upperLeftPoint, Point lowerRightPoint)
         {
@@ -41,21 +53,23 @@ namespace WindowsFormsApp1
             NotifyDataChanged();
         }
 
-        //add shape random
-        public virtual void AddShape(string shapeType)
-        {
-            AddShape(shapeType, _factory.CreateRandomPoint(ScreenSize.WIDTH, ScreenSize.HEIGHT), _factory.CreateRandomPoint(ScreenSize.WIDTH, ScreenSize.HEIGHT));
-            AddShapeToList();
-        }
-
         //add shape in shape list
         public virtual void AddShapeToList()
         {
             if (_referOn != null)
-            {
                 _shape._referToThePart += _referOn.Invoke;
-            }
             _shapeList.Add(_shape);
+            _shape = null;
+            NotifyDataChanged();
+        }
+
+        public virtual void InsertShapeToList(string shapeType , Point startPoint , Point endPoint , int index)
+        {
+            _shape = Factory.CreateShapes(shapeType);
+            _shape.SetPoint(startPoint, endPoint);
+            if (_referOn != null)
+                _shape._referToThePart += _referOn.Invoke;
+            _shapeList.Insert(index, _shape);
             _shape = null;
             NotifyDataChanged();
         }
@@ -70,23 +84,10 @@ namespace WindowsFormsApp1
             else if (index < _shapeList.Count && index >= 0)
             {
                 _shapeList.RemoveAt(index);
-                ClearSelect();
                 if (_referOn != null)
                     _referOn(ShapePart.ELSE);
             }
             NotifyDataChanged();
-        }
-
-        //delete shape
-        public virtual void DeleteSelectShape()
-        {
-            for (int i = 0; i < _shapeList.Count; i++)
-            {
-                if (_shapeList[i].IsSelect == true)
-                {                    
-                    DeleteShapeByIndex(i);
-                }
-            }
         }
 
         //draw method

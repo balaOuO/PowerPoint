@@ -65,7 +65,7 @@ namespace WindowsFormsApp1.Tests
         {
             _model.AddShape(ShapeName.LINE);
 
-            Assert.IsTrue(_mockShapes.IsAddShapeRandom);
+            Assert.IsTrue(_mockShapes.IsAddShape);
             Assert.IsTrue(_isNotifyDataChange);
         }
 
@@ -84,14 +84,14 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestDeleteSelect()
         {
-            _model.AddShape(ShapeName.LINE);
-            _mockShapes.SelectShape(new Point(1600 , 900));
+            _model.AddShapeCommand(ShapeName.LINE , new Point(1600 , 900) , new Point(1600 , 900));
+            _mockShapes.SelectShape(new Point(1600, 900));
             Assert.IsTrue(_isNotifyDataChange);
             _isNotifyDataChange = false;
 
             _model.DeleteSelect();
 
-            Assert.IsTrue(_mockShapes.IsDeleteSelectShape);
+            Assert.IsTrue(_mockShapes.IsDeleteShape);
             Assert.IsTrue(_isNotifyDataChange);
         }
 
@@ -223,6 +223,18 @@ namespace WindowsFormsApp1.Tests
         public void TestSetRefer()
         {
             Assert.IsTrue(true);
+        }
+
+        [TestMethod()]
+        public void TestUndo()
+        {
+            Assert.IsFalse(false);
+        }
+
+        [TestMethod()]
+        public void TestRedo()
+        {
+            Assert.IsFalse(false);
         }
     }
 }

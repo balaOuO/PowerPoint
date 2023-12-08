@@ -14,9 +14,7 @@ namespace WindowsFormsApp1Tests1
         {
             IsAddShape = false;
             AddShapeInput = string.Empty;
-            IsAddShapeRandom = false;
             IsDeleteShape = false;
-            IsDeleteSelectShape = false;
             IsDraw = false;
             IsSelectShape = false;
             MoveInput = string.Empty;
@@ -36,17 +34,8 @@ namespace WindowsFormsApp1Tests1
         {
             get; set;
         }
-        public bool IsAddShapeRandom
-        {
-            get; set;
-        }
 
         public bool IsDeleteShape
-        {
-            get; set;
-        }
-
-        public bool IsDeleteSelectShape
         {
             get; set;
         }
@@ -99,26 +88,11 @@ namespace WindowsFormsApp1Tests1
             base.AddShape(shapeType, upperLeftPoint, lowerRightPoint);
         }
 
-        //AddShapeRandom
-        public override void AddShape(string shapeType)
-        {
-            IsAddShapeRandom = true;
-            _factory = new Factory(new MockRandom());
-            base.AddShape(shapeType);
-        }
-
         //DeleteShape
         public override void DeleteShapeByIndex(int index)
         {
             IsDeleteShape = true;
             base.DeleteShapeByIndex(index);
-        }
-
-        //DeleteSelectShape
-        public override void DeleteSelectShape()
-        {
-            IsDeleteSelectShape = true;
-            base.DeleteSelectShape();
         }
 
         //Draw

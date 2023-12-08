@@ -57,13 +57,13 @@ namespace WindowsFormsApp1
             const string STATE = "State";
             const string IS_UNDO_ENABLED = "IsUndoEnabled";
             const string IS_REDO_ENABLE = "IsRedoEnabled";
+
             _chooseShapeLineButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.LINE], STATE);
             _chooseShapeRectangleButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.RECTANGLE], STATE);
             _chooseShapeEllipseButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.ELLIPSE], STATE);
             _chooseShapePointerButton.DataBindings.Add(CHECK, _presentationModel.ChooseShapeButtonState[ShapeName.POINTER], STATE);
             _undoButton.DataBindings.Add(ENABLED , _model.CommandManager, IS_UNDO_ENABLED);
             _redoButton.DataBindings.Add(ENABLED, _model.CommandManager, IS_REDO_ENABLE);
-
 
             _shapeList.DataSource = _model.ShapeList;
         }

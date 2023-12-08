@@ -46,19 +46,20 @@ namespace WindowsFormsApp1
         //add shape random
         public void AddShape(string shapeType)
         {
-            _shapes.AddShape(shapeType);
+            PointFactory pointFactory = new PointFactory();
+            CommandManager.Execute(new AddShapeCommand(this, shapeType , pointFactory.CreatePoint(), pointFactory.CreatePoint()));
         }
 
         //delete shape
         public void DeleteShapeByIndex(int index)
         {
-            _shapes.DeleteShapeByIndex(index);
+            _commandManager.Execute(new DeleteShapeByIndexCommand(this, index));
         }
 
         //delete select
         public void DeleteSelect()
         {
-            _shapes.DeleteSelectShape();
+            _commandManager.Execute(new DeleteShapeByIndexCommand(this, _shapes.GetSelectedShapeIndex()));
         }
 
         //draw method

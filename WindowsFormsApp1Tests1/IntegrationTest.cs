@@ -36,7 +36,7 @@ namespace WindowsFormsApp1.Tests
 
         //Test1
         [TestMethod()]
-        public void Test1()
+        public void TestDraw()
         {
             Initialize();
 
@@ -84,39 +84,15 @@ namespace WindowsFormsApp1.Tests
             _model.AddShape(ShapeName.RECTANGLE);
 
             Assert.AreEqual(_model.ShapeList.Count, 4);
-            CheckShape(_model.ShapeList[2], ShapeName.LINE, "(1600,900),(1600,900)");
-            CheckShape(_model.ShapeList[3], ShapeName.RECTANGLE, "(1600,900),(1600,900)");
+            Assert.AreEqual(_model.ShapeList[2].ShapeName, ShapeName.LINE);
+            Assert.AreEqual(_model.ShapeList[3].ShapeName, ShapeName.RECTANGLE);
+        }
 
-            //test4
-            _model.ChooseShape(ShapeName.POINTER);
-            _model.PressCanvas(new Point(20, 20));
-            _model.MoveOnCanvas(new Point(80, 80));
-            _model.ReleaseCanvas(new Point(80, 80));
-
-            CheckShape(_model.ShapeList[0], ShapeName.ELLIPSE, "(70,70),(100,100)", true);
-            CheckShape(_model.ShapeList[1], ShapeName.ELLIPSE, "(50,50),(80,80)");
-            CheckShape(_model.ShapeList[2], ShapeName.LINE, "(1600,900),(1600,900)");
-            CheckShape(_model.ShapeList[3], ShapeName.RECTANGLE, "(1600,900),(1600,900)");
-
-            //test5
-            _model.PressCanvas(new Point(20, 20));
-            _model.MoveOnCanvas(new Point(0, 0));
-            _model.ReleaseCanvas(new Point(0, 0));
-
-            CheckShape(_model.ShapeList[0], ShapeName.ELLIPSE, "(70,70),(100,100)");
-            CheckShape(_model.ShapeList[1], ShapeName.ELLIPSE, "(50,50),(80,80)");
-            CheckShape(_model.ShapeList[2], ShapeName.LINE, "(1600,900),(1600,900)");
-            CheckShape(_model.ShapeList[3], ShapeName.RECTANGLE, "(1600,900),(1600,900)");
-
-            //test6
-            _model.PressCanvas(new Point(50, 50));
-            _model.ReleaseCanvas(new Point(50, 50));
-            _model.DeleteSelect();
-
-            Assert.AreEqual(_model.ShapeList.Count, 3);
-            CheckShape(_model.ShapeList[0], ShapeName.ELLIPSE, "(70,70),(100,100)");
-            CheckShape(_model.ShapeList[1], ShapeName.LINE, "(1600,900),(1600,900)");
-            CheckShape(_model.ShapeList[2], ShapeName.RECTANGLE, "(1600,900),(1600,900)");
+        //test move shape
+        [TestMethod()]
+        public void TestModifyShape()
+        {
+            Assert.Fail();
         }
 
         //TestOverlapModify

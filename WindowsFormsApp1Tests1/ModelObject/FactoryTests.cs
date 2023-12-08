@@ -33,15 +33,5 @@ namespace WindowsFormsApp1.Tests
             Assert.IsTrue(Factory.CreateShapes(ShapeName.ELLIPSE) is Ellipse);
             Assert.IsTrue(Factory.CreateShapes("阿巴阿巴") == null);
         }
-
-        //TestCreateRandomPoint
-        [TestMethod()]
-        public void TestCreateRandomPoint()
-        {
-            Factory factory = new Factory(new MockRandom());
-            Point point = factory.CreateRandomPoint(10, 20);
-            Assert.AreEqual(point.X, 10);
-            Assert.AreEqual(point.Y, 20);
-        }
     }
 }

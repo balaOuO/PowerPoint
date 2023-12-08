@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    partial class Model
+    public partial class Model
     {
         private CommandManager _commandManager = new CommandManager();
         public CommandManager CommandManager
@@ -40,6 +40,11 @@ namespace WindowsFormsApp1
         public void DeleteShapeCommand(int index = -1)
         {
             _shapes.DeleteShapeByIndex(index);
+        }
+
+        public void InsertShapeToList(string shapeType, Point startPoint , Point endPoint , int index)
+        {
+            _shapes.InsertShapeToList(shapeType, startPoint, endPoint, index);
         }
     }
 }
