@@ -64,6 +64,7 @@
     <Compile Include="ModelObject\Command\AddShapeCommandTests.cs" />
     <Compile Include="ModelObject\Command\CommandManagerTests.cs" />
     <Compile Include="ModelObject\Command\DeleteShapeByIndexCommandTests.cs" />
+    <Compile Include="ModelObject\Command\MoveCommandTests.cs" />
     <Compile Include="ModelObject\FactoryTests.cs" />
     <Compile Include="ModelObject\ModelTests.cs" />
     <Compile Include="ModelObject\PointFactoryTests.cs" />

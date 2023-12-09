@@ -46,5 +46,13 @@ namespace WindowsFormsApp1
         {
             _shapes.InsertShapeToList(shapeType, startPoint, endPoint, index);
         }
+
+        public void MoveShapeByIndexCommand(int index , Point startPoint , Point endPoint)
+        {
+            ShapeList[index].Select(startPoint , startPoint);
+            ShapeList[index].ReferPart(startPoint);
+            ShapeList[index].Move(new Point(endPoint.X - startPoint.X, endPoint.Y - startPoint.Y));
+            NotifyDataChanged();
+        }
     }
 }

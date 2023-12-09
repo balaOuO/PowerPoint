@@ -288,7 +288,7 @@ namespace WindowsFormsApp1.Tests
         public void TestNotifyDataChanged()
         {
             Shapes shapes = new Shapes();
-            shapes.AddShape(ShapeName.LINE , new Point(1,1) , new Point(1,1));
+            shapes.AddShape(ShapeName.LINE, new Point(1, 1), new Point(1, 1));
             shapes.AddShapeToList();
             Assert.IsFalse(_isDataChange);
         }
@@ -332,6 +332,23 @@ namespace WindowsFormsApp1.Tests
         public void ReferSelectedShapeHandler(string referPart)
         {
             _referPart = referPart;
+        }
+
+        //TestGetSelectedShapeIndex
+        [TestMethod()]
+        public void TestGetSelectedShapeIndex()
+        {
+            CreateShapeList();
+            _shapes.SelectShape(new Point(10, 10));
+            Assert.AreEqual(_shapes.GetSelectedShapeIndex(), 2);
+            _shapes.DeleteShapeByIndex(2);
+
+            _shapes.SelectShape(new Point(10, 10));
+            Assert.AreEqual(_shapes.GetSelectedShapeIndex(), 1);
+            _shapes.DeleteShapeByIndex(1);
+
+            _shapes.SelectShape(new Point(10, 10));
+            Assert.AreEqual(_shapes.GetSelectedShapeIndex(), 0);
         }
     }
 }

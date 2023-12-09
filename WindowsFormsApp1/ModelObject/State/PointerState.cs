@@ -9,15 +9,16 @@ namespace WindowsFormsApp1.ModelObject.State
     public class PointerState : ICanvasState
     {
         private Model _model;
+        private Point _point1;
+        private Point _point2;
         private Point _startPoint;
-        private Point _endPoint;
         private bool _isPress = false;
         private const string STATE = "PointerState";
         public PointerState(Model model)
         {
             _model = model;
-            _startPoint = new Point(0, 0);
-            _endPoint = new Point(0, 0);
+            _point1 = new Point(0, 0);
+            _point2 = new Point(0, 0);
         }
 
         //GetStateName
@@ -31,9 +32,9 @@ namespace WindowsFormsApp1.ModelObject.State
         {
             if (_isPress)
             {
-                _endPoint = pointer;
-                _model.Shapes.MoveShape(new Point(_endPoint.X - _startPoint.X, _endPoint.Y - _startPoint.Y));
-                _startPoint = pointer;
+                _point2 = pointer;
+                _model.Shapes.MoveShape(new Point(_point2.X - _point1.X, _point2.Y - _point1.Y));
+                _point1 = pointer;
             }
             else
             {
@@ -48,6 +49,7 @@ namespace WindowsFormsApp1.ModelObject.State
             {
                 _isPress = true;
                 _model.Shapes.SelectShape(pointer);
+                _point1 = pointer;
                 _startPoint = pointer;
             }
         }
@@ -59,6 +61,10 @@ namespace WindowsFormsApp1.ModelObject.State
             {
                 _isPress = false;
                 _model.Shapes.UpdateInfo();
+                if (_startPoint.ToString() != pointer.ToString() && _model.Shapes.GetSelectedShapeIndex() != -1)
+                {
+                    _model.CommandManager.Add(new MoveCommand(_model, _model.Shapes.GetSelectedShapeIndex(), _startPoint, pointer));
+                }
             }
         }
     }

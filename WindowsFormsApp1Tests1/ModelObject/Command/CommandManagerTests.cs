@@ -33,6 +33,29 @@ namespace WindowsFormsApp1.Tests
 
             Assert.AreEqual(((Stack<ICommand>)_commandManagerPrivateObject.GetFieldOrProperty("_undo")).Count, 3);
             Assert.AreEqual(((Stack<ICommand>)_commandManagerPrivateObject.GetFieldOrProperty("_redo")).Count, 0);
+            Assert.AreEqual(_command1.ExecuteTime, 1);
+            Assert.AreEqual(_command2.ExecuteTime, 1);
+            Assert.AreEqual(_command3.ExecuteTime, 1);
+        }
+
+        //TestAdd
+        [TestMethod()]
+        public void TestAdd()
+        {
+            _commandManager = new CommandManager();
+            _command1 = new MockCommand();
+            _command2 = new MockCommand();
+            _command3 = new MockCommand();
+            _commandManager.Add(_command1);
+            _commandManager.Add(_command2);
+            _commandManager.Add(_command3);
+            _commandManagerPrivateObject = new PrivateObject(_commandManager);
+
+            Assert.AreEqual(((Stack<ICommand>)_commandManagerPrivateObject.GetFieldOrProperty("_undo")).Count, 3);
+            Assert.AreEqual(((Stack<ICommand>)_commandManagerPrivateObject.GetFieldOrProperty("_redo")).Count, 0);
+            Assert.AreEqual(_command1.ExecuteTime, 0);
+            Assert.AreEqual(_command2.ExecuteTime, 0);
+            Assert.AreEqual(_command3.ExecuteTime, 0);
         }
 
         //TestUndo

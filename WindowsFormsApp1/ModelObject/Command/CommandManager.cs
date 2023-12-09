@@ -21,6 +21,12 @@ namespace WindowsFormsApp1
         public void Execute(ICommand command)
         {
             command.Execute();
+            Add(command);
+        }
+
+        //Add
+        public void Add(ICommand command)
+        {
             _undo.Push(command);
             _redo.Clear();
             Notify(IS_UNDO_ENABLED);

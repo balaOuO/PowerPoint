@@ -13,7 +13,6 @@ namespace WindowsFormsApp1.ModelObject.State
         private string _shape = ShapeName.RECTANGLE;
         private const string STATE = "DrawingState";
         private Point _startPoint;
-        private Point _endPoint;
         public DrawingState(Model model)
         {
             _model = model;
