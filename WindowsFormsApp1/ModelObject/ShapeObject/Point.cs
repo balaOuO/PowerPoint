@@ -35,7 +35,7 @@ namespace WindowsFormsApp1
         // return point in string
         override public string ToString()
         {
-            return string.Format(FORMAT, X, Y);
+            return string.Format(FORMAT, (int)X, (int)Y);
         }
     }
 }

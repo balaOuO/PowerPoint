@@ -50,7 +50,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestToString()
         {
-            Assert.AreEqual(_point.ToString(), "(1.2,3.456)");
+            Assert.AreEqual(_point.ToString(), "(1,3)");
         }
 
         //TestDistance
