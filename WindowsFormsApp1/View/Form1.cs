@@ -24,9 +24,9 @@ namespace WindowsFormsApp1
 
             _presentationModel = presentationModel;
 
-            _page1.Height = (int)((float)_page1.Width / (float)_canvas.Width * _canvas.Height);
             _canvas.Width = _splitContainer2.Panel1.Width;
             _canvas.Height = (int)((float)_canvas.Width * SCREEN_SCALE);
+            _page1.Height = (int)((float)_page1.Width / (float)_canvas.Width * _canvas.Height);
 
             InitializeEvent();
             InitializeDataBinding();
