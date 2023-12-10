@@ -34,13 +34,10 @@ namespace WindowsFormsApp1.Tests
             Assert.AreEqual(shape.IsSelect, isSelect);
         }
 
-        //Test1
-        [TestMethod()]
-        public void TestDraw()
+        //DrawSomeShape
+        public void DrawSomeShape()
         {
-            Initialize();
-
-            _presentationModel.SetChooseShapeButton(ShapeName.ELLIPSE);            
+            _presentationModel.SetChooseShapeButton(ShapeName.ELLIPSE);
             _model.PressCanvas(new Point(10, 10));
             _model.MoveOnCanvas(new Point(20, 20));
             _model.MoveOnCanvas(new Point(40, 40));
@@ -63,6 +60,13 @@ namespace WindowsFormsApp1.Tests
             _model.MoveOnCanvas(new Point(60, 60));
             _model.MoveOnCanvas(new Point(80, 80));
             _model.ReleaseCanvas(new Point(80, 80));
+        }
+
+        //Test1
+        [TestMethod()]
+        public void TestDraw()
+        {
+            DrawSomeShape();
 
             Assert.AreEqual(_presentationModel.ChooseShapeButtonState[ShapeName.POINTER].State, true);
             Assert.AreEqual(_model.ShapeList.Count, 4);
@@ -86,13 +90,6 @@ namespace WindowsFormsApp1.Tests
             Assert.AreEqual(_model.ShapeList.Count, 4);
             Assert.AreEqual(_model.ShapeList[2].ShapeName, ShapeName.LINE);
             Assert.AreEqual(_model.ShapeList[3].ShapeName, ShapeName.RECTANGLE);
-        }
-
-        //test move shape
-        [TestMethod()]
-        public void TestModifyShape()
-        {
-            Assert.Fail();
         }
 
         //TestOverlapModify

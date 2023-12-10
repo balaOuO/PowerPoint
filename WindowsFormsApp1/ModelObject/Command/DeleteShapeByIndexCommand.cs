@@ -22,11 +22,14 @@ namespace WindowsFormsApp1
             _startdPoint = _model.ShapeList[_index].StartPoint;
             _endPoint = _model.ShapeList[_index].EndPoint;
         }
+
+        //Execute
         public void Execute()
         {
             _model.DeleteShapeCommand(_index);
         }
 
+        //RollBackExecute
         public void RollBackExecute()
         {
             _model.InsertShapeToList(_shapeType, _startdPoint, _endPoint, _index);

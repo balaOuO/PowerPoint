@@ -55,7 +55,7 @@
     <Compile Include="ModelObject\PointFactory.cs" />
     <Compile Include="ModelObject\ScreenSize.cs" />
     <Compile Include="ModelObject\ShapeObject\Shape.Method.cs" />
-    <Compile Include="ModelObject\ShapePart.cs" />
+    <Compile Include="ModelObject\ShapeObject\ShapePart.cs" />
     <Compile Include="ModelObject\IGraphics.cs" />
     <Compile Include="ModelObject\Model.Canvas.cs" />
     <Compile Include="ModelObject\State\ICanvasState.cs" />
@@ -73,7 +73,7 @@
     </Compile>
     <Compile Include="ModelObject\Model.cs" />
     <Compile Include="View\PresentationModel.cs" />
-    <Compile Include="ModelObject\ShapeName.cs" />
+    <Compile Include="ModelObject\ShapeObject\ShapeName.cs" />
     <Compile Include="ModelObject\ShapeObject\Ellipse.cs" />
     <Compile Include="ModelObject\ShapeObject\Point.cs" />
     <Compile Include="Program.cs" />

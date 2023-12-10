@@ -76,7 +76,7 @@ namespace WindowsFormsApp1.Tests
             _model.AddShape(ShapeName.LINE);
             _model.DeleteShapeByIndex(0);
 
-            Assert.IsTrue(_mockShapes.IsDeleteShape);
+            Assert.IsTrue(_mockShapes.IsDeleteShapeByIndex);
             Assert.IsTrue(_isNotifyDataChange);
         }
 
@@ -84,14 +84,14 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestDeleteSelect()
         {
-            _model.AddShapeCommand(ShapeName.LINE , new Point(1600 , 900) , new Point(1600 , 900));
+            _model.AddShapeCommand(ShapeName.LINE, new Point(1600, 900), new Point(1600, 900));
             _mockShapes.SelectShape(new Point(1600, 900));
             Assert.IsTrue(_isNotifyDataChange);
             _isNotifyDataChange = false;
 
             _model.DeleteSelect();
 
-            Assert.IsTrue(_mockShapes.IsDeleteShape);
+            Assert.IsTrue(_mockShapes.IsDeleteShapeByIndex);
             Assert.IsTrue(_isNotifyDataChange);
         }
 
@@ -225,16 +225,67 @@ namespace WindowsFormsApp1.Tests
             Assert.IsTrue(true);
         }
 
+        //TestUndo
         [TestMethod()]
         public void TestUndo()
         {
-            Assert.IsFalse(false);
+            _model.AddShape(ShapeName.LINE);
+            _model.Undo();
+            Assert.AreEqual(_model.ShapeList.Count, 0);
         }
 
+        //TestRedo
         [TestMethod()]
         public void TestRedo()
         {
-            Assert.IsFalse(false);
+            _model.AddShape(ShapeName.LINE);
+            _model.Undo();
+            _model.Redo();
+            Assert.AreEqual(_model.ShapeList.Count, 1);
+            Assert.AreEqual(_model.ShapeList[0].ShapeName, ShapeName.LINE);
+        }
+
+        //TestAddShapeCommand
+        [TestMethod()]
+        public void TestAddShapeCommand()
+        {
+            _model.AddShape(ShapeName.LINE);
+
+            Assert.IsTrue(_mockShapes.IsAddShape);
+            Assert.IsTrue(_mockShapes.IsAddShapeToList);
+            Assert.IsTrue(_isNotifyDataChange);
+        }
+
+        //TestDeleteShapeCommand
+        [TestMethod()]
+        public void TestDeleteShapeCommand()
+        {
+            _model.AddShape(ShapeName.ELLIPSE);
+            _model.DeleteShapeCommand();
+            Assert.AreEqual(_model.ShapeList.Count, 0);
+            Assert.IsTrue(_mockShapes.IsDeleteShapeByIndex);
+            Assert.IsTrue(_isNotifyDataChange);
+        }
+
+        //TestInsertShapeToList
+        [TestMethod()]
+        public void TestInsertShapeToList()
+        {
+            _model.InsertShapeToList(ShapeName.RECTANGLE, new Point(10, 10), new Point(200, 200), 0);
+            Assert.IsTrue(_mockShapes.IsInsertShapeToList);
+            Assert.AreEqual(_model.ShapeList.Count, 1);
+            Assert.AreEqual(_model.ShapeList[0].ShapeName, ShapeName.RECTANGLE);
+            Assert.AreEqual(_model.ShapeList[0].Info, "(10,10),(200,200)");
+        }
+
+        //TestMoveShapeByIndexCommand
+        [TestMethod()]
+        public void TestMoveShapeByIndexCommand()
+        {
+            _model.AddShapeCommand(ShapeName.ELLIPSE, new Point(10, 10), new Point(500, 500));
+            _model.MoveShapeByIndexCommand(0, new Point(10, 10), new Point(100, 100));
+
+            Assert.AreEqual(_model.ShapeList[0].Info , "(100,100),(500,500)");
         }
     }
 }

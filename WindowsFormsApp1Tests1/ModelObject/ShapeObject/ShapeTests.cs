@@ -144,6 +144,26 @@ namespace WindowsFormsApp1.Tests
 
             _shape.Move(new Point(-100, -100));
             Assert.AreEqual(_shape.Info, "(-80,-70),(-70,-60)");
+
+            _shape.SetPoint(new Point(10, 10), new Point(200, 200));
+            _shape.ReferPart(new Point(200, 200));
+            _shape.Move(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(10,10),(210,210)");
+
+            _shape.SetPoint(new Point(10, 10), new Point(200, 200));
+            _shape.ReferPart(new Point(10, 10));
+            _shape.Move(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(20,20),(200,200)");
+
+            _shape.SetPoint(new Point(10, 10), new Point(200, 200));
+            _shape.ReferPart(new Point(10, 200));
+            _shape.Move(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(20,10),(200,210)");
+
+            _shape.SetPoint(new Point(10, 10), new Point(200, 200));
+            _shape.ReferPart(new Point(200, 10));
+            _shape.Move(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(10,20),(210,200)");
         }
 
         //TestMoveLowerRightPoint
@@ -246,6 +266,7 @@ namespace WindowsFormsApp1.Tests
         {
             _shape._referToThePart += ReferTOThePartHandler;
 
+            _testPoint2 = new Point(200, 200);
             _shape.SetPoint(_testPoint1, _testPoint2);
             _shape.Select(_testPoint2, _testPoint2);
             _shape.ReferPart(_testPoint2);
@@ -274,6 +295,15 @@ namespace WindowsFormsApp1.Tests
 
             _shape.ReferPart(new Point(_testPoint2.X, _testPoint2.Y - (Shape.SELECT_POINT_SIZE / 2 + 1)));
             Assert.AreEqual(_referPart, ShapePart.ELSE);
+
+            _shape.ReferPart(new Point(_testPoint1.X, _testPoint1.Y));
+            Assert.AreEqual(_referPart, ShapePart.UPPER_LEFT_POINT);
+
+            _shape.ReferPart(new Point(_testPoint2.X, _testPoint1.Y));
+            Assert.AreEqual(_referPart, ShapePart.UPPER_RIGHT_POINT);
+
+            _shape.ReferPart(new Point(_testPoint1.X, _testPoint2.Y));
+            Assert.AreEqual(_referPart, ShapePart.LOWER_LEFT_POINT);
         }
 
         //ReferTOThePartHandler
@@ -321,6 +351,42 @@ namespace WindowsFormsApp1.Tests
             _shape._referToThePart += ReferTOThePartHandler;
             _shape.NotifyRefer();
             Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
+        }
+
+        //TestModifyLowerRightPoint
+        [TestMethod()]
+        public void TestModifyLowerRightPoint()
+        {
+            _shape.SetPoint(_testPoint1, _testPoint2);
+            _shape.ModifyLowerRightPoint(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(10,10),(30,30)");
+        }
+
+        //TestModifyUpperLeftPoint
+        [TestMethod()]
+        public void TestModifyUpperLeftPoint()
+        {
+            _shape.SetPoint(_testPoint1, _testPoint2);
+            _shape.ModifyUpperLeftPoint(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(20,20),(20,20)");
+        }
+
+        //TestModifyLowerLeftPoint
+        [TestMethod()]
+        public void TestModifyLowerLeftPoint()
+        {
+            _shape.SetPoint(_testPoint1, _testPoint2);
+            _shape.ModifyLowerLeftPoint(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(20,10),(20,30)");
+        }
+
+        //TestModifyUpperRightPoint
+        [TestMethod()]
+        public void TestModifyUpperRightPoint()
+        {
+            _shape.SetPoint(_testPoint1, _testPoint2);
+            _shape.ModifyUpperRightPoint(new Point(10, 10));
+            Assert.AreEqual(_shape.Info, "(10,20),(30,20)");
         }
     }
 }

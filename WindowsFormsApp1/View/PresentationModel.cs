@@ -58,7 +58,12 @@ namespace WindowsFormsApp1
             switch (state)
             {
                 case ShapePart.LOWER_RIGHT_POINT:
+                case ShapePart.UPPER_LEFT_POINT:
                     _pointerCursorState = Cursors.SizeNWSE;
+                    break;
+                case ShapePart.LOWER_LEFT_POINT:
+                case ShapePart.UPPER_RIGHT_POINT:
+                    _pointerCursorState = Cursors.SizeNESW;
                     break;
                 case ShapePart.ELSE:
                     _pointerCursorState = Cursors.Default;

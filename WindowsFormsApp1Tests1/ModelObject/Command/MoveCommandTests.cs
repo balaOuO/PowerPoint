@@ -20,7 +20,7 @@ namespace WindowsFormsApp1.Tests
         public void TestMoveCommand()
         {
             _model = new Model();
-            _command = new MoveCommand(_model, 0, new Point(15, 15), new Point(30, 30));
+            _command = new MoveCommand(_model, 0, new Point(100, 100), new Point(115, 115));
         }
 
         //TestExecute
@@ -37,10 +37,10 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestExecute1()
         {
-            _model.AddShapeCommand(ShapeName.ELLIPSE, new Point(10, 10), new Point(15, 15));
+            _model.AddShapeCommand(ShapeName.ELLIPSE, new Point(10, 10), new Point(100, 100));
             _command.Execute();
             Assert.AreEqual(_model.ShapeList.Count, 1);
-            Assert.AreEqual(_model.ShapeList[0].Info, "(10,10),(30,30)");
+            Assert.AreEqual(_model.ShapeList[0].Info, "(10,10),(115,115)");
         }
 
         //TestRollBackExecute
@@ -58,11 +58,11 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestRollBackExecute1()
         {
-            _model.AddShapeCommand(ShapeName.ELLIPSE, new Point(10, 10), new Point(15, 15));
+            _model.AddShapeCommand(ShapeName.ELLIPSE, new Point(10, 10), new Point(100, 100));
             _command.Execute();
             _command.RollBackExecute();
             Assert.AreEqual(_model.ShapeList.Count, 1);
-            Assert.AreEqual(_model.ShapeList[0].Info, "(10,10),(15,15)");
+            Assert.AreEqual(_model.ShapeList[0].Info, "(10,10),(100,100)");
         }
     }
 }

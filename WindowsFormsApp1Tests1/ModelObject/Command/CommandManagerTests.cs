@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace WindowsFormsApp1.Tests
 {
@@ -16,6 +17,13 @@ namespace WindowsFormsApp1.Tests
         MockCommand _command1;
         MockCommand _command2;
         MockCommand _command3;
+        string _propertyName;
+
+        //NotifyHandler
+        public void NotifyHandler(object nothing, PropertyChangedEventArgs e)
+        {
+            _propertyName = e.PropertyName;
+        }
 
         //TestExecute
         [TestInitialize()]
@@ -23,6 +31,7 @@ namespace WindowsFormsApp1.Tests
         public void TestExecute()
         {
             _commandManager = new CommandManager();
+            _commandManager.PropertyChanged += NotifyHandler;
             _command1 = new MockCommand();
             _command2 = new MockCommand();
             _command3 = new MockCommand();
@@ -98,6 +107,31 @@ namespace WindowsFormsApp1.Tests
             Assert.AreEqual(_command1.RollBackExecuteTime, 1);
             Assert.AreEqual(((Stack<ICommand>)_commandManagerPrivateObject.GetFieldOrProperty("_undo")).Count, 3);
             Assert.AreEqual(((Stack<ICommand>)_commandManagerPrivateObject.GetFieldOrProperty("_redo")).Count, 0);
+        }
+
+        //TestIsRedoEnabled
+        [TestMethod()]
+        public void TestIsRedoEnabled()
+        {
+            _commandManager.Execute(new MockCommand());
+            Assert.IsFalse(_commandManager.IsRedoEnabled);
+
+            _commandManager.Undo();
+            Assert.IsTrue(_commandManager.IsRedoEnabled);
+        }
+
+        //TestIsUndoEnabled
+        [TestMethod()]
+        public void TestIsUndoEnabled()
+        {
+            _commandManager.Execute(new MockCommand());
+            Assert.IsTrue(_commandManager.IsUndoEnabled);
+
+            _commandManager.Undo();
+            _commandManager.Undo();
+            _commandManager.Undo();
+            _commandManager.Undo();
+            Assert.IsFalse(_commandManager.IsUndoEnabled);
         }
     }
 

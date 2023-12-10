@@ -132,7 +132,7 @@ namespace WindowsFormsApp1.Tests
 
         //TestDeleteShape
         [TestMethod()]
-        public void TestDeleteShape()
+        public void TestDeleteShapeByIndex()
         {
             string shapeListString;
 
@@ -183,7 +183,7 @@ namespace WindowsFormsApp1.Tests
             Assert.AreEqual(_shapes.ShapeList.Count, 1);
             CheckShape(_shapes.ShapeList[0], ShapeName.LINE, _testPoint1String, _testPoint2String, true);
 
-            _shapes.SelectShape(new Point(5, 5));
+            _shapes.SelectShape(new Point(-100, -100));
             Assert.AreEqual(_shapes.ShapeList.Count, 1);
             CheckShape(_shapes.ShapeList[0], ShapeName.LINE, _testPoint1String, _testPoint2String, false);
 
@@ -258,7 +258,7 @@ namespace WindowsFormsApp1.Tests
             _isDataChange = true;
             CheckShape(_shapes.ShapeList[1], ShapeName.RECTANGLE, _testPoint2String, _testPoint1String, false);
             _isDataChange = true;
-            CheckShape(_shapes.ShapeList[2], ShapeName.ELLIPSE, "(30,30)", "(40,40)", true);
+            CheckShape(_shapes.ShapeList[2], ShapeName.ELLIPSE, "(10,10)", "(40,40)", true);
 
             _shapes.SelectShape(new Point(40, 40));
             _shapes.MoveShape(new Point(20, 20));
@@ -267,7 +267,7 @@ namespace WindowsFormsApp1.Tests
             _isDataChange = true;
             CheckShape(_shapes.ShapeList[1], ShapeName.RECTANGLE, _testPoint2String, _testPoint1String, false);
             _isDataChange = true;
-            CheckShape(_shapes.ShapeList[2], ShapeName.ELLIPSE, "(30,30)", "(60,60)", true);
+            CheckShape(_shapes.ShapeList[2], ShapeName.ELLIPSE, "(10,10)", "(60,60)", true);
         }
 
         //TestClearSelect
@@ -318,14 +318,20 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestReferSelectedShape()
         {
-            _shapes.AddShape(ShapeName.LINE, _testPoint1, _testPoint2);
+            _shapes.AddShape(ShapeName.LINE, _testPoint1, new Point(200, 200));
             _shapes.AddShapeToList();
             _shapes.SelectShape(_testPoint1);
-            _shapes.ReferSelectedShape(_testPoint2);
+            _shapes.ReferSelectedShape(new Point(200, 200));
             Assert.AreEqual(_referPart, ShapePart.LOWER_RIGHT_POINT);
 
             _shapes.ReferSelectedShape(_testPoint1);
-            Assert.AreEqual(_referPart, ShapePart.ELSE);
+            Assert.AreEqual(_referPart, ShapePart.UPPER_LEFT_POINT);
+
+            _shapes.ReferSelectedShape(new Point(10, 200));
+            Assert.AreEqual(_referPart, ShapePart.LOWER_LEFT_POINT);
+
+            _shapes.ReferSelectedShape(new Point(200, 10));
+            Assert.AreEqual(_referPart, ShapePart.UPPER_RIGHT_POINT);
         }
 
         //ReferSelectedShapeHandler
@@ -349,6 +355,17 @@ namespace WindowsFormsApp1.Tests
 
             _shapes.SelectShape(new Point(10, 10));
             Assert.AreEqual(_shapes.GetSelectedShapeIndex(), 0);
+        }
+
+        //TestInsertShapeToList
+        [TestMethod()]
+        public void TestInsertShapeToList()
+        {
+            CreateShapeList();
+            _shapes.InsertShapeToList(ShapeName.LINE, new Point(10, 10), new Point(200, 200), 1);
+            Assert.AreEqual(_shapes.ShapeList.Count, 4);
+            Assert.AreEqual(_shapes.ShapeList[1].ShapeName, ShapeName.LINE);
+            Assert.AreEqual(_shapes.ShapeList[1].Info, "(10,10),(200,200)");
         }
     }
 }

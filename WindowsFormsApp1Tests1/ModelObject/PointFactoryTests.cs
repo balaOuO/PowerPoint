@@ -21,7 +21,7 @@ namespace WindowsFormsApp1.Tests
 
             privateObject.SetFieldOrProperty("_random", mockrandom);
             string answerPointString = "(1600,900)";
-            Assert.AreEqual(pointFactory.CreatePoint().ToString(), answerPointString);
+            Assert.AreEqual(pointFactory.GetPoint().ToString(), answerPointString);
         }
     }
 }

@@ -74,6 +74,15 @@ namespace WindowsFormsApp1.Tests
 
             _presentationPrivateObject.Invoke("SetCursorState", new object[] { ShapePart.LOWER_RIGHT_POINT });
             Assert.AreEqual(_presentationModel.GetCursors(), Cursors.SizeNWSE);
+
+            _presentationPrivateObject.Invoke("SetCursorState", new object[] { ShapePart.UPPER_LEFT_POINT });
+            Assert.AreEqual(_presentationModel.GetCursors(), Cursors.SizeNWSE);
+
+            _presentationPrivateObject.Invoke("SetCursorState", new object[] { ShapePart.LOWER_LEFT_POINT });
+            Assert.AreEqual(_presentationModel.GetCursors(), Cursors.SizeNESW);
+
+            _presentationPrivateObject.Invoke("SetCursorState", new object[] { ShapePart.UPPER_RIGHT_POINT });
+            Assert.AreEqual(_presentationModel.GetCursors(), Cursors.SizeNESW);
         }
 
         //TestGetCursors

@@ -14,7 +14,7 @@ namespace WindowsFormsApp1Tests1
         {
             IsAddShape = false;
             AddShapeInput = string.Empty;
-            IsDeleteShape = false;
+            IsDeleteShapeByIndex = false;
             IsDraw = false;
             IsSelectShape = false;
             MoveInput = string.Empty;
@@ -23,6 +23,7 @@ namespace WindowsFormsApp1Tests1
             IsAddShapeToList = false;
             IsUpdateInfo = false;
             IsReferSelectedShape = false;
+            IsInsertShapeToList = false;
         }
 
         public bool IsAddShape
@@ -35,7 +36,7 @@ namespace WindowsFormsApp1Tests1
             get; set;
         }
 
-        public bool IsDeleteShape
+        public bool IsDeleteShapeByIndex
         {
             get; set;
         }
@@ -80,6 +81,11 @@ namespace WindowsFormsApp1Tests1
             get; set;
         }
 
+        public bool IsInsertShapeToList
+        {
+            get; set;
+        }
+
         //AddShape
         public override void AddShape(string shapeType, Point upperLeftPoint, Point lowerRightPoint)
         {
@@ -91,7 +97,7 @@ namespace WindowsFormsApp1Tests1
         //DeleteShape
         public override void DeleteShapeByIndex(int index)
         {
-            IsDeleteShape = true;
+            IsDeleteShapeByIndex = true;
             base.DeleteShapeByIndex(index);
         }
 
@@ -143,6 +149,13 @@ namespace WindowsFormsApp1Tests1
         {
             IsReferSelectedShape = true;
             base.ReferSelectedShape(point);
+        }
+
+        //InsertShapeToList
+        public override void InsertShapeToList(string shapeType, Point startPoint, Point endPoint, int index)
+        {
+            IsInsertShapeToList = true;
+            base.InsertShapeToList(shapeType, startPoint, endPoint, index);
         }
     }
 }

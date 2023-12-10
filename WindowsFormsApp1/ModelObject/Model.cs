@@ -47,7 +47,7 @@ namespace WindowsFormsApp1
         public void AddShape(string shapeType)
         {
             PointFactory pointFactory = new PointFactory();
-            CommandManager.Execute(new AddShapeCommand(this, shapeType , pointFactory.CreatePoint(), pointFactory.CreatePoint()));
+            CommandManager.Execute(new AddShapeCommand(this, shapeType , pointFactory.GetPoint(), pointFactory.GetPoint()));
         }
 
         //delete shape

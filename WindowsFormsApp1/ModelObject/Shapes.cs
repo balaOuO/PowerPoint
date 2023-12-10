@@ -33,6 +33,7 @@ namespace WindowsFormsApp1
             }
         }
 
+        //GetSelectedShapeIndex
         public int GetSelectedShapeIndex()
         {
             for (int i = 0; i < _shapeList.Count; i++)
@@ -63,6 +64,7 @@ namespace WindowsFormsApp1
             NotifyDataChanged();
         }
 
+        //InsertShapeToList
         public virtual void InsertShapeToList(string shapeType , Point startPoint , Point endPoint , int index)
         {
             _shape = Factory.CreateShapes(shapeType);

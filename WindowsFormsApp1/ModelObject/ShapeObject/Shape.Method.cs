@@ -48,10 +48,13 @@ namespace WindowsFormsApp1
         public virtual void Move(Point point)
         {
             if (_referArea == ShapePart.LOWER_RIGHT_POINT)
-            {
-                _xBigPoint.X += point.X;
-                _yBigPoint.Y += point.Y;
-            }
+                ModifyLowerRightPoint(point);
+            else if (_referArea == ShapePart.UPPER_LEFT_POINT)
+                ModifyUpperLeftPoint(point);
+            else if (_referArea == ShapePart.LOWER_LEFT_POINT)
+                ModifyLowerLeftPoint(point);
+            else if (_referArea == ShapePart.UPPER_RIGHT_POINT)
+                ModifyUpperRightPoint(point);
             else
             {
                 _startPoint.X += point.X;
@@ -59,6 +62,34 @@ namespace WindowsFormsApp1
                 _endPoint.X += point.X;
                 _endPoint.Y += point.Y;
             }
+        }
+
+        //ModifyLowerRightPoint
+        public void ModifyLowerRightPoint(Point point)
+        {
+            _xBigPoint.X += point.X;
+            _yBigPoint.Y += point.Y;
+        }
+
+        //ModifyUpperLeftPoint
+        public void ModifyUpperLeftPoint(Point point)
+        {
+            _xSmallPoint.X += point.X;
+            _ySmallPoint.Y += point.Y;
+        }
+
+        //ModifyLowerLeftPoint
+        public void ModifyLowerLeftPoint(Point point)
+        {
+            _xSmallPoint.X += point.X;
+            _yBigPoint.Y += point.Y;
+        }
+
+        //ModifyUpperRightPoint
+        public void ModifyUpperRightPoint(Point point)
+        {
+            _xBigPoint.X += point.X;
+            _ySmallPoint.Y += point.Y;
         }
 
         //cancel select
@@ -122,13 +153,15 @@ namespace WindowsFormsApp1
         public void ReferPart(Point point)
         {
             if (Point.CalculateDistance(point, LowerRightPoint) <= SELECT_POINT_SIZE / TWO)
-            {
                 _referArea = ShapePart.LOWER_RIGHT_POINT;
-            }
+            else if (Point.CalculateDistance(point, UpperLeftPoint) <= SELECT_POINT_SIZE / TWO)
+                _referArea = ShapePart.UPPER_LEFT_POINT;
+            else if (Point.CalculateDistance(point, new Point(_xSmallPoint.X, _yBigPoint.Y)) <= SELECT_POINT_SIZE / TWO)
+                _referArea = ShapePart.LOWER_LEFT_POINT;
+            else if (Point.CalculateDistance(point, new Point(_xBigPoint.X, _ySmallPoint.Y)) <= SELECT_POINT_SIZE / TWO)
+                _referArea = ShapePart.UPPER_RIGHT_POINT;
             else
-            {
                 _referArea = ShapePart.ELSE;
-            }
             NotifyRefer();
         }
 

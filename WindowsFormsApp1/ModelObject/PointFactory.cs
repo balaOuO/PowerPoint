@@ -10,7 +10,8 @@ namespace WindowsFormsApp1
     {
         Random _random = new Random();
 
-        public Point CreatePoint()
+        //GetPoint
+        public Point GetPoint()
         {
             return new Point(_random.Next(ScreenSize.WIDTH) , _random.Next(ScreenSize.HEIGHT));
         }

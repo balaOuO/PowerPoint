@@ -42,16 +42,20 @@ namespace WindowsFormsApp1
             _shapes.DeleteShapeByIndex(index);
         }
 
+        //InsertShapeToList
         public void InsertShapeToList(string shapeType, Point startPoint , Point endPoint , int index)
         {
             _shapes.InsertShapeToList(shapeType, startPoint, endPoint, index);
         }
 
+        const string INFO = "Info";
+
+        //MoveShapeByIndexCommand
         public void MoveShapeByIndexCommand(int index , Point startPoint , Point endPoint)
         {
-            ShapeList[index].Select(startPoint , startPoint);
             ShapeList[index].ReferPart(startPoint);
             ShapeList[index].Move(new Point(endPoint.X - startPoint.X, endPoint.Y - startPoint.Y));
+            ShapeList[index].Update(INFO);
             NotifyDataChanged();
         }
     }
