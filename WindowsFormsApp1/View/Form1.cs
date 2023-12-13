@@ -25,8 +25,8 @@ namespace WindowsFormsApp1
             _presentationModel = presentationModel;
 
             _canvas.Width = _splitContainer2.Panel1.Width;
-            _canvas.Height = (int)((float)_canvas.Width * SCREEN_SCALE);
-            _page1.Height = (int)((float)_page1.Width / (float)_canvas.Width * _canvas.Height);
+            _canvas.Height = (int)((float)_canvas.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
+            _page1.Height = (int)((float)_page1.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
 
             InitializeEvent();
             InitializeDataBinding();
@@ -43,7 +43,7 @@ namespace WindowsFormsApp1
             _canvas.MouseMove += HandleCanvasMoved;
             _canvas.MouseEnter += EnterCanvas;
             _canvas.MouseLeave += LeaveCanvas;
-            _canvas.Resize += HandleCanvasResize;
+            _splitContainer2.Panel1.Resize += HandleSplitContainerResize;
             this._splitContainer2.Panel1.Resize += HandleCanvasContainerResize;
 
             _page1.Paint += PagePaint;
@@ -178,19 +178,27 @@ namespace WindowsFormsApp1
         }
 
         //canvas resize
-        public void HandleCanvasResize(object sender, EventArgs e)
+        public void HandleSplitContainerResize(object sender, EventArgs e)
         {
-            _page1.Height = (int)((float)_page1.Width / (float)_canvas.Width * _canvas.Height) + 1;
+            _page1.Height = (int)((float)_page1.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
             _canvas.Invalidate();
         }
 
-        const float SCREEN_SCALE = (float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH;
+        //const float SCREEN_SCALE = (float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH;
 
         //canvas container resize
         public void HandleCanvasContainerResize(object sender, EventArgs e)
         {
-            _canvas.Width = _splitContainer2.Panel1.Width;
-            _canvas.Height = (int)((float)_canvas.Width * SCREEN_SCALE);
+            if ((float)_splitContainer2.Panel1.Width / (float)_splitContainer2.Panel1.Height < (float)ScreenSize.WIDTH / (float)ScreenSize.HEIGHT)
+            {
+                _canvas.Width = _splitContainer2.Panel1.Width;
+                _canvas.Height = (int)((float)_canvas.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
+            }
+            else
+            {
+                _canvas.Height = _splitContainer2.Panel1.Height;
+                _canvas.Width = (int)((float)_canvas.Height * ((float)ScreenSize.WIDTH / (float)ScreenSize.HEIGHT));
+            }
         }
 
         //ClickUndoButton

@@ -1,0 +1,6 @@
+Entering constructor for: ReviewPal.ReviewPal2013.DrSmellPackage
+Entering Initialize() of: ReviewPal.ReviewPal2013.DrSmellPackage
+2023-12-13 11:06:40Z : PB = 449576960 : In   : --------------------- StyleCop.StyleCopCore..ctor(environment=<null>, hostTag=<null>)
+2023-12-13 11:06:40Z : PB = 449622016 : Out  : --------------------- StyleCop.StyleCopCore..ctor()
+2023-12-13 11:06:40Z : PB = 450162688 : Out  : ------------------ StyleCop.StyleCopCore.Initialize()
+D:\victor\desktop\file\NTUT\3_1\windows_form\110820038\debug.log
