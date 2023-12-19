@@ -3,6 +3,9 @@
   <project key="1803955434">
     <configuration>DEBUG;TRACE</configuration>
   </project>
+  <project key="-194130021">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
   <sourcecode name="IntegrationTest.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2023/09/16 14:23:49.220</styleCop>
@@ -106,7 +109,7 @@
     <timestamps>
       <styleCop>2023/09/16 14:23:49.220</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2023/12/10 22:27:36.252</sourceFile>
+      <sourceFile>2023/12/19 20:06:15.227</sourceFile>
       <parser>2023/09/16 14:23:49.220</parser>
       <KellyPalRules.KellyPalAnalyzer>2023/09/16 14:23:49.220</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -150,7 +153,7 @@
     <timestamps>
       <styleCop>2023/09/16 14:23:49.220</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2023/11/25 19:45:55.379</sourceFile>
+      <sourceFile>2023/12/10 23:07:36.525</sourceFile>
       <parser>2023/09/16 14:23:49.220</parser>
       <KellyPalRules.KellyPalAnalyzer>2023/09/16 14:23:49.220</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>

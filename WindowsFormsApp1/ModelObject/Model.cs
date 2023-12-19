@@ -14,11 +14,9 @@ namespace WindowsFormsApp1
         public delegate void ShapeDataChangedEventHandler();
         public event ShapeDataChangedEventHandler _shapeDataChanged;
 
-        private Shapes _shapes;
-
         public Model()
         {
-            Shapes = new Shapes();
+            AddPage(0);
             InitializeCanvas();
         }
 
@@ -26,12 +24,12 @@ namespace WindowsFormsApp1
         {
             get
             {
-                return _shapes;
+                return _pageList[_pageIndex];
             }
             set
             {
-                _shapes = value;
-                _shapes._shapeDataChanged += NotifyDataChanged;
+                _pageList[_pageIndex] = value;
+                _pageList[_pageIndex]._shapeDataChanged += NotifyDataChanged;
             }
         }
 
@@ -39,7 +37,7 @@ namespace WindowsFormsApp1
         {
             get
             {
-                return _shapes.ShapeList;
+                return Shapes.ShapeList;
             }
         }
 
@@ -59,13 +57,13 @@ namespace WindowsFormsApp1
         //delete select
         public void DeleteSelect()
         {
-            _commandManager.Execute(new DeleteShapeByIndexCommand(this, _shapes.GetSelectedShapeIndex()));
+            _commandManager.Execute(new DeleteShapeByIndexCommand(this, Shapes.GetSelectedShapeIndex()));
         }
 
         //draw method
         public void Draw(IGraphics graphics)
         {
-            _shapes.Draw(graphics);
+            Shapes.Draw(graphics);
         }
 
         //notify data change

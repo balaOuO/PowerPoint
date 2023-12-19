@@ -53,7 +53,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestModel()
         {
-            Assert.IsTrue(_modelPrivateObject.GetFieldOrProperty("_shapes") is Shapes);
+            Assert.IsTrue(_model.Shapes is Shapes);
             Assert.IsTrue(_modelPrivateObject.GetFieldOrProperty("_pointerState") is PointerState);
             Assert.IsTrue(_modelPrivateObject.GetFieldOrProperty("_drawingState") is DrawingState);
             Assert.IsTrue(_modelPrivateObject.GetFieldOrProperty("_canvasState") is ICanvasState);

@@ -32,20 +32,20 @@ namespace WindowsFormsApp1
         //AddShapeCommand
         public void AddShapeCommand(string shapeType , Point startPoint , Point endPoint)
         {
-            _shapes.AddShape(shapeType, startPoint, endPoint);
-            _shapes.AddShapeToList();
+            Shapes.AddShape(shapeType, startPoint, endPoint);
+            Shapes.AddShapeToList();
         }
 
         //DeleteShapeCommand
         public void DeleteShapeCommand(int index = -1)
         {
-            _shapes.DeleteShapeByIndex(index);
+            Shapes.DeleteShapeByIndex(index);
         }
 
         //InsertShapeToList
         public void InsertShapeToList(string shapeType, Point startPoint , Point endPoint , int index)
         {
-            _shapes.InsertShapeToList(shapeType, startPoint, endPoint, index);
+            Shapes.InsertShapeToList(shapeType, startPoint, endPoint, index);
         }
 
         const string INFO = "Info";
@@ -57,6 +57,13 @@ namespace WindowsFormsApp1
             ShapeList[index].Move(new Point(endPoint.X - startPoint.X, endPoint.Y - startPoint.Y));
             ShapeList[index].Update(INFO);
             NotifyDataChanged();
+        }
+
+        public void AddPageCommand(int index , Shapes shapes)
+        {
+            _pageList.Insert(index, shapes);
+            _pageList[index]._shapeDataChanged += NotifyDataChanged;
+            NotifyPageDataChange();
         }
     }
 }

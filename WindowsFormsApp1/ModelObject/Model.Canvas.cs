@@ -31,7 +31,7 @@ namespace WindowsFormsApp1
         public void SetRefer()
         {
             if (_referOn != null)
-                _shapes._referOn += _referOn.Invoke;
+                Shapes._referOn += _referOn.Invoke;
         }
 
         //choose shape

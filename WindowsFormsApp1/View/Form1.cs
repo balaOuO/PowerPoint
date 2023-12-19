@@ -14,6 +14,7 @@ namespace WindowsFormsApp1
     {
         Model _model;
         PresentationModel _presentationModel;
+        List<Button> _pageButtonList = new List<Button>();
         public PowerPointForm(Model model , PresentationModel presentationModel)
         {
             InitializeComponent();
@@ -26,7 +27,8 @@ namespace WindowsFormsApp1
 
             _canvas.Width = _splitContainer2.Panel1.Width;
             _canvas.Height = (int)((float)_canvas.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
-            _page1.Height = (int)((float)_page1.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
+            //_page1.Height = (int)((float)_page1.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
+            UpdatePageList();
 
             InitializeEvent();
             InitializeDataBinding();
@@ -45,8 +47,6 @@ namespace WindowsFormsApp1
             _canvas.MouseLeave += LeaveCanvas;
             _splitContainer2.Panel1.Resize += HandleSplitContainerResize;
             this._splitContainer2.Panel1.Resize += HandleCanvasContainerResize;
-
-            _page1.Paint += PagePaint;
         }
 
         //Initialize data binding
@@ -72,7 +72,10 @@ namespace WindowsFormsApp1
         private void UpdateCanvas()
         {
             _canvas.Invalidate(true);
-            _page1.Invalidate(true);
+            foreach (Control control in _pageList.Controls)
+            {
+                control.Invalidate(true);
+            }
         }
 
         //clicl add btn
@@ -137,9 +140,8 @@ namespace WindowsFormsApp1
         //page paing event
         public void PagePaint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            //Let it smooth
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            _model.Draw(new WindowsFormsPreviewGraphicsAdaptor(e.Graphics , _page1.Width , _page1.Height));
+            _model.Draw(new WindowsFormsPreviewGraphicsAdaptor(e.Graphics , ((Button) sender).Width , ((Button)sender).Height));
         }
 
         //TransformPoint
@@ -180,7 +182,7 @@ namespace WindowsFormsApp1
         //canvas resize
         public void HandleSplitContainerResize(object sender, EventArgs e)
         {
-            _page1.Height = (int)((float)_page1.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
+            PageResize();
             _canvas.Invalidate();
         }
 
@@ -202,15 +204,46 @@ namespace WindowsFormsApp1
         }
 
         //ClickUndoButton
-        private void ClickUndoButton(object sender, EventArgs e)
+        public void ClickUndoButton(object sender, EventArgs e)
         {
             _model.Undo();
         }
 
         //ClickRedoButton
-        private void ClickRedoButton(object sender, EventArgs e)
+        public void ClickRedoButton(object sender, EventArgs e)
         {
             _model.Redo();
+        }
+
+        //UpdatePageList
+        public void UpdatePageList()
+        {
+            if (_pageList.Controls.OfType<Button>().Count() != _presentationModel.PageCheckList.Count)
+            {
+                _pageList.Controls.Clear();
+                for (int i = 0; i < _presentationModel.PageCheckList.Count; i++)
+                {
+                    Button button = new Button();
+                    _pageList.Controls.Add(button);
+                    button.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)| System.Windows.Forms.AnchorStyles.Right)));
+                    button.Paint += PagePaint;
+                    button.UseVisualStyleBackColor = true;
+                }
+            }
+            for (int i = 0; i < _presentationModel.PageCheckList.Count; i++)
+            {
+                //((Button)_pageList.Controls[i]).Checked = _presentationModel.PageCheckList[i];
+            }
+            PageResize();
+        }
+
+        public void PageResize()
+        {
+            foreach(Control control in _pageList.Controls)
+            {
+                control.Width = _pageList.Width - 20;
+                control.Height = (int)((float)control.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
+            }
         }
     }
 }

@@ -15,6 +15,8 @@ namespace WindowsFormsApp1
         private Model _model;
         private Dictionary<string, ButtonState> _chooseShapeButtonState = new Dictionary<string, ButtonState>();
         private Cursor _pointerCursorState = Cursors.Default;
+        private List<bool> _pageCheckedList = new List<bool>();
+        private int _lastChoosePage = 0;
 
         public PresentationModel(Model model)
         {
@@ -22,6 +24,8 @@ namespace WindowsFormsApp1
             _model._drawingFinish += InitializeChooseShapeButton;
             _model._referOn += SetCursorState;
             _model.SetRefer();
+            _pageCheckedList.Add(false);
+            _pageCheckedList.Add(true);
             _chooseShapeButtonState.Add(ShapeName.RECTANGLE, new ButtonState(false));
             _chooseShapeButtonState.Add(ShapeName.LINE, new ButtonState(false));
             _chooseShapeButtonState.Add(ShapeName.ELLIPSE, new ButtonState(false));
@@ -34,6 +38,14 @@ namespace WindowsFormsApp1
             get
             {
                 return _chooseShapeButtonState;
+            }
+        }
+
+        public List<bool> PageCheckList
+        {
+            get
+            {
+                return _pageCheckedList;
             }
         }
 
