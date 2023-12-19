@@ -22,12 +22,13 @@ namespace WindowsFormsApp1
 
             this._model = model;
             this._model._shapeDataChanged += UpdateCanvas;
+            this._model._pageDataChange += UpdatePageList;
+            this._model._pageDataChange += UpdateCanvas;
 
             _presentationModel = presentationModel;
 
             _canvas.Width = _splitContainer2.Panel1.Width;
             _canvas.Height = (int)((float)_canvas.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
-            //_page1.Height = (int)((float)_page1.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
             UpdatePageList();
 
             InitializeEvent();
@@ -72,10 +73,7 @@ namespace WindowsFormsApp1
         private void UpdateCanvas()
         {
             _canvas.Invalidate(true);
-            foreach (Control control in _pageList.Controls)
-            {
-                control.Invalidate(true);
-            }
+            _pageList.Controls[_presentationModel.LastChoosePage].Invalidate(true);
         }
 
         //clicl add btn
@@ -141,7 +139,7 @@ namespace WindowsFormsApp1
         public void PagePaint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            _model.Draw(new WindowsFormsPreviewGraphicsAdaptor(e.Graphics , ((Button) sender).Width , ((Button)sender).Height));
+            _model.Draw(new WindowsFormsPreviewGraphicsAdaptor(e.Graphics , ((Button) sender).Width , ((Button)sender).Height) , _pageList.Controls.GetChildIndex((Control)sender));
         }
 
         //TransformPoint
@@ -182,7 +180,7 @@ namespace WindowsFormsApp1
         //canvas resize
         public void HandleSplitContainerResize(object sender, EventArgs e)
         {
-            PageResize();
+            ResizePage();
             _canvas.Invalidate();
         }
 
@@ -218,6 +216,7 @@ namespace WindowsFormsApp1
         //UpdatePageList
         public void UpdatePageList()
         {
+            _presentationModel.UpdatePageCheckList();
             if (_pageList.Controls.OfType<Button>().Count() != _presentationModel.PageCheckList.Count)
             {
                 _pageList.Controls.Clear();
@@ -225,8 +224,8 @@ namespace WindowsFormsApp1
                 {
                     Button button = new Button();
                     _pageList.Controls.Add(button);
-                    button.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)| System.Windows.Forms.AnchorStyles.Right)));
                     button.Paint += PagePaint;
+                    button.Click += ClickPageButton;
                     button.UseVisualStyleBackColor = true;
                 }
             }
@@ -234,16 +233,31 @@ namespace WindowsFormsApp1
             {
                 //((Button)_pageList.Controls[i]).Checked = _presentationModel.PageCheckList[i];
             }
-            PageResize();
+            ResizePage();
+            _shapeList.DataSource = _model.ShapeList;
         }
 
-        public void PageResize()
+        //ResizePage
+        public void ResizePage()
         {
             foreach(Control control in _pageList.Controls)
             {
                 control.Width = _pageList.Width - 20;
                 control.Height = (int)((float)control.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
             }
+        }
+
+        //ClickPageButton
+        public void ClickPageButton(object sender , EventArgs e)
+        {
+            _presentationModel.ChoosePage(_pageList.Controls.GetChildIndex((Control)sender));
+            _shapeList.Invalidate(true);
+        }
+
+        //ClickAddPageButton
+        private void ClickAddPageButton(object sender, EventArgs e)
+        {
+            _model.AddPage(_presentationModel.LastChoosePage + 1);
         }
     }
 }

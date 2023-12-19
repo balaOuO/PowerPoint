@@ -63,6 +63,18 @@ namespace WindowsFormsApp1
         {
             _pageList.Insert(index, shapes);
             _pageList[index]._shapeDataChanged += NotifyDataChanged;
+            PageIndex = index;
+            SetRefer();
+            NotifyPageDataChange();
+        }
+
+        public void DeletePageCommand(int index)
+        {
+            _pageList.RemoveAt(index);
+            if (PageIndex > _pageList.Count - 1)
+            {
+                PageIndex -= 1;
+            }
             NotifyPageDataChange();
         }
     }

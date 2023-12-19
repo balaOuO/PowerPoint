@@ -24,12 +24,12 @@ namespace WindowsFormsApp1
         {
             get
             {
-                return _pageList[_pageIndex];
+                return _pageList[PageIndex];
             }
             set
             {
-                _pageList[_pageIndex] = value;
-                _pageList[_pageIndex]._shapeDataChanged += NotifyDataChanged;
+                _pageList[PageIndex] = value;
+                _pageList[PageIndex]._shapeDataChanged += NotifyDataChanged;
             }
         }
 
@@ -57,13 +57,28 @@ namespace WindowsFormsApp1
         //delete select
         public void DeleteSelect()
         {
-            _commandManager.Execute(new DeleteShapeByIndexCommand(this, Shapes.GetSelectedShapeIndex()));
+            if (Shapes.GetSelectedShapeIndex() != -1)
+            {
+                _commandManager.Execute(new DeleteShapeByIndexCommand(this, Shapes.GetSelectedShapeIndex()));
+            }
+            else
+            {
+                if (PageList.Count() > 1)
+                {
+                    DeletePageCommand(PageIndex);
+                }
+            }
         }
 
         //draw method
         public void Draw(IGraphics graphics)
         {
             Shapes.Draw(graphics);
+        }
+
+        public void Draw(IGraphics graphics , int index)
+        {
+            _pageList[index].Draw(graphics);
         }
 
         //notify data change

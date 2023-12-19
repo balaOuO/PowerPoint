@@ -33,7 +33,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        //GetSelectedShapeIndex
+        /// <returns>If no select return -1</returns>
         public int GetSelectedShapeIndex()
         {
             for (int i = 0; i < _shapeList.Count; i++)
