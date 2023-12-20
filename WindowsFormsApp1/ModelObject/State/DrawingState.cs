@@ -58,7 +58,7 @@ namespace WindowsFormsApp1.ModelObject.State
             if (_isPress)
             {
                 _isPress = false;
-                _model.CommandManager.Execute(new AddShapeCommand(_model, _shape, _startPoint, pointer));
+                _model.CommandManager.Execute(new AddShapeCommand(_model, _model.PageIndex , _shape , _startPoint , pointer));
                 _model.NotifyDrawingFinish();
             }
         }

@@ -26,11 +26,13 @@ namespace WindowsFormsApp1
             get; set;
         }
 
+        //AddPage
         public void AddPage(int index)
         {
-            AddPageCommand(index, new Shapes());
+            _commandManager.Execute(new AddPageCommand(this, index , new Shapes()));
         }
 
+        //NotifyPageDataChange
         public void NotifyPageDataChange()
         {
             if (_pageDataChange != null)
@@ -39,6 +41,7 @@ namespace WindowsFormsApp1
             }
         }
 
+        //ChoosePage
         public void ChoosePage(int index)
         {
             PageIndex = index;

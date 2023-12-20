@@ -30,35 +30,40 @@ namespace WindowsFormsApp1
         }
 
         //AddShapeCommand
-        public void AddShapeCommand(string shapeType , Point startPoint , Point endPoint)
+        public void AddShapeCommand(int pageIndex , string shapeType , Point startPoint , Point endPoint)
         {
-            Shapes.AddShape(shapeType, startPoint, endPoint);
-            Shapes.AddShapeToList();
+            PageIndex = pageIndex;
+            PageList[pageIndex].AddShape(shapeType, startPoint, endPoint);
+            PageList[pageIndex].AddShapeToList();
         }
 
         //DeleteShapeCommand
-        public void DeleteShapeCommand(int index = -1)
+        public void DeleteShapeCommand(int pageIndex , int index = -1)
         {
-            Shapes.DeleteShapeByIndex(index);
+            PageIndex = pageIndex;
+            PageList[pageIndex].DeleteShapeByIndex(index);
         }
 
         //InsertShapeToList
-        public void InsertShapeToList(string shapeType, Point startPoint , Point endPoint , int index)
+        public void InsertShapeToList(int pageIndex , string shapeType, Point startPoint , Point endPoint , int index)
         {
-            Shapes.InsertShapeToList(shapeType, startPoint, endPoint, index);
+            PageIndex = pageIndex;
+            PageList[pageIndex].InsertShapeToList(shapeType, startPoint, endPoint, index);
         }
 
         const string INFO = "Info";
 
         //MoveShapeByIndexCommand
-        public void MoveShapeByIndexCommand(int index , Point startPoint , Point endPoint)
+        public void MoveShapeByIndexCommand(int pageIndex , int index , Point startPoint , Point endPoint)
         {
-            ShapeList[index].ReferPart(startPoint);
-            ShapeList[index].Move(new Point(endPoint.X - startPoint.X, endPoint.Y - startPoint.Y));
-            ShapeList[index].Update(INFO);
+            PageIndex = pageIndex;
+            PageList[pageIndex].ShapeList[index].ReferPart(startPoint);
+            PageList[pageIndex].ShapeList[index].Move(new Point(endPoint.X - startPoint.X, endPoint.Y - startPoint.Y));
+            PageList[pageIndex].ShapeList[index].Update(INFO);
             NotifyDataChanged();
         }
 
+        //AddPageCommand
         public void AddPageCommand(int index , Shapes shapes)
         {
             _pageList.Insert(index, shapes);
@@ -68,8 +73,10 @@ namespace WindowsFormsApp1
             NotifyPageDataChange();
         }
 
+        //DeletePageCommand
         public void DeletePageCommand(int index)
         {
+            PageIndex = index;
             _pageList.RemoveAt(index);
             if (PageIndex > _pageList.Count - 1)
             {

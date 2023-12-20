@@ -12,24 +12,26 @@ namespace WindowsFormsApp1
         Point _startPoint;
         Point _endPoint;
         int _index;
-        public MoveCommand(Model model , int index , Point startPoint , Point endPoint)
+        int _pageIndex;
+        public MoveCommand(Model model , int pageIndex , int index , Point startPoint , Point endPoint)
         {
             _model = model;
             _index = index;
             _startPoint = startPoint;
             _endPoint = endPoint;
+            _pageIndex = pageIndex;
         }
 
         //Execute
         public void Execute()
         {
-            _model.MoveShapeByIndexCommand(_index, _startPoint, _endPoint);
+            _model.MoveShapeByIndexCommand(_pageIndex , _index, _startPoint, _endPoint);
         }
 
         //RollBackExecute
         public void RollBackExecute()
         {
-            _model.MoveShapeByIndexCommand(_index, _endPoint, _startPoint);
+            _model.MoveShapeByIndexCommand(_pageIndex, _index, _endPoint, _startPoint);
         }
     }
 }

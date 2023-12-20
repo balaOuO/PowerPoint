@@ -19,8 +19,8 @@ namespace WindowsFormsApp1.Tests
         public void TestDeleteShapeByIndexCommand()
         {
             _model = new Model();
-            _model.AddShapeCommand(ShapeName.LINE, new Point(10, 10), new Point(20, 20));
-            _command = new DeleteShapeByIndexCommand(_model, 0);
+            _model.AddShapeCommand(0 , ShapeName.LINE, new Point(10, 10), new Point(20, 20));
+            _command = new DeleteShapeByIndexCommand(_model, 0 , 0);
             Assert.AreEqual(_model.ShapeList.Count, 1);
         }
 

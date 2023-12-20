@@ -16,7 +16,7 @@ namespace WindowsFormsApp1
 
         public Model()
         {
-            AddPage(0);
+            AddPageCommand(0 , new Shapes());
             InitializeCanvas();
         }
 
@@ -45,27 +45,27 @@ namespace WindowsFormsApp1
         public void AddShape(string shapeType)
         {
             PointFactory pointFactory = new PointFactory();
-            CommandManager.Execute(new AddShapeCommand(this, shapeType , pointFactory.GetPoint(), pointFactory.GetPoint()));
+            CommandManager.Execute(new AddShapeCommand(this, PageIndex , shapeType , pointFactory.GetPoint(), pointFactory.GetPoint()));
         }
 
         //delete shape
         public void DeleteShapeByIndex(int index)
         {
-            _commandManager.Execute(new DeleteShapeByIndexCommand(this, index));
+            _commandManager.Execute(new DeleteShapeByIndexCommand(this, PageIndex , index));
         }
 
         //delete select
-        public void DeleteSelect()
+        public void Delete()
         {
             if (Shapes.GetSelectedShapeIndex() != -1)
             {
-                _commandManager.Execute(new DeleteShapeByIndexCommand(this, Shapes.GetSelectedShapeIndex()));
+                _commandManager.Execute(new DeleteShapeByIndexCommand(this, PageIndex ,Shapes.GetSelectedShapeIndex()));
             }
             else
             {
                 if (PageList.Count() > 1)
                 {
-                    DeletePageCommand(PageIndex);
+                    _commandManager.Execute(new DeletePageCommand(this, PageIndex));
                 }
             }
         }
@@ -76,6 +76,7 @@ namespace WindowsFormsApp1
             Shapes.Draw(graphics);
         }
 
+        //Draw preview page
         public void Draw(IGraphics graphics , int index)
         {
             _pageList[index].Draw(graphics);

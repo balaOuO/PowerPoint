@@ -63,7 +63,7 @@ namespace WindowsFormsApp1.ModelObject.State
                 _model.Shapes.UpdateInfo();
                 if (_startPoint.ToString() != pointer.ToString() && _model.Shapes.GetSelectedShapeIndex() != -1)
                 {
-                    _model.CommandManager.Add(new MoveCommand(_model, _model.Shapes.GetSelectedShapeIndex(), _startPoint, pointer));
+                    _model.CommandManager.Add(new MoveCommand(_model , _model.PageIndex , _model.Shapes.GetSelectedShapeIndex(), _startPoint, pointer));
                 }
             }
         }

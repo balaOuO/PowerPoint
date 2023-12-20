@@ -9,19 +9,20 @@ using System.Threading.Tasks;
 namespace WindowsFormsApp1.Tests
 {
     [TestClass()]
-    public class AddShapeCommandTests
+    public class AddPageCommandTests
     {
         ICommand _command;
         Model _model;
+        Shapes _shapes;
 
-
-        //TestAddShapeCommand
+        //TestAddPageCommand
         [TestInitialize()]
         [TestMethod()]
-        public void TestAddShapeCommand()
+        public void TestAddPageCommand()
         {
             _model = new Model();
-            _command = new AddShapeCommand(_model, 0 , ShapeName.RECTANGLE, new Point(10, 10), new Point(20, 20));
+            _shapes = new Shapes();
+            _command = new AddPageCommand(_model, 1, _shapes);
         }
 
         //TestExecute
@@ -29,10 +30,7 @@ namespace WindowsFormsApp1.Tests
         public void TestExecute()
         {
             _command.Execute();
-            Assert.AreEqual(_model.ShapeList[0].ShapeName, ShapeName.RECTANGLE);
-            Assert.AreEqual(_model.ShapeList[0].StartPoint.ToString(), "(10,10)");
-            Assert.AreEqual(_model.ShapeList[0].EndPoint.ToString(), "(20,20)");
-            Assert.AreEqual(_model.ShapeList.Count, 1);
+            Assert.AreEqual(_model.PageList.Count() , 2);
         }
 
         //TestRollBackExecute
@@ -41,7 +39,7 @@ namespace WindowsFormsApp1.Tests
         {
             _command.Execute();
             _command.RollBackExecute();
-            Assert.AreEqual(_model.ShapeList.Count, 0);
+            Assert.AreEqual(_model.PageList.Count(), 1);
         }
     }
 }

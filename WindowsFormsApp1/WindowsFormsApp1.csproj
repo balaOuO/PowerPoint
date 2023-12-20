@@ -46,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModelObject\Command\AddPageCommand.cs" />
     <Compile Include="ModelObject\Command\AddShapeCommand.cs" />
     <Compile Include="ModelObject\Command\CommandManager.cs" />
+    <Compile Include="ModelObject\Command\DeletePageCommand.cs" />
     <Compile Include="ModelObject\Command\DeleteShapeByIndexCommand.cs" />
     <Compile Include="ModelObject\Command\ICommand.cs" />
     <Compile Include="ModelObject\Command\MoveCommand.cs" />

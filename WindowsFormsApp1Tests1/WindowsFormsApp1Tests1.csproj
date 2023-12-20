@@ -61,8 +61,10 @@
     <Compile Include="MockGraphicAdaptor.cs" />
     <Compile Include="MockRandom.cs" />
     <Compile Include="MockShapes.cs" />
+    <Compile Include="ModelObject\Command\AddPageCommandTests.cs" />
     <Compile Include="ModelObject\Command\AddShapeCommandTests.cs" />
     <Compile Include="ModelObject\Command\CommandManagerTests.cs" />
+    <Compile Include="ModelObject\Command\DeletePageCommandTests.cs" />
     <Compile Include="ModelObject\Command\DeleteShapeByIndexCommandTests.cs" />
     <Compile Include="ModelObject\Command\MoveCommandTests.cs" />
     <Compile Include="ModelObject\FactoryTests.cs" />

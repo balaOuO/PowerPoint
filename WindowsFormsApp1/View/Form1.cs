@@ -139,7 +139,7 @@ namespace WindowsFormsApp1
         public void PagePaint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            _model.Draw(new WindowsFormsPreviewGraphicsAdaptor(e.Graphics , ((Button) sender).Width , ((Button)sender).Height) , _pageList.Controls.GetChildIndex((Control)sender));
+            _model.Draw(new WindowsFormsPreviewGraphicsAdaptor(e.Graphics , ((Button)sender).Width , ((Button)sender).Height) , _pageList.Controls.GetChildIndex((Control)sender));
         }
 
         //TransformPoint
@@ -172,7 +172,7 @@ namespace WindowsFormsApp1
         {
             if (e.KeyCode is Keys.Delete)
             {
-                _model.DeleteSelect();
+                _model.Delete();
                 Cursor = _presentationModel.GetCursors();
             }
         }
@@ -240,9 +240,9 @@ namespace WindowsFormsApp1
         //ResizePage
         public void ResizePage()
         {
-            foreach(Control control in _pageList.Controls)
+            foreach (Control control in _pageList.Controls)
             {
-                control.Width = _pageList.Width - 20;
+                control.Width = _pageList.Width - 10;
                 control.Height = (int)((float)control.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
             }
         }

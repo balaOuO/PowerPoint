@@ -12,24 +12,26 @@ namespace WindowsFormsApp1
         string _shapeType;
         Point _startPoint;
         Point _endPoint;
-        public AddShapeCommand(Model model , string shapeType , Point startPoint , Point endPoint)
+        int _pageIndex;
+        public AddShapeCommand(Model model, int pageIndex , string shapeType , Point startPoint , Point endPoint)
         {
             _model = model;
             _shapeType = shapeType;
             _startPoint = startPoint;
             _endPoint = endPoint;
+            _pageIndex = pageIndex;
         }
 
         //Execute
         public void Execute()
         {
-            _model.AddShapeCommand(_shapeType, _startPoint, _endPoint);
+            _model.AddShapeCommand(_pageIndex, _shapeType, _startPoint, _endPoint);
         }
 
         //UnExecute
         public void RollBackExecute()
         {
-            _model.DeleteShapeCommand();
+            _model.DeleteShapeCommand(_pageIndex);
         }
     }
 }
