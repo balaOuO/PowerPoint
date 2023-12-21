@@ -55,7 +55,6 @@
     <Compile Include="ModelObject\Command\MoveCommand.cs" />
     <Compile Include="ModelObject\Model.Command.cs" />
     <Compile Include="ModelObject\Model.Page.cs" />
-    <Compile Include="ModelObject\PointFactory.cs" />
     <Compile Include="ModelObject\ScreenSize.cs" />
     <Compile Include="ModelObject\ShapeObject\Shape.Method.cs" />
     <Compile Include="ModelObject\ShapeObject\ShapePart.cs" />
@@ -64,6 +63,15 @@
     <Compile Include="ModelObject\State\ICanvasState.cs" />
     <Compile Include="ModelObject\State\DrawingState.cs" />
     <Compile Include="ModelObject\State\PointerState.cs" />
+    <Compile Include="View\AddShapeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\AddShapeForm.Designer.cs">
+      <DependentUpon>AddShapeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\CheckedAbleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="View\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -91,6 +99,9 @@
     <Compile Include="View\WindowsFormsGraphicsAdaptor.cs" />
     <Compile Include="View\ButtonState.cs" />
     <Compile Include="View\WindowsFormsPreviewGraphicsAdaptor.cs" />
+    <EmbeddedResource Include="View\AddShapeForm.resx">
+      <DependentUpon>AddShapeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -42,10 +42,9 @@ namespace WindowsFormsApp1
         }
 
         //add shape random
-        public void AddShape(string shapeType)
+        public void AddShape(string shapeType , Point startPoint , Point endPoint)
         {
-            PointFactory pointFactory = new PointFactory();
-            CommandManager.Execute(new AddShapeCommand(this, PageIndex , shapeType , pointFactory.GetPoint(), pointFactory.GetPoint()));
+            CommandManager.Execute(new AddShapeCommand(this, PageIndex , shapeType , startPoint, endPoint));
         }
 
         //delete shape

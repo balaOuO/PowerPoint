@@ -69,7 +69,6 @@
     <Compile Include="ModelObject\Command\MoveCommandTests.cs" />
     <Compile Include="ModelObject\FactoryTests.cs" />
     <Compile Include="ModelObject\ModelTests.cs" />
-    <Compile Include="ModelObject\PointFactoryTests.cs" />
     <Compile Include="ModelObject\ShapeObject\EllipseTests.cs" />
     <Compile Include="ModelObject\ShapeObject\LineTests.cs" />
     <Compile Include="ModelObject\ShapeObject\PointTests.cs" />

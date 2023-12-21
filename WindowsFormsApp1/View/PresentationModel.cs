@@ -117,7 +117,7 @@ namespace WindowsFormsApp1
         {
             _pageCheckedList[LastChoosePage] = false;
             _pageCheckedList[index] = true;
-            _model.ChoosePage(index);
+            _model.SetPageIndex(index);
         }
 
         public void UpdatePageCheckList()

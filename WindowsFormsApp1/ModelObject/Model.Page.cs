@@ -12,6 +12,7 @@ namespace WindowsFormsApp1
         public event PageDataChangeEventHandler _pageDataChange;
 
         List<Shapes> _pageList = new List<Shapes>();
+        int _pageIndex;
 
         public List<Shapes> PageList
         {
@@ -23,7 +24,15 @@ namespace WindowsFormsApp1
 
         public int PageIndex
         {
-            get; set;
+            get
+            {
+                return _pageIndex;
+            }
+            set
+            {
+                _pageIndex = value;
+                NotifyPageDataChange();
+            }
         }
 
         //AddPage
@@ -42,10 +51,9 @@ namespace WindowsFormsApp1
         }
 
         //ChoosePage
-        public void ChoosePage(int index)
+        public void SetPageIndex(int index)
         {
             PageIndex = index;
-            NotifyPageDataChange();
         }
     }
 }

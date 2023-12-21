@@ -72,7 +72,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestAddShape()
         {
-            _model.AddShape(ShapeName.LINE);
+            _model.AddShape(ShapeName.LINE , new Point(0, 0) , new Point(0, 0));
 
             Assert.IsTrue(_mockShapes.IsAddShape);
             Assert.IsTrue(_isNotifyDataChange);
@@ -82,7 +82,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestDeleteShapeByIndex()
         {
-            _model.AddShape(ShapeName.LINE);
+            _model.AddShape(ShapeName.LINE , new Point(0, 0) , new Point(0, 0));
             _model.DeleteShapeByIndex(0);
 
             Assert.IsTrue(_mockShapes.IsDeleteShapeByIndex);
@@ -109,20 +109,20 @@ namespace WindowsFormsApp1.Tests
         public void TestDeletePage()
         {
             _model.AddPage(0);
-            _model.AddShape(ShapeName.RECTANGLE);
+            _model.AddShape(ShapeName.RECTANGLE , new Point(0, 0) , new Point(0, 0));
 
             _model.AddPage(2);
-            _model.AddShape(ShapeName.ELLIPSE);
+            _model.AddShape(ShapeName.ELLIPSE , new Point(0, 0) , new Point(0, 0));
 
             Assert.AreEqual(_model.PageList.Count(), 3);
 
-            _model.ChoosePage(1);
+            _model.SetPageIndex(1);
             _model.Delete();
             Assert.AreEqual(_model.PageList.Count(), 2);
             Assert.AreEqual(_model.PageIndex, 1);
             Assert.AreEqual(_model.Shapes.ShapeList[0].ShapeName, ShapeName.ELLIPSE);
 
-            _model.ChoosePage(1);
+            _model.SetPageIndex(1);
             _model.Delete();
             Assert.AreEqual(_model.PageList.Count(), 1);
             Assert.AreEqual(_model.PageIndex, 0);
@@ -277,7 +277,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestUndo()
         {
-            _model.AddShape(ShapeName.LINE);
+            _model.AddShape(ShapeName.LINE , new Point(0, 0) , new Point(0, 0));
             _model.Undo();
             Assert.AreEqual(_model.ShapeList.Count, 0);
         }
@@ -286,7 +286,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestRedo()
         {
-            _model.AddShape(ShapeName.LINE);
+            _model.AddShape(ShapeName.LINE , new Point(0, 0) , new Point(0, 0));
             _model.Undo();
             _model.Redo();
             Assert.AreEqual(_model.ShapeList.Count, 1);
@@ -297,7 +297,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestAddShapeCommand()
         {
-            _model.AddShape(ShapeName.LINE);
+            _model.AddShape(ShapeName.LINE , new Point(0, 0) , new Point(0, 0));
 
             Assert.IsTrue(_mockShapes.IsAddShape);
             Assert.IsTrue(_mockShapes.IsAddShapeToList);
@@ -308,7 +308,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestDeleteShapeCommand()
         {
-            _model.AddShape(ShapeName.ELLIPSE);
+            _model.AddShape(ShapeName.ELLIPSE , new Point(0, 0) , new Point(0, 0));
             _model.DeleteShapeCommand(0);
             Assert.AreEqual(_model.ShapeList.Count, 0);
             Assert.IsTrue(_mockShapes.IsDeleteShapeByIndex);
@@ -376,15 +376,15 @@ namespace WindowsFormsApp1.Tests
         public void TestChoosePage()
         {
             _model.AddPage(0);
-            _model.AddShape(ShapeName.RECTANGLE);
+            _model.AddShape(ShapeName.RECTANGLE , new Point(0, 0) , new Point(0, 0));
             _model.AddPage(2);
-            _model.AddShape(ShapeName.ELLIPSE);
+            _model.AddShape(ShapeName.ELLIPSE , new Point(0, 0) , new Point(0, 0));
 
-            _model.ChoosePage(0);
+            _model.SetPageIndex(0);
             Assert.AreEqual(_model.Shapes.ShapeList[0].ShapeName, ShapeName.RECTANGLE);
-            _model.ChoosePage(1);
+            _model.SetPageIndex(1);
             Assert.AreEqual(_model.Shapes, _mockShapes);
-            _model.ChoosePage(2);
+            _model.SetPageIndex(2);
             Assert.AreEqual(_model.Shapes.ShapeList[0].ShapeName, ShapeName.ELLIPSE);
         }
 
@@ -393,20 +393,20 @@ namespace WindowsFormsApp1.Tests
         public void TestAddPage()
         {
             _model.AddPage(0);
-            _model.AddShape(ShapeName.RECTANGLE);
+            _model.AddShape(ShapeName.RECTANGLE , new Point(0, 0) , new Point(0, 0));
             Assert.AreEqual(_model.PageList.Count, 2);
 
             _model.AddPage(2);
-            _model.AddShape(ShapeName.ELLIPSE);
+            _model.AddShape(ShapeName.ELLIPSE , new Point(0, 0) , new Point(0, 0));
             Assert.AreEqual(_model.PageList.Count, 3);
 
-            _model.ChoosePage(0);
+            _model.SetPageIndex(0);
             Assert.AreEqual(_model.Shapes.ShapeList[0].ShapeName, ShapeName.RECTANGLE);
 
-            _model.ChoosePage(1);
+            _model.SetPageIndex(1);
             Assert.AreEqual(_model.Shapes, _mockShapes);
 
-            _model.ChoosePage(2);
+            _model.SetPageIndex(2);
             Assert.AreEqual(_model.Shapes.ShapeList[0].ShapeName, ShapeName.ELLIPSE);
         }
     }

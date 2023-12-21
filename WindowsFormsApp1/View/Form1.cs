@@ -14,7 +14,6 @@ namespace WindowsFormsApp1
     {
         Model _model;
         PresentationModel _presentationModel;
-        List<Button> _pageButtonList = new List<Button>();
         public PowerPointForm(Model model , PresentationModel presentationModel)
         {
             InitializeComponent();
@@ -24,12 +23,16 @@ namespace WindowsFormsApp1
             this._model._shapeDataChanged += UpdateCanvas;
             this._model._pageDataChange += UpdatePageList;
             this._model._pageDataChange += UpdateCanvas;
+            this._model._pageDataChange += UpdatePageChecked;
+            this._model._pageDataChange += ResizePage;
 
             _presentationModel = presentationModel;
 
             _canvas.Width = _splitContainer2.Panel1.Width;
             _canvas.Height = (int)((float)_canvas.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
             UpdatePageList();
+            UpdatePageChecked();
+            ResizePage();
 
             InitializeEvent();
             InitializeDataBinding();
@@ -79,7 +82,13 @@ namespace WindowsFormsApp1
         //clicl add btn
         private void ClickAddShape(object sender, EventArgs e)
         {
-            _model.AddShape(_selectShape.Text);
+            AddShapeForm addShapeForm = new AddShapeForm();
+            addShapeForm.ShowDialog();
+
+            if (addShapeForm.DialogResult == DialogResult.OK)
+            {
+                _model.AddShape(_selectShape.Text, addShapeForm.StartPoint, addShapeForm.EndPoint);
+            }
         }
         
         //click delete button in data grid view
@@ -222,27 +231,35 @@ namespace WindowsFormsApp1
                 _pageList.Controls.Clear();
                 for (int i = 0; i < _presentationModel.PageCheckList.Count; i++)
                 {
-                    Button button = new Button();
+                    CheckedAbleButton button = new CheckedAbleButton();
                     _pageList.Controls.Add(button);
                     button.Paint += PagePaint;
                     button.Click += ClickPageButton;
                     button.UseVisualStyleBackColor = true;
                 }
             }
-            for (int i = 0; i < _presentationModel.PageCheckList.Count; i++)
-            {
-                //((Button)_pageList.Controls[i]).Checked = _presentationModel.PageCheckList[i];
-            }
+            UpdatePageChecked();
             ResizePage();
             _shapeList.DataSource = _model.ShapeList;
         }
+
+        //UpdatePageChecked
+        public void UpdatePageChecked()
+        {
+            for (int i = 0; i < _presentationModel.PageCheckList.Count; i++)
+            {
+                ((CheckedAbleButton)_pageList.Controls[i]).Checked = _presentationModel.PageCheckList[i];
+            }
+        }
+
+        const int PAGE_PADDING = 25;
 
         //ResizePage
         public void ResizePage()
         {
             foreach (Control control in _pageList.Controls)
             {
-                control.Width = _pageList.Width - 10;
+                control.Width = _pageList.Width - PAGE_PADDING;
                 control.Height = (int)((float)control.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
             }
         }

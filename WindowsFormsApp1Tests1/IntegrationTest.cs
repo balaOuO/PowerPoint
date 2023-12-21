@@ -84,8 +84,8 @@ namespace WindowsFormsApp1.Tests
             CheckShape(_model.ShapeList[1], ShapeName.ELLIPSE, "(50,50),(80,80)");
 
             //test3
-            _model.AddShape(ShapeName.LINE);
-            _model.AddShape(ShapeName.RECTANGLE);
+            _model.AddShape(ShapeName.LINE , new Point(0 , 0) , new Point(0, 0));
+            _model.AddShape(ShapeName.RECTANGLE , new Point(0, 0) , new Point(0, 0));
 
             Assert.AreEqual(_model.ShapeList.Count, 4);
             Assert.AreEqual(_model.ShapeList[2].ShapeName, ShapeName.LINE);
