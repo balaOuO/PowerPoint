@@ -17,6 +17,15 @@ namespace WindowsFormsApp1
         const string IS_UNDO_ENABLED = "IsUndoEnabled";
         const string IS_REDO_ENABLE = "IsRedoEnabled";
 
+        //Initilize
+        public void Initialize()
+        {
+            _undo = new Stack<ICommand>();
+            _redo = new Stack<ICommand>();
+            Notify(IS_UNDO_ENABLED);
+            Notify(IS_REDO_ENABLE);
+        }
+
         //Execute
         public void Execute(ICommand command)
         {

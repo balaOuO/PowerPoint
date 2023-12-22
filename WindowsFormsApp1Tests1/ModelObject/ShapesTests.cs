@@ -367,5 +367,15 @@ namespace WindowsFormsApp1.Tests
             Assert.AreEqual(_shapes.ShapeList[1].ShapeName, ShapeName.LINE);
             Assert.AreEqual(_shapes.ShapeList[1].Info, "(10,10),(200,200)");
         }
+
+        //TestDelegateAllRefer
+        [TestMethod()]
+        public void TestDelegateAllRefer()
+        {
+            CreateShapeList();
+            _shapes.DelegateAllRefer();
+            _shapes.ShapeList[0].ReferPart(new Point(20, 20));
+            Assert.AreEqual(_referPart , ShapePart.LOWER_RIGHT_POINT);
+        }
     }
 }

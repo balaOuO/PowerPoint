@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using WindowsFormsApp1.ModelObject.State;
+using System.Diagnostics;
 
 namespace WindowsFormsApp1
 {
@@ -16,8 +17,28 @@ namespace WindowsFormsApp1
 
         public Model()
         {
-            AddPageCommand(0 , new Shapes());
+            _pageList = new List<Shapes>() 
+            {
+                new Shapes() 
+            };
+            _commandManager = new CommandManager();
+            Initialize();
+        }
+
+        //Initialize
+        public void Initialize()
+        {
+            _pageIndex = 0;
             InitializeCanvas();
+            _commandManager.Initialize();
+            SetRefer();
+            foreach (Shapes shapes in _pageList)
+            {
+                shapes._shapeDataChanged += NotifyDataChanged;
+                shapes.DelegateAllRefer();
+            }
+            NotifyDataChanged();
+            NotifyPageDataChange();
         }
 
         public Shapes Shapes
@@ -44,6 +65,7 @@ namespace WindowsFormsApp1
         //add shape random
         public void AddShape(string shapeType , Point startPoint , Point endPoint)
         {
+            Debug.Assert(shapeType == ShapeName.RECTANGLE || shapeType == ShapeName.ELLIPSE || shapeType == ShapeName.LINE);
             CommandManager.Execute(new AddShapeCommand(this, PageIndex , shapeType , startPoint, endPoint));
         }
 
@@ -79,6 +101,19 @@ namespace WindowsFormsApp1
         public void Draw(IGraphics graphics , int index)
         {
             _pageList[index].Draw(graphics);
+        }
+
+        //Save
+        public void Save()
+        {
+            FileManager.Save(PageList);
+        }
+
+        //Load
+        public void Load()
+        {
+            _pageList = FileManager.Load();
+            Initialize();
         }
 
         //notify data change

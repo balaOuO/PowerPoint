@@ -276,5 +276,23 @@ namespace WindowsFormsApp1
         {
             _model.AddPage(_presentationModel.LastChoosePage + 1);
         }
+
+        //ClickSaveButton
+        private void ClickSaveButton(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Save in google drive?", "Confirm Message", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                _model.Save();
+            }
+        }
+
+        //ClickLoadButton
+        private void ClickLoadButton(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Load on google drive?", "Confirm Message", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                _model.Load();
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace WindowsFormsApp1
         public delegate void PageDataChangeEventHandler();
         public event PageDataChangeEventHandler _pageDataChange;
 
-        List<Shapes> _pageList = new List<Shapes>();
+        List<Shapes> _pageList;
         int _pageIndex;
 
         public List<Shapes> PageList

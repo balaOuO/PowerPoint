@@ -225,6 +225,7 @@ namespace WindowsFormsApp1
             this._saveButton.Name = "_saveButton";
             this._saveButton.Size = new System.Drawing.Size(44, 41);
             this._saveButton.Text = "save";
+            this._saveButton.Click += new System.EventHandler(this.ClickSaveButton);
             // 
             // _loadButton
             // 
@@ -234,6 +235,7 @@ namespace WindowsFormsApp1
             this._loadButton.Name = "_loadButton";
             this._loadButton.Size = new System.Drawing.Size(44, 41);
             this._loadButton.Text = "load";
+            this._loadButton.Click += new System.EventHandler(this.ClickLoadButton);
             // 
             // _splitContainer1
             // 
@@ -260,7 +262,7 @@ namespace WindowsFormsApp1
             this._pageList.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this._pageList.Dock = System.Windows.Forms.DockStyle.Fill;
             this._pageList.Location = new System.Drawing.Point(0, 0);
-            this._pageList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._pageList.Margin = new System.Windows.Forms.Padding(4);
             this._pageList.Name = "_pageList";
             this._pageList.Size = new System.Drawing.Size(188, 634);
             this._pageList.TabIndex = 0;

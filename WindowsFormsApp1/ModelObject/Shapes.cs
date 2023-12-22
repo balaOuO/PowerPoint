@@ -152,6 +152,16 @@ namespace WindowsFormsApp1
             }
         }
 
+        //DelegateAllRefer
+        public void DelegateAllRefer()
+        {
+            foreach (Shape shape in ShapeList)
+            {
+                if (_referOn != null)
+                    shape._referToThePart += _referOn.Invoke;
+            }
+        }
+
         //clear select
         public void ClearSelect()
         {

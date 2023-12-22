@@ -8,7 +8,7 @@ namespace WindowsFormsApp1
 {
     public partial class Model
     {
-        private CommandManager _commandManager = new CommandManager();
+        private CommandManager _commandManager;
         public CommandManager CommandManager
         {
             get

@@ -133,6 +133,15 @@ namespace WindowsFormsApp1.Tests
             _commandManager.Undo();
             Assert.IsFalse(_commandManager.IsUndoEnabled);
         }
+
+        //TestInitilize
+        [TestMethod()]
+        public void TestInitilize()
+        {
+            _commandManager.Initialize();
+            Assert.AreEqual(((Stack<ICommand>)_commandManagerPrivateObject.GetFieldOrProperty("_undo")).Count, 0);
+            Assert.AreEqual(((Stack<ICommand>)_commandManagerPrivateObject.GetFieldOrProperty("_redo")).Count, 0);
+        }
     }
 
     class MockCommand : ICommand

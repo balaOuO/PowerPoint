@@ -4,4 +4,6 @@ WindowsFormsApp1/bin/
 WindowsFormsApp1/obj/
 WindowsFormsApp1Tests1/bin/
 WindowsFormsApp1Tests1/obj/
+WindowsFormsApp1UITests/bin/
+WindowsFormsApp1UITests/obj/
 *.doc
