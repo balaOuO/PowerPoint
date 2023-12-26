@@ -141,7 +141,7 @@ namespace WindowsFormsApp1
         {
             //Let it smooth
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            _model.Draw(new WindowsFormsGraphicsAdaptor(e.Graphics , _canvas.Width , _canvas.Height));
+            _model.Draw(new WindowsFormsGraphicsAdaptor(e.Graphics , e.ClipRectangle.Width, e.ClipRectangle.Height));
         }
 
         //page paing event
@@ -154,7 +154,7 @@ namespace WindowsFormsApp1
         //TransformPoint
         public Point TransformPoint(Point point)
         {
-            return new Point((point.X / _canvas.Width) * ScreenSize.WIDTH, (point.Y / _canvas.Height) * ScreenSize.HEIGHT);
+            return new Point((point.X / _canvas.ClientSize.Width) * ScreenSize.WIDTH, (point.Y / _canvas.ClientSize.Height) * ScreenSize.HEIGHT);
         }
 
         //press canvas event method
@@ -236,6 +236,7 @@ namespace WindowsFormsApp1
                     button.Paint += PagePaint;
                     button.Click += ClickPageButton;
                     button.UseVisualStyleBackColor = true;
+                    button.Name = i.ToString();
                 }
             }
             UpdatePageChecked();
@@ -277,19 +278,25 @@ namespace WindowsFormsApp1
             _model.AddPage(_presentationModel.LastChoosePage + 1);
         }
 
+        const string SAVE_MESSAGE = "Save in google drive?";
+        const string SAVE_TITLE = "Confirm Message";
+
         //ClickSaveButton
         private void ClickSaveButton(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Save in google drive?", "Confirm Message", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show(SAVE_MESSAGE, SAVE_TITLE, MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 _model.Save();
             }
         }
 
+        const string LOAD_MESSAGE = "Load on google drive?";
+        const string LOAD_TITLE = "Confirm Message";
+
         //ClickLoadButton
         private void ClickLoadButton(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Load on google drive?", "Confirm Message", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show(LOAD_MESSAGE, LOAD_TITLE, MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 _model.Load();
             }

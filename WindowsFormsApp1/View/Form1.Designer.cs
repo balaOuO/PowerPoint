@@ -76,7 +76,7 @@ namespace WindowsFormsApp1
             this._menuStrip.Location = new System.Drawing.Point(0, 0);
             this._menuStrip.Name = "_menuStrip";
             this._menuStrip.Padding = new System.Windows.Forms.Padding(7, 1, 0, 1);
-            this._menuStrip.Size = new System.Drawing.Size(1441, 30);
+            this._menuStrip.Size = new System.Drawing.Size(1441, 25);
             this._menuStrip.TabIndex = 0;
             this._menuStrip.Text = "menuStrip1";
             // 
@@ -85,7 +85,7 @@ namespace WindowsFormsApp1
             this._directionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._aboutToolStripMenuItem});
             this._directionsToolStripMenuItem.Name = "_directionsToolStripMenuItem";
-            this._directionsToolStripMenuItem.Size = new System.Drawing.Size(53, 28);
+            this._directionsToolStripMenuItem.Size = new System.Drawing.Size(53, 23);
             this._directionsToolStripMenuItem.Text = "說明";
             // 
             // _aboutToolStripMenuItem
@@ -112,7 +112,7 @@ namespace WindowsFormsApp1
             this._shapeList.RowHeadersVisible = false;
             this._shapeList.RowHeadersWidth = 51;
             this._shapeList.RowTemplate.Height = 27;
-            this._shapeList.Size = new System.Drawing.Size(354, 540);
+            this._shapeList.Size = new System.Drawing.Size(354, 545);
             this._shapeList.TabIndex = 2;
             this._shapeList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShapeListCellContentClick);
             // 
@@ -157,7 +157,7 @@ namespace WindowsFormsApp1
             this._groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this._groupBox1.Name = "_groupBox1";
             this._groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this._groupBox1.Size = new System.Drawing.Size(371, 634);
+            this._groupBox1.Size = new System.Drawing.Size(371, 639);
             this._groupBox1.TabIndex = 3;
             this._groupBox1.TabStop = false;
             this._groupBox1.Text = "資料顯示";
@@ -200,7 +200,7 @@ namespace WindowsFormsApp1
             this._redoButton,
             this._saveButton,
             this._loadButton});
-            this._chooseShape.Location = new System.Drawing.Point(0, 30);
+            this._chooseShape.Location = new System.Drawing.Point(0, 25);
             this._chooseShape.Name = "_chooseShape";
             this._chooseShape.Size = new System.Drawing.Size(1441, 44);
             this._chooseShape.TabIndex = 6;
@@ -241,7 +241,7 @@ namespace WindowsFormsApp1
             // 
             this._splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this._splitContainer1.Location = new System.Drawing.Point(0, 74);
+            this._splitContainer1.Location = new System.Drawing.Point(0, 69);
             this._splitContainer1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this._splitContainer1.Name = "_splitContainer1";
             // 
@@ -252,7 +252,7 @@ namespace WindowsFormsApp1
             // _splitContainer1.Panel2
             // 
             this._splitContainer1.Panel2.Controls.Add(this._splitContainer2);
-            this._splitContainer1.Size = new System.Drawing.Size(1441, 634);
+            this._splitContainer1.Size = new System.Drawing.Size(1441, 639);
             this._splitContainer1.SplitterDistance = 188;
             this._splitContainer1.TabIndex = 9;
             // 
@@ -264,7 +264,7 @@ namespace WindowsFormsApp1
             this._pageList.Location = new System.Drawing.Point(0, 0);
             this._pageList.Margin = new System.Windows.Forms.Padding(4);
             this._pageList.Name = "_pageList";
-            this._pageList.Size = new System.Drawing.Size(188, 634);
+            this._pageList.Size = new System.Drawing.Size(188, 639);
             this._pageList.TabIndex = 0;
             // 
             // _splitContainer2
@@ -284,7 +284,7 @@ namespace WindowsFormsApp1
             // _splitContainer2.Panel2
             // 
             this._splitContainer2.Panel2.Controls.Add(this._groupBox1);
-            this._splitContainer2.Size = new System.Drawing.Size(1249, 634);
+            this._splitContainer2.Size = new System.Drawing.Size(1249, 639);
             this._splitContainer2.SplitterDistance = 874;
             this._splitContainer2.TabIndex = 4;
             // 
@@ -356,6 +356,7 @@ namespace WindowsFormsApp1
             // _redoButton
             // 
             this._redoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._redoButton.Enabled = false;
             this._redoButton.Font = new System.Drawing.Font("Microsoft JhengHei UI", 15F);
             this._redoButton.Image = ((System.Drawing.Image)(resources.GetObject("_redoButton.Image")));
             this._redoButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -409,7 +410,6 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.DataGridViewTextBoxColumn _shapeName;
         private System.Windows.Forms.DataGridViewTextBoxColumn _information;
         private System.Windows.Forms.ToolStrip _chooseShape;
-        private ToolStripBindAbleButton _chooseShapeRectangleButton;
         private ToolStripBindAbleButton _chooseShapeEllipseButton;
         private ToolStripBindAbleButton _chooseShapeLineButton;
         private DoubleBufferedPanel _canvas;
@@ -422,5 +422,6 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.ToolStripButton _saveButton;
         private System.Windows.Forms.ToolStripButton _loadButton;
         private System.Windows.Forms.FlowLayoutPanel _pageList;
+        private ToolStripBindAbleButton _chooseShapeRectangleButton;
     }
 }

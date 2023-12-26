@@ -113,6 +113,7 @@ namespace WindowsFormsApp1
             }
         }
 
+        //ChoosePage
         public void ChoosePage(int index)
         {
             _pageCheckedList[LastChoosePage] = false;
@@ -120,6 +121,7 @@ namespace WindowsFormsApp1
             _model.SetPageIndex(index);
         }
 
+        //UpdatePageCheckList
         public void UpdatePageCheckList()
         {
             _pageCheckedList.Clear();

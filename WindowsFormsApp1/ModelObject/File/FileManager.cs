@@ -13,7 +13,7 @@ namespace WindowsFormsApp1
 {
     public class FileManager
     {
-        const string FILE_PATH = "/PowerPointData.json";
+        const string FILE_PATH = "../../PowerPointData.json";
 
         //Save
         public static void Save(List<Shapes> pageList)
