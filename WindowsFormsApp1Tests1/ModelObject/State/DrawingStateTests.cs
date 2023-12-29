@@ -39,7 +39,7 @@ namespace WindowsFormsApp1.ModelObject.State.Tests
             _isNotifyDataChange = false;
             _isDrawingFinish = false;
 
-            _model = new Model();
+            _model = new Model(new MockGoogleDriveManager());
             _mockShapes = new MockShapes();
 
             _model.Shapes = _mockShapes;

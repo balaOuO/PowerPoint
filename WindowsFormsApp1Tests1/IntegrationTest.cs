@@ -21,7 +21,7 @@ namespace WindowsFormsApp1.Tests
         public void Initialize()
         {
             _shapes = new MockShapes();
-            _model = new Model();
+            _model = new Model(new MockGoogleDriveManager());
             _model.Shapes = _shapes;
             _presentationModel = new PresentationModel(_model);
         }

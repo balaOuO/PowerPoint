@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -29,7 +30,7 @@ namespace WindowsFormsApp1
             _presentationModel = presentationModel;
 
             _canvas.Width = _splitContainer2.Panel1.Width;
-            _canvas.Height = (int)((float)_canvas.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
+            _canvas.Height = (int)((double)_canvas.Width * ((double)ScreenSize.HEIGHT / (double)ScreenSize.WIDTH));
             UpdatePageList();
             UpdatePageChecked();
             ResizePage();
@@ -154,18 +155,19 @@ namespace WindowsFormsApp1
         //TransformPoint
         public Point TransformPoint(Point point)
         {
-            return new Point((point.X / _canvas.ClientSize.Width) * ScreenSize.WIDTH, (point.Y / _canvas.ClientSize.Height) * ScreenSize.HEIGHT);
+            return new Point((point.X / _canvas.Size.Width) * ScreenSize.WIDTH, (point.Y / _canvas.Size.Height) * ScreenSize.HEIGHT);
         }
 
         //press canvas event method
         public void HandleCanvasPressed(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            _model.PressCanvas(TransformPoint(new Point(e.X, e.Y)));
+            _model.PressCanvas(TransformPoint(new Point(e.Location.X, e.Location.Y)));
         }
 
         //release canvas event method
         public void HandleCanvasReleased(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+
             _model.ReleaseCanvas(TransformPoint(new Point(e.X, e.Y)));
         }
 
@@ -198,15 +200,15 @@ namespace WindowsFormsApp1
         //canvas container resize
         public void HandleCanvasContainerResize(object sender, EventArgs e)
         {
-            if ((float)_splitContainer2.Panel1.Width / (float)_splitContainer2.Panel1.Height < (float)ScreenSize.WIDTH / (float)ScreenSize.HEIGHT)
+            if ((double)_splitContainer2.Panel1.Width / (double)_splitContainer2.Panel1.Height < (double)ScreenSize.WIDTH / (double)ScreenSize.HEIGHT)
             {
                 _canvas.Width = _splitContainer2.Panel1.Width;
-                _canvas.Height = (int)((float)_canvas.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
+                _canvas.Height = (int)((double)_canvas.Width * ((double)ScreenSize.HEIGHT / (double)ScreenSize.WIDTH));
             }
             else
             {
                 _canvas.Height = _splitContainer2.Panel1.Height;
-                _canvas.Width = (int)((float)_canvas.Height * ((float)ScreenSize.WIDTH / (float)ScreenSize.HEIGHT));
+                _canvas.Width = (int)((double)_canvas.Height * ((double)ScreenSize.WIDTH / (double)ScreenSize.HEIGHT));
             }
         }
 
@@ -261,7 +263,7 @@ namespace WindowsFormsApp1
             foreach (Control control in _pageList.Controls)
             {
                 control.Width = _pageList.Width - PAGE_PADDING;
-                control.Height = (int)((float)control.Width * ((float)ScreenSize.HEIGHT / (float)ScreenSize.WIDTH));
+                control.Height = (int)((double)control.Width * ((double)ScreenSize.HEIGHT / (double)ScreenSize.WIDTH));
             }
         }
 
@@ -280,25 +282,75 @@ namespace WindowsFormsApp1
 
         const string SAVE_MESSAGE = "Save in google drive?";
         const string SAVE_TITLE = "Confirm Message";
+        const string FAIL_TITLE = "Error";
+        const string SAVE_FAIL = "Saved Failed";
+        const string SUCCESS_TITLE = "Croissant";
+        const string SAVE_SUCCESS = "Saved Successfully";
 
         //ClickSaveButton
-        private void ClickSaveButton(object sender, EventArgs e)
+        private async void ClickSaveButton(object sender, EventArgs e)
         {
             if (MessageBox.Show(SAVE_MESSAGE, SAVE_TITLE, MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                _model.Save();
+                _saveButton.Enabled = false;
+                _loadButton.Enabled = false;
+                Task<bool> saveTask = Task<bool>.Run(() =>
+                {
+                    return Saving();
+                });
+                SaveFinish(await saveTask);
             }
+        }
+
+        //Saving
+        public bool Saving()
+        {
+            try
+            {
+                _model.Save();
+                Thread.Sleep(10000);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        //SaveFinish
+        private void SaveFinish(bool result)
+        {
+            if (result)
+            {
+                MessageBox.Show(SAVE_SUCCESS, SUCCESS_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+            else
+            {
+                MessageBox.Show(SAVE_FAIL, FAIL_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            _saveButton.Enabled = true;
+            _loadButton.Enabled = true;
         }
 
         const string LOAD_MESSAGE = "Load on google drive?";
         const string LOAD_TITLE = "Confirm Message";
+        const string LOAD_FAIL = "Loaded Failed";
 
         //ClickLoadButton
         private void ClickLoadButton(object sender, EventArgs e)
         {
             if (MessageBox.Show(LOAD_MESSAGE, LOAD_TITLE, MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                _model.Load();
+                Cursor = Cursors.WaitCursor;
+                try
+                {
+                    _model.Load();
+                }
+                catch
+                {
+                    MessageBox.Show(LOAD_FAIL, FAIL_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                Cursor = Cursors.Default;
             }
         }
     }

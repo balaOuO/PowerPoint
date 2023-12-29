@@ -15,7 +15,9 @@ namespace WindowsFormsApp1
         public delegate void ShapeDataChangedEventHandler();
         public event ShapeDataChangedEventHandler _shapeDataChanged;
 
-        public Model()
+        private IGoogleDriveManager _googleDriveManager;
+
+        public Model(IGoogleDriveManager googleDriveManager)
         {
             _pageList = new List<Shapes>() 
             {
@@ -23,6 +25,7 @@ namespace WindowsFormsApp1
             };
             _commandManager = new CommandManager();
             Initialize();
+            _googleDriveManager = googleDriveManager;
         }
 
         //Initialize
@@ -107,11 +110,13 @@ namespace WindowsFormsApp1
         public void Save()
         {
             FileManager.Save(PageList);
+            _googleDriveManager.UploadToGoogleDrive();
         }
 
         //Load
         public void Load()
         {
+            _googleDriveManager.DownloadFileFromGoogleDrive();
             _pageList = FileManager.Load();
             Initialize();
         }

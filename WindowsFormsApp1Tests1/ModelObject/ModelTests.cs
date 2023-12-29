@@ -20,6 +20,7 @@ namespace WindowsFormsApp1.Tests
         bool _isNotifyDrawingFinish;
         bool _isPageDataChanged;
         ICanvasState _canvasState;
+        MockGoogleDriveManager _mockGoogleDriveManager;
 
         //HandleShapeDataChanged
         public void HandleShapeDataChanged()
@@ -43,7 +44,8 @@ namespace WindowsFormsApp1.Tests
         [TestInitialize()]
         public void Initialize()
         {
-            _model = new Model();
+            _mockGoogleDriveManager = new MockGoogleDriveManager();
+            _model = new Model(_mockGoogleDriveManager);
             _modelPrivateObject = new PrivateObject(_model);
             _mockShapes = new MockShapes();
             _model.Shapes = _mockShapes;
@@ -431,12 +433,20 @@ namespace WindowsFormsApp1.Tests
             _model.AddPage(0);
             _model.Save();
             Assert.IsTrue(true);
+            Assert.AreEqual(_mockGoogleDriveManager.UpLoadTimes, 1);
         }
 
         //TestLoad
         [TestMethod()]
         public void TestLoad()
         {
+            _model.AddShape(ShapeName.LINE, new Point(1, 2), new Point(300, 400));
+            _model.AddPage(1);
+            _model.AddShape(ShapeName.ELLIPSE, new Point(300, 400), new Point(500, 600));
+            _model.AddPage(2);
+            _model.AddShape(ShapeName.RECTANGLE, new Point(500, 600), new Point(1500, 700));
+            _model.AddPage(0);
+            _model.Save();
             _model.Load();
             Assert.AreEqual(_model.PageList[0].ShapeList.Count, 0);
             Assert.AreEqual(_model.PageList[1].ShapeList.Count, 1);
@@ -448,6 +458,7 @@ namespace WindowsFormsApp1.Tests
             Assert.AreEqual(_model.PageList[3].ShapeList.Count, 1);
             Assert.AreEqual(_model.PageList[3].ShapeList[0].ShapeName, ShapeName.RECTANGLE);
             Assert.AreEqual(_model.PageList[3].ShapeList[0].Info, "(500,600),(1500,700)");
+            Assert.AreEqual(_mockGoogleDriveManager.DownLoadTimes, 1);
         }
     }
 }

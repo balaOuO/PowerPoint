@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1Tests1;
 
 namespace WindowsFormsApp1.Tests
 {
     [TestClass()]
     public class PresentationModelTests
     {
-        Model _model = new Model();
+        Model _model = new Model(new MockGoogleDriveManager());
         PresentationModel _presentationModel;
         PrivateObject _presentationPrivateObject;
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFormsApp1Tests1;
 
 namespace WindowsFormsApp1.Tests
 {
@@ -20,7 +21,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestAddShapeCommand()
         {
-            _model = new Model();
+            _model = new Model(new MockGoogleDriveManager());
             _command = new AddShapeCommand(_model, 0 , ShapeName.RECTANGLE, new Point(10, 10), new Point(20, 20));
         }
 

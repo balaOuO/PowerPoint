@@ -83,8 +83,12 @@
     <Compile Include="ModelObject\File\PageFormat.cs" />
     <Compile Include="ModelObject\File\PowerPointFileFormat.cs" />
     <Compile Include="ModelObject\File\ShapeFormat.cs" />
+    <Compile Include="ModelObject\GoogleDrive\GoogleDriveManager.cs" />
+    <Compile Include="ModelObject\GoogleDrive\GoogleDriveService.cs" />
+    <Compile Include="ModelObject\GoogleDrive\IGoogleDriveManager.cs" />
     <Compile Include="ModelObject\Model.Command.cs" />
     <Compile Include="ModelObject\Model.Page.cs" />
+    <Compile Include="ModelObject\ProjectFile.cs" />
     <Compile Include="ModelObject\ScreenSize.cs" />
     <Compile Include="ModelObject\ShapeObject\Shape.Method.cs" />
     <Compile Include="ModelObject\ShapeObject\ShapePart.cs" />

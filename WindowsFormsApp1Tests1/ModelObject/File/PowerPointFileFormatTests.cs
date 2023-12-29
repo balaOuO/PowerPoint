@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using WindowsFormsApp1Tests1;
 
 namespace WindowsFormsApp1.ModelObject.File.Tests
 {
@@ -21,7 +22,7 @@ namespace WindowsFormsApp1.ModelObject.File.Tests
         [TestMethod()]
         public void TestPowerPointFileFormat()
         {
-            _model = new Model();
+            _model = new Model(new MockGoogleDriveManager());
             _model.AddShape(ShapeName.LINE, new Point(1, 2), new Point(3, 4));
             _model.AddPage(1);
             _model.AddShape(ShapeName.LINE, new Point(10, 20), new Point(30, 40));

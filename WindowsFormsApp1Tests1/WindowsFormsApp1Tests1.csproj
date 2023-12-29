@@ -62,6 +62,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="IntegrationTest.cs" />
+    <Compile Include="MockGoogleDriveManager.cs" />
     <Compile Include="MockGraphicAdaptor.cs" />
     <Compile Include="MockRandom.cs" />
     <Compile Include="MockShapes.cs" />

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFormsApp1Tests1;
 
 namespace WindowsFormsApp1.Tests
 {
@@ -19,7 +20,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestMoveCommand()
         {
-            _model = new Model();
+            _model = new Model(new MockGoogleDriveManager());
             _command = new MoveCommand(_model , 0 , 0, new Point(100, 100), new Point(115, 115));
         }
 

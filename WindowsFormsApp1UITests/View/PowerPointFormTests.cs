@@ -26,6 +26,7 @@ namespace WindowsFormsApp1.Tests
         private WindowsDriver<WindowsElement> _driver;
         RemoteTouchScreen _touchScreen;
         Actions _actions;
+        string _templateString;
 
         //https://kkboxsqa.wordpress.com/2019/03/10/windows-automation-with-winappdriver/
         // init
@@ -48,46 +49,157 @@ namespace WindowsFormsApp1.Tests
             _robot.CleanUp();
         }
 
+        //TransformPoint
+        public Point TransformPoint(Point point)
+        {
+            return new Point((point.X / _driver.FindElementByAccessibilityId("_canvas").Size.Width) * ScreenSize.WIDTH, (point.Y / _driver.FindElementByAccessibilityId("_canvas").Size.Height) * ScreenSize.HEIGHT);
+        }
+
         //Mapping
         public Point Mapping(Point point)
         {
-            const double WIDTH = 1600;
-            const double HEIGHT = 900;
+            const double WIDTH = ScreenSize.WIDTH;
+            const double HEIGHT = ScreenSize.HEIGHT;
             int width = _driver.FindElementByAccessibilityId("_canvas").Size.Width;
             int height = _driver.FindElementByAccessibilityId("_canvas").Size.Height;
-            return new Point((int)((double)point.X / WIDTH * (double)width), (int)((double)point.Y / HEIGHT * (double)height));
+            return new Point((int) ((double)point.X / WIDTH * (double)width), (int) ((double)point.Y / HEIGHT * (double)height));
         }
 
+        //DoubleTranspose
+        public Point DoubleTranspose(Point point)
+        {
+            return TransformPoint(Mapping(point));
+        }
+
+        Dictionary<string, string> ShapeNameToButton = new Dictionary<string, string>()
+        {
+            {ShapeName.RECTANGLE , "☐"},
+            {ShapeName.ELLIPSE , "○"},
+            {ShapeName.LINE ,"╱"}
+        };
+
         //Draw
-        public void Draw(string shapeType , Point startPoint , Point endPoint)
+        public void Draw(string shapeType, Point startPoint, Point endPoint , int index)
         {
             Point newStartPoint = Mapping(startPoint);
             Point newEndPoint = Mapping(endPoint);
 
-            _driver.FindElementByName(shapeType).Click();
+            _driver.FindElementByName(ShapeNameToButton[shapeType]).Click();
 
-            int x = _driver.FindElementByAccessibilityId("_canvas").LocationOnScreenOnceScrolledIntoView.X;
-            int y = _driver.FindElementByAccessibilityId("_canvas").LocationOnScreenOnceScrolledIntoView.Y;
-            int width = _driver.FindElementByAccessibilityId("_canvas").Size.Width;
-            int height = _driver.FindElementByAccessibilityId("_canvas").Size.Height;
+            int x = _driver.FindElementByAccessibilityId("_canvas").Location.X;
+            int y = _driver.FindElementByAccessibilityId("_canvas").Location.Y;
+            x += 1;
+            y += 1;
 
-            _actions.MoveToElement(_driver.FindElementByAccessibilityId("_canvas")).Perform();
-            //_actions.MoveByOffset(-1 * width / 2, -1 * height / 2).Perform();
-            //_actions.MoveByOffset((int)newStartPoint.X, (int)newStartPoint.Y).Perform();
-            _actions.ClickAndHold().Perform();
-            _actions.MoveByOffset(-1 * width / 2, -1 * height / 2).Perform();
-            //_actions.MoveByOffset((int)(newEndPoint.X - newStartPoint.X), (int)(newEndPoint.Y - newStartPoint.Y)).Perform();
-            _actions.Release().Perform();
-            _robot.Sleep(5);
-            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
-            _robot.AssertDataGridViewRowDataBy("_shapeList", 0,new string[]{"刪除" , ShapeName.RECTANGLE , string.Format("({0},{1}),({2},{3})", startPoint.X, startPoint.Y, endPoint.X, endPoint.Y) });
+            Point InitialStartPoint = TransformPoint(newStartPoint);
+            Point InitialEndPoint = TransformPoint(newEndPoint);
+
+            _touchScreen.Down(x + (int)newStartPoint.X, y + (int)newStartPoint.Y);
+            _touchScreen.Up(x + (int)newEndPoint.X, y + (int)newEndPoint.Y);
+            _templateString = InitialStartPoint.ToString() + "," + InitialEndPoint.ToString();
+
+            _robot.AssertDataGridViewRowDataBy("_shapeList", index, new string[] { "刪除", shapeType, _templateString });
         }
 
-        //TestDraw
-        [TestMethod]
-        public void TestDraw()
+        //Move 
+        public Point Move(Point startPoint, Point endPoint)
         {
-            Draw("☐" , new Point(200,100) , new Point(400, 225));
+            Point newStartPoint = Mapping(startPoint);
+            Point newEndPoint = Mapping(endPoint);
+            _driver.FindElementByName("➛").Click();
+            int x = _driver.FindElementByAccessibilityId("_canvas").Location.X;
+            int y = _driver.FindElementByAccessibilityId("_canvas").Location.Y;
+            x += 1;
+            y += 1;
+            _touchScreen.Down(x + (int)newStartPoint.X, y + (int)newStartPoint.Y);
+            _touchScreen.Up(x + (int)newEndPoint.X, y + (int)newEndPoint.Y);
+            return new Point(TransformPoint(newEndPoint).X - TransformPoint(newStartPoint).X, TransformPoint(newEndPoint).Y - TransformPoint(newStartPoint).Y);
+        }
+
+        //TestDrawRectangle
+        [TestMethod , Priority(1)]
+        public void TestDrawRectangle()
+        {
+            Draw(ShapeName.RECTANGLE, new Point(100, 100), new Point(400, 400), 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            Draw(ShapeName.RECTANGLE, new Point(500, 100), new Point(800, 400), 1);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 2);
+            Draw(ShapeName.RECTANGLE, new Point(100, 500), new Point(400, 800), 2);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 3);
+            Draw(ShapeName.RECTANGLE, new Point(500, 500), new Point(800, 800), 3);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 4);
+        }
+
+        //TestDrawEllipse
+        [TestMethod, Priority(2)]
+        public void TestDrawEllipse()
+        {
+            Draw(ShapeName.ELLIPSE, new Point(100, 100), new Point(400, 400), 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            Draw(ShapeName.ELLIPSE, new Point(500, 100), new Point(900, 400), 1);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 2);
+            Draw(ShapeName.ELLIPSE, new Point(100, 500), new Point(400, 900), 2);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 3);
+            Draw(ShapeName.ELLIPSE, new Point(500, 500), new Point(1200, 800), 3);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 4);
+        }
+
+        //TestDrawLine
+        [TestMethod, Priority(3)]
+        public void TestDrawLine()
+        {
+            Draw(ShapeName.LINE, new Point(400, 100), new Point(100, 400), 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            Draw(ShapeName.LINE, new Point(500, 100), new Point(800, 400), 1);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 2);
+            Draw(ShapeName.LINE, new Point(400, 800), new Point(100, 500), 2);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 3);
+            Draw(ShapeName.LINE, new Point(500, 800), new Point(800, 500), 3);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 4);
+        }
+
+        //TestModifyRectangle
+        [TestMethod(), Priority(4)]
+        public void TestModifyRectangle()
+        {
+            Draw(ShapeName.RECTANGLE, new Point(100, 100), new Point(400, 400), 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            Move(new Point(400, 400), new Point(800, 800));
+            _robot.AssertDataGridViewRowDataBy("_shapeList", 0, new string[] { "刪除", ShapeName.RECTANGLE, DoubleTranspose(new Point(100, 100)).ToString() + "," + DoubleTranspose(new Point(800, 800)).ToString() });
+        }
+
+        //TestModifyEllipse
+        [TestMethod(), Priority(5)]
+        public void TestModifyEllipse()
+        {
+            Draw(ShapeName.ELLIPSE, new Point(400, 400), new Point(800, 800), 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            Move(new Point(800, 800), new Point(100, 100));
+            _robot.AssertDataGridViewRowDataBy("_shapeList", 0, new string[] { "刪除", ShapeName.ELLIPSE, DoubleTranspose(new Point(400, 400)).ToString() + "," + DoubleTranspose(new Point(100, 100)).ToString() });
+        }
+
+        //TestModifyLine
+        [TestMethod(), Priority(6)]
+        public void TestModifyLine()
+        {
+            Draw(ShapeName.LINE, new Point(500, 800), new Point(800, 500), 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            Move(new Point(800, 800), new Point(800, 100));
+            _robot.AssertDataGridViewRowDataBy("_shapeList", 0, new string[] { "刪除", ShapeName.LINE, DoubleTranspose(new Point(500, 100)).ToString() + "," + DoubleTranspose(new Point(800, 500)).ToString() });
+            Move(new Point(800, 500), new Point(100, 500));
+            _robot.AssertDataGridViewRowDataBy("_shapeList", 0, new string[] { "刪除", ShapeName.LINE, DoubleTranspose(new Point(500, 100)).ToString() + "," + DoubleTranspose(new Point(100, 500)).ToString() });
+        }
+
+        //TestMove
+        [TestMethod(), Priority(7)]
+        public void TestMove()
+        {
+            Draw(ShapeName.RECTANGLE, new Point(100, 100), new Point(400, 400), 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            Point offset = Move(new Point(200, 200), new Point(400, 400));
+            Point answerStartPoint = new Point(DoubleTranspose(new Point(100, 100)).X + offset.X, DoubleTranspose(new Point(100, 100)).Y + offset.Y);
+            Point answerEndPoint = new Point(DoubleTranspose(new Point(400, 400)).X + offset.X, DoubleTranspose(new Point(400, 400)).Y + offset.Y);
+            _robot.AssertDataGridViewRowDataBy("_shapeList", 0, new string[] { "刪除", ShapeName.RECTANGLE, answerStartPoint.ToString() + "," + answerEndPoint.ToString() });
         }
 
         List<string> Key = new List<string>()
@@ -130,7 +242,7 @@ namespace WindowsFormsApp1.Tests
         }
 
         //TestAddEllipse
-        [TestMethod()]
+        [TestMethod(), Priority(8)]
         public void TestAddDeleteShape()
         {
             AddShape(ShapeName.ELLIPSE , "10" , "10" , "100" , "200");
@@ -147,7 +259,7 @@ namespace WindowsFormsApp1.Tests
         }
 
         //TestUndoRedo
-        [TestMethod()]
+        [TestMethod(), Priority(9)]
         public void TestUndoRedo()
         {
             AddShape(ShapeName.LINE, "100", "700", "3", "200");
@@ -158,7 +270,7 @@ namespace WindowsFormsApp1.Tests
         }
 
         //TestAddPage
-        [TestMethod()]
+        [TestMethod(), Priority(10)]
         public void TestAddPage()
         {
             _robot.AssertDataGridViewRowCountBy("_pageList", 1);
@@ -179,7 +291,7 @@ namespace WindowsFormsApp1.Tests
         }
 
         //TestLeftSpliterResize
-        [TestMethod()]
+        [TestMethod(), Priority(11)]
         public void TestLeftSpliterResize()
         {
             int x = _driver.FindElementByAccessibilityId("_canvas").Location.X;
@@ -201,7 +313,7 @@ namespace WindowsFormsApp1.Tests
         }
 
         //TestLeftSpliterResize
-        [TestMethod()]
+        [TestMethod(), Priority(12)]
         public void TestRightSpliterResize()
         {
             int x = _driver.FindElementByAccessibilityId("_canvas").Location.X;
@@ -220,6 +332,64 @@ namespace WindowsFormsApp1.Tests
             width = _driver.FindElementByAccessibilityId("0").Size.Width;
             height = _driver.FindElementByAccessibilityId("0").Size.Height;
             Assert.AreEqual(width / height, 16 / 9);
+        }
+
+        //test modify window
+        [TestMethod(), Priority(13)]
+        public void TestModifyWindow()
+        {
+            int width;
+            int height;
+
+            _driver.Manage().Window.Maximize();
+
+            width = _driver.FindElementByAccessibilityId("_canvas").Size.Width;
+            height = _driver.FindElementByAccessibilityId("_canvas").Size.Height;
+            Assert.AreEqual(width / height, 16 / 9);
+
+            width = _driver.FindElementByAccessibilityId("0").Size.Width;
+            height = _driver.FindElementByAccessibilityId("0").Size.Height;
+            Assert.AreEqual(width / height, 16 / 9);
+        }
+
+        //test save
+        [TestMethod(), Priority(14)]
+        public void TestSaveLoad()
+        {
+            Draw(ShapeName.LINE, new Point(400, 100), new Point(100, 400), 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+
+            _driver.FindElementByName("save").Click();
+            _robot.SwitchTo("MessageBox");
+            _driver.FindElementByName("確定").Click();
+            _robot.SwitchTo("Form1");
+
+            Assert.AreEqual(_driver.FindElementByName("save").Enabled, false);
+            Assert.AreEqual(_driver.FindElementByName("load").Enabled, false);
+            _driver.FindElementByAccessibilityId("0").Click();
+            Move(new Point(200, 200), new Point(200, 200));
+            _actions.SendKeys(Keys.Delete).Perform();
+            _robot.Sleep(10);
+
+            _robot.SwitchTo("MessageBox");
+            _driver.FindElementByName("確定").Click();
+            _robot.SwitchTo("Form1");
+
+            _driver.FindElementByName("load").Click();
+            _robot.SwitchTo("MessageBox");
+            _driver.FindElementByName("確定").Click();
+            _robot.SwitchTo("Form1");
+            _robot.Sleep(5);
+
+            _driver.FindElementByAccessibilityId("0").Click();
+            _robot.AssertDataGridViewRowDataBy("_shapeList", 0, new string[] { "刪除", ShapeName.LINE, _templateString});
+        }
+
+        //TestIntegration
+        [TestMethod(), Priority(14)]
+        public void TestIntegration()
+        {
+
         }
     }
 }

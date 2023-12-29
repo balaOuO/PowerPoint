@@ -13,21 +13,19 @@ namespace WindowsFormsApp1
 {
     public class FileManager
     {
-        const string FILE_PATH = "../../PowerPointData.json";
-
         //Save
         public static void Save(List<Shapes> pageList)
         {
             PowerPointFileFormat powerPointFileFormat = new PowerPointFileFormat(pageList);
             string fileData = JsonConvert.SerializeObject(powerPointFileFormat);
 
-            File.WriteAllText(FILE_PATH, fileData);
+            File.WriteAllText(new ProjectFile().SaveFilePath + ProjectFile.SAVE_FILE_NAME, fileData);
         }
 
         //Load
         public static List<Shapes> Load()
         {
-            string fileData = File.ReadAllText(FILE_PATH);
+            string fileData = File.ReadAllText(new ProjectFile().SaveFilePath + ProjectFile.SAVE_FILE_NAME);
             PowerPointFileFormat powerPointFileFormat = JsonConvert.DeserializeObject<PowerPointFileFormat>(fileData);
             return powerPointFileFormat.Read();
         }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFormsApp1Tests1;
 
 namespace WindowsFormsApp1.Tests
 {
@@ -18,7 +19,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestDeleteShapeByIndexCommand()
         {
-            _model = new Model();
+            _model = new Model(new MockGoogleDriveManager());
             _model.AddShapeCommand(0 , ShapeName.LINE, new Point(10, 10), new Point(20, 20));
             _command = new DeleteShapeByIndexCommand(_model, 0 , 0);
             Assert.AreEqual(_model.ShapeList.Count, 1);

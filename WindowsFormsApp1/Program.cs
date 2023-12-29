@@ -16,7 +16,7 @@ namespace WindowsFormsApp1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Model model = new Model();
+            Model model = new Model(new GoogleDriveManager());
             PresentationModel presentationModel = new PresentationModel(model);
             Application.Run(new PowerPointForm(model , presentationModel));
         }

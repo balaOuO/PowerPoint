@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFormsApp1Tests1;
 
 namespace WindowsFormsApp1.Tests
 {
@@ -20,7 +21,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod()]
         public void TestDeletePageCommand()
         {
-            _model = new Model();
+            _model = new Model(new MockGoogleDriveManager());
             _model.AddPage(0);
             _command = new DeletePageCommand(_model, 0);
             _commandPrivateObject = new PrivateObject(_command);
