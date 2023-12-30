@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using OpenQA.Selenium;
 using System.Windows.Input;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace WindowsFormsApp1UITests
 {
@@ -180,30 +181,6 @@ namespace WindowsFormsApp1UITests
                     Assert.AreEqual(rowCount, gridPattern.Current.RowCount);
                 }
             }
-        }
-
-        //DataGridViewCount
-        public int DataGridViewCount(string name)
-        {
-            var dataGridView = _driver.FindElementByAccessibilityId(name);
-            System.Windows.Point point = new System.Windows.Point(dataGridView.Location.X, dataGridView.Location.Y);
-            AutomationElement element = AutomationElement.FromPoint(point);
-
-            while (element != null && element.Current.LocalizedControlType.Contains("datagrid") == false)
-            {
-                element = TreeWalker.RawViewWalker.GetParent(element);
-            }
-
-            if (element != null)
-            {
-                GridPattern gridPattern = element.GetCurrentPattern(GridPattern.Pattern) as GridPattern;
-
-                if (gridPattern != null)
-                {
-                    return gridPattern.Current.RowCount;
-                }
-            }
-            return -1;
         }
 
         //InputText

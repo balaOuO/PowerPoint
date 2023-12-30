@@ -208,9 +208,8 @@ namespace WindowsFormsApp1.Tests
         };
 
         //AddShape
-        public void AddShape(string shapeType , string startX , string startY , string endX , string endY)
+        public void AddShape(string shapeType , string startX , string startY , string endX , string endY , int rowIndex)
         {
-            int dataCount = _robot.DataGridViewCount("_shapeList");
             _driver.FindElementByName("開啟").Click();
             _driver.FindElementByName(shapeType).Click();
             _robot.ClickButton("_addShape");
@@ -223,7 +222,7 @@ namespace WindowsFormsApp1.Tests
             _robot.AssertEnable("_okButton", true);
             _robot.ClickButton("_okButton");
             _robot.SwitchTo("Form1");
-            _robot.AssertDataGridViewRowDataBy("_shapeList", dataCount + 1, new string[] { "刪除", shapeType, string.Format("({0},{1}),({2},{3})" , startX , startY , endX , endY) });
+            _robot.AssertDataGridViewRowDataBy("_shapeList", rowIndex , new string[] { "刪除", shapeType, string.Format("({0},{1}),({2},{3})" , startX , startY , endX , endY) });
         }
 
         //MappingNumberToKey
@@ -245,15 +244,15 @@ namespace WindowsFormsApp1.Tests
         [TestMethod(), Priority(8)]
         public void TestAddDeleteShape()
         {
-            AddShape(ShapeName.ELLIPSE , "10" , "10" , "100" , "200");
+            AddShape(ShapeName.ELLIPSE , "10" , "10" , "100" , "200" , 0);
             _robot.DeletDataGridView("_shapeList", 0);
             _robot.AssertDataGridViewRowCountBy("_shapeList", 0);
 
-            AddShape(ShapeName.RECTANGLE, "100", "200", "500", "600");
+            AddShape(ShapeName.RECTANGLE, "100", "200", "500", "600", 0);
             _robot.DeletDataGridView("_shapeList", 0);
             _robot.AssertDataGridViewRowCountBy("_shapeList", 0);
 
-            AddShape(ShapeName.LINE, "1500", "850", "357", "44");
+            AddShape(ShapeName.LINE, "1500", "850", "357", "44", 0);
             _robot.DeletDataGridView("_shapeList", 0);
             _robot.AssertDataGridViewRowCountBy("_shapeList", 0);
         }
@@ -262,7 +261,7 @@ namespace WindowsFormsApp1.Tests
         [TestMethod(), Priority(9)]
         public void TestUndoRedo()
         {
-            AddShape(ShapeName.LINE, "100", "700", "3", "200");
+            AddShape(ShapeName.LINE, "100", "700", "3", "200", 0);
             _driver.FindElementByName("↩︎").Click();
             _robot.AssertDataGridViewRowCountBy("_shapeList", 0);
             _driver.FindElementByName("↪︎").Click();
@@ -389,7 +388,152 @@ namespace WindowsFormsApp1.Tests
         [TestMethod(), Priority(14)]
         public void TestIntegration()
         {
+            //draw wrong
+            Draw(ShapeName.RECTANGLE, new Point(100, 100), new Point(200, 200), 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            Move(new Point(200, 200), new Point(300, 300));
+            _driver.FindElementByName("↩︎").Click();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            _driver.FindElementByName("↩︎").Click();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 0);
 
+            //draw head and body
+            Draw(ShapeName.ELLIPSE, new Point(100, 100), new Point(200, 200), 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            Move(new Point(200, 200), new Point(400, 400));
+            Draw(ShapeName.ELLIPSE, new Point(100, 100), new Point(500, 500), 1);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 2);
+            Move(new Point(200, 200), new Point(500, 500));
+            Move(new Point(200, 200), new Point(550, 200));
+
+            //draw left eye
+            Draw(ShapeName.RECTANGLE, new Point(200, 200), new Point(250, 250), 2);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 3);
+            _driver.FindElementByName("↩︎").Click();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 2);
+            Draw(ShapeName.RECTANGLE, new Point(400, 200), new Point(450, 250), 2);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 3);
+            _driver.FindElementByName("↩︎").Click();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 2);
+            Draw(ShapeName.RECTANGLE, new Point(500, 200), new Point(550, 250), 2);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 3);
+
+            //draw right eye
+            AddShape(ShapeName.RECTANGLE, "600", "200", "650", "250", 3);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 4);
+            Move(new Point(625, 225), new Point(675, 225));
+
+            //draw left hand
+            AddShape(ShapeName.LINE, "200", "400", "400", "600", 4);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 5);
+
+            //draw right hand
+            Draw(ShapeName.LINE, new Point(800, 600), new Point(1000, 400), 5);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 6);
+            Move(new Point(1000, 400), new Point(1000, 800));
+            _driver.FindElementByName("↩︎").Click();
+            _driver.FindElementByName("↪︎").Click();
+
+            //save
+            _driver.FindElementByName("save").Click();
+            _robot.SwitchTo("MessageBox");
+            _driver.FindElementByName("確定").Click();
+            _robot.SwitchTo("Form1");
+
+            Assert.AreEqual(_driver.FindElementByName("save").Enabled, false);
+            Assert.AreEqual(_driver.FindElementByName("load").Enabled, false);
+            _robot.AssertDataGridViewRowCountBy("_pageList", 1);
+            _driver.FindElementByName("📄").Click();
+            _robot.AssertDataGridViewRowCountBy("_pageList", 2);
+            _robot.Sleep(0.5);
+            _driver.FindElementByAccessibilityId("0").Click();
+            _robot.Sleep(0.5);
+            _driver.FindElementByAccessibilityId("1").Click();
+            Draw(ShapeName.LINE, new Point(100, 100), new Point(100, 800), 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            _driver.Manage().Window.Maximize();
+
+            //wait save finish
+            _robot.Sleep(10);
+            _robot.SwitchTo("MessageBox");
+            _driver.FindElementByName("確定").Click();
+            _robot.SwitchTo("Form1");
+
+            //draw page 2
+            //draw H
+            Draw(ShapeName.LINE, new Point(100, 450), new Point(300, 450), 1);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 2);
+
+            Draw(ShapeName.LINE, new Point(300, 100), new Point(300, 800), 2);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 3);
+
+            //delete page 1
+            _driver.FindElementByAccessibilityId("1").Click();
+            _robot.Sleep(0.5);
+            _actions.SendKeys(Keys.Delete).Perform();
+            _driver.FindElementByName("↩︎").Click();
+            _driver.FindElementByAccessibilityId("0").Click();
+            _actions.SendKeys(Keys.Delete).Perform();
+            _robot.AssertDataGridViewRowCountBy("_pageList", 1);
+
+            //Draw I
+            Draw(ShapeName.ELLIPSE, new Point(600, 100), new Point(800, 300), 3);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 4);
+            Draw(ShapeName.RECTANGLE, new Point(600, 400), new Point(800, 800), 4);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 5);
+
+            //Load
+            _driver.FindElementByName("load").Click();
+            _robot.SwitchTo("MessageBox");
+            _driver.FindElementByName("確定").Click();
+            _robot.SwitchTo("Form1");
+            _robot.Sleep(5);
+
+            //check
+            _driver.FindElementByAccessibilityId("0").Click();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 6);
+
+            //delete snowman on screen
+            Move(new Point(500, 200), new Point(500, 200));
+            _actions.SendKeys(Keys.Delete).Perform();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 5);
+
+            Move(new Point(500, 500), new Point(500, 500));
+            _actions.SendKeys(Keys.Delete).Perform();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 4);
+
+            _robot.DeletDataGridView("_shapeList", 1);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 3);
+
+            _robot.DeletDataGridView("_shapeList", 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 2);
+
+            _robot.DeletDataGridView("_shapeList", 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+
+            _robot.DeletDataGridView("_shapeList", 0);
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 0);
+
+            _robot.Sleep(1);
+
+            Assert.AreEqual(_driver.FindElementByName("↩︎").Enabled, true);
+            Assert.AreEqual(_driver.FindElementByName("↪︎").Enabled, false);
+
+            _driver.FindElementByName("↩︎").Click();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 1);
+            _driver.FindElementByName("↩︎").Click();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 2);
+            _driver.FindElementByName("↩︎").Click();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 3);
+            _driver.FindElementByName("↩︎").Click();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 4);
+            _driver.FindElementByName("↩︎").Click();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 5);
+            _driver.FindElementByName("↩︎").Click();
+            _robot.AssertDataGridViewRowCountBy("_shapeList", 6);
+
+            Assert.AreEqual(_driver.FindElementByName("↩︎").Enabled, false);
+            Assert.AreEqual(_driver.FindElementByName("↪︎").Enabled, true);
         }
     }
 }

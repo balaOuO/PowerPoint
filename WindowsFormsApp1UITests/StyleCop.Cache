@@ -29,15 +29,15 @@
     <timestamps>
       <styleCop>2023/09/16 14:23:49.220</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2023/12/29 19:55:21.395</sourceFile>
+      <sourceFile>2023/12/30 23:40:06.722</sourceFile>
       <parser>2023/09/16 14:23:49.220</parser>
       <KellyPalRules.KellyPalAnalyzer>2023/09/16 14:23:49.220</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
     </timestamps>
     <violations>
       <violation namespace="StyleCop.CSharp.CsParser" rule="SyntaxException" ruleCheckId="SA0102">
-        <context>A syntax error has been discovered in file D:\victor\desktop\file\NTUT\3_1\windows_form\110820038\WindowsFormsApp1UITests\Robot.cs on line 126.</context>
-        <line>126</line>
+        <context>A syntax error has been discovered in file D:\victor\desktop\file\NTUT\3_1\windows_form\110820038\WindowsFormsApp1UITests\Robot.cs on line 127.</context>
+        <line>127</line>
         <warning>False</warning>
       </violation>
     </violations>
@@ -46,7 +46,7 @@
     <timestamps>
       <styleCop>2023/09/16 14:23:49.220</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2023/12/29 19:54:23.356</sourceFile>
+      <sourceFile>2023/12/30 23:55:12.096</sourceFile>
       <parser>2023/09/16 14:23:49.220</parser>
       <KellyPalRules.KellyPalAnalyzer>2023/09/16 14:23:49.220</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>

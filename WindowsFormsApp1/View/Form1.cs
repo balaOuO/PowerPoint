@@ -15,6 +15,7 @@ namespace WindowsFormsApp1
     {
         Model _model;
         PresentationModel _presentationModel;
+        const int SAVE_SLEEP_TIME = 10000;
         public PowerPointForm(Model model , PresentationModel presentationModel)
         {
             InitializeComponent();
@@ -87,9 +88,7 @@ namespace WindowsFormsApp1
             addShapeForm.ShowDialog();
 
             if (addShapeForm.DialogResult == DialogResult.OK)
-            {
                 _model.AddShape(_selectShape.Text, addShapeForm.StartPoint, addShapeForm.EndPoint);
-            }
         }
         
         //click delete button in data grid view
@@ -308,7 +307,7 @@ namespace WindowsFormsApp1
             try
             {
                 _model.Save();
-                Thread.Sleep(10000);
+                Thread.Sleep(SAVE_SLEEP_TIME);
                 return true;
             }
             catch
