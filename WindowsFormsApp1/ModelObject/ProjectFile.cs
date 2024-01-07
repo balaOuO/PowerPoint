@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    class ProjectFile
+    public class ProjectFile
     {
         public const string SAVE_FILE_NAME = "PowerPointData.json";
         public const string SAVE_FILE_TYPE = "application/json";

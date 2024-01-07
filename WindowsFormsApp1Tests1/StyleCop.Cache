@@ -149,6 +149,17 @@
     </timestamps>
     <violations />
   </sourcecode>
+  <sourcecode name="FileManagerTests.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2023/09/16 14:23:49.220</styleCop>
+      <settingsFile>0001/01/01 00:00:00.000</settingsFile>
+      <sourceFile>2024/01/06 21:47:11.543</sourceFile>
+      <parser>2023/09/16 14:23:49.220</parser>
+      <KellyPalRules.KellyPalAnalyzer>2023/09/16 14:23:49.220</KellyPalRules.KellyPalAnalyzer>
+      <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
   <sourcecode name="PageFormatTests.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2023/09/16 14:23:49.220</styleCop>
@@ -307,7 +318,7 @@
     <timestamps>
       <styleCop>2023/09/16 14:23:49.220</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2023/12/29 20:39:27.809</sourceFile>
+      <sourceFile>2024/01/06 21:33:15.350</sourceFile>
       <parser>2023/09/16 14:23:49.220</parser>
       <KellyPalRules.KellyPalAnalyzer>2023/09/16 14:23:49.220</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>

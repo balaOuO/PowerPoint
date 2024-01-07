@@ -73,6 +73,7 @@
     <Compile Include="ModelObject\Command\DeleteShapeByIndexCommandTests.cs" />
     <Compile Include="ModelObject\Command\MoveCommandTests.cs" />
     <Compile Include="ModelObject\FactoryTests.cs" />
+    <Compile Include="ModelObject\File\FileManagerTests.cs" />
     <Compile Include="ModelObject\File\PageFormatTests.cs" />
     <Compile Include="ModelObject\File\PowerPointFileFormatTests.cs" />
     <Compile Include="ModelObject\File\ShapeFormatTests.cs" />

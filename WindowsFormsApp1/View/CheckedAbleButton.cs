@@ -36,7 +36,7 @@ namespace WindowsFormsApp1
         {
             if (Checked)
             {
-                e.Graphics.DrawRectangle(Pens.LimeGreen , 0, 0, this.Width - 1, this.Height - 1);
+                e.Graphics.DrawRectangle(Pens.Red , 0, 0, this.Width - 1, this.Height - 1);
             }
         }
     }

@@ -32,6 +32,26 @@ namespace WindowsFormsApp1
             _changeShapeButtonReset += _chooseShapeButtonState[ShapeName.POINTER].ResetState;
         }
 
+        //Resize
+        public static int Resize(int knowValue , int modelNeedValue , int modelKnowValue)
+        {
+            return (int)((double)knowValue / (double)modelKnowValue * (double)modelNeedValue);
+        }
+
+        //TransformPoint
+        public static Point TransformPoint(Point point , Point canvasSize)
+        {
+            return new Point((point.X / canvasSize.X) * ScreenSize.WIDTH, (point.Y / canvasSize.Y) * ScreenSize.HEIGHT);
+        }
+
+        const int TWO = 2;
+
+        //CalculateLocation
+        public static int CalculateLocation(int containerSize , int canvasSize)
+        {
+            return (containerSize - canvasSize) / TWO;
+        }
+
         public Dictionary<string, ButtonState> ChooseShapeButtonState
         {
             get

@@ -172,5 +172,35 @@ namespace WindowsFormsApp1.Tests
             _presentationModel.UpdatePageCheckList();
             Assert.AreEqual(_presentationModel.PageCheckList.Count, 3);
         }
+
+        //TestResize
+        [TestMethod()]
+        public void TestResize()
+        {
+            Assert.AreEqual(PresentationModel.Resize(100, 20, 10), 200);
+            Assert.AreEqual(PresentationModel.Resize(512, 128, 64), 1024);
+            Assert.AreEqual(PresentationModel.Resize(77, 121, 11), 847);
+            Assert.AreEqual(PresentationModel.Resize(171, 14, 266), 9);
+        }
+
+        //TestTransformPoint
+        [TestMethod()]
+        public void TestTransformPoint()
+        {
+            Assert.AreEqual(PresentationModel.TransformPoint(new Point(10, 10), new Point(20, 20)).ToString(), (new Point(800, 450)).ToString());
+            Assert.AreEqual(PresentationModel.TransformPoint(new Point(5000, 5000), new Point(80000, 45000)).ToString(), (new Point(100, 100)).ToString());
+            Assert.AreEqual(PresentationModel.TransformPoint(new Point(8, 10), new Point(40, 50)).ToString(), (new Point(320, 180)).ToString());
+            Assert.AreEqual(PresentationModel.TransformPoint(new Point(10, 10), new Point(100, 100)).ToString(), (new Point(160, 90)).ToString());
+        }
+
+        //TestCalculateLocation
+        [TestMethod()]
+        public void TestCalculateLocation()
+        {
+            Assert.AreEqual(PresentationModel.CalculateLocation(400, 200), 100);
+            Assert.AreEqual(PresentationModel.CalculateLocation(128, 64), 32);
+            Assert.AreEqual(PresentationModel.CalculateLocation(2048, 2000), 24);
+            Assert.AreEqual(PresentationModel.CalculateLocation(6543210, 123456), 3209877);
+        }
     }
 }

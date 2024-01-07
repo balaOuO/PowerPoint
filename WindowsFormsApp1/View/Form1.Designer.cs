@@ -41,19 +41,19 @@ namespace WindowsFormsApp1
             this._selectShape = new System.Windows.Forms.ComboBox();
             this._addShape = new System.Windows.Forms.Button();
             this._chooseShape = new System.Windows.Forms.ToolStrip();
-            this._chooseShapeLineButton = new WindowsFormsApp1.ToolStripBindAbleButton();
-            this._chooseShapeRectangleButton = new WindowsFormsApp1.ToolStripBindAbleButton();
-            this._chooseShapeEllipseButton = new WindowsFormsApp1.ToolStripBindAbleButton();
-            this._chooseShapePointerButton = new WindowsFormsApp1.ToolStripBindAbleButton();
             this._addPageButton = new System.Windows.Forms.ToolStripButton();
-            this._undoButton = new WindowsFormsApp1.ToolStripBindAbleButton();
-            this._redoButton = new WindowsFormsApp1.ToolStripBindAbleButton();
             this._saveButton = new System.Windows.Forms.ToolStripButton();
             this._loadButton = new System.Windows.Forms.ToolStripButton();
             this._splitContainer1 = new System.Windows.Forms.SplitContainer();
             this._pageList = new System.Windows.Forms.FlowLayoutPanel();
             this._splitContainer2 = new System.Windows.Forms.SplitContainer();
             this._canvas = new WindowsFormsApp1.DoubleBufferedPanel();
+            this._chooseShapeLineButton = new WindowsFormsApp1.ToolStripBindAbleButton();
+            this._chooseShapeRectangleButton = new WindowsFormsApp1.ToolStripBindAbleButton();
+            this._chooseShapeEllipseButton = new WindowsFormsApp1.ToolStripBindAbleButton();
+            this._chooseShapePointerButton = new WindowsFormsApp1.ToolStripBindAbleButton();
+            this._undoButton = new WindowsFormsApp1.ToolStripBindAbleButton();
+            this._redoButton = new WindowsFormsApp1.ToolStripBindAbleButton();
             this._menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._shapeList)).BeginInit();
             this._groupBox1.SuspendLayout();
@@ -76,7 +76,7 @@ namespace WindowsFormsApp1
             this._menuStrip.Location = new System.Drawing.Point(0, 0);
             this._menuStrip.Name = "_menuStrip";
             this._menuStrip.Padding = new System.Windows.Forms.Padding(5, 1, 0, 1);
-            this._menuStrip.Size = new System.Drawing.Size(1081, 24);
+            this._menuStrip.Size = new System.Drawing.Size(1102, 24);
             this._menuStrip.TabIndex = 0;
             this._menuStrip.Text = "menuStrip1";
             // 
@@ -112,7 +112,7 @@ namespace WindowsFormsApp1
             this._shapeList.RowHeadersVisible = false;
             this._shapeList.RowHeadersWidth = 51;
             this._shapeList.RowTemplate.Height = 27;
-            this._shapeList.Size = new System.Drawing.Size(359, 431);
+            this._shapeList.Size = new System.Drawing.Size(358, 373);
             this._shapeList.TabIndex = 2;
             this._shapeList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShapeListCellContentClick);
             // 
@@ -157,7 +157,7 @@ namespace WindowsFormsApp1
             this._groupBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this._groupBox1.Name = "_groupBox1";
             this._groupBox1.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this._groupBox1.Size = new System.Drawing.Size(371, 506);
+            this._groupBox1.Size = new System.Drawing.Size(370, 448);
             this._groupBox1.TabIndex = 3;
             this._groupBox1.TabStop = false;
             this._groupBox1.Text = "資料顯示";
@@ -202,9 +202,102 @@ namespace WindowsFormsApp1
             this._loadButton});
             this._chooseShape.Location = new System.Drawing.Point(0, 24);
             this._chooseShape.Name = "_chooseShape";
-            this._chooseShape.Size = new System.Drawing.Size(1081, 36);
+            this._chooseShape.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this._chooseShape.Size = new System.Drawing.Size(1102, 36);
             this._chooseShape.TabIndex = 6;
             this._chooseShape.Text = "toolStrip1";
+            // 
+            // _addPageButton
+            // 
+            this._addPageButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._addPageButton.Font = new System.Drawing.Font("Microsoft JhengHei UI", 15F);
+            this._addPageButton.Image = ((System.Drawing.Image)(resources.GetObject("_addPageButton.Image")));
+            this._addPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._addPageButton.Name = "_addPageButton";
+            this._addPageButton.Size = new System.Drawing.Size(37, 33);
+            this._addPageButton.Text = "📄";
+            this._addPageButton.Click += new System.EventHandler(this.ClickAddPageButton);
+            // 
+            // _saveButton
+            // 
+            this._saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._saveButton.Image = ((System.Drawing.Image)(resources.GetObject("_saveButton.Image")));
+            this._saveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._saveButton.Name = "_saveButton";
+            this._saveButton.Size = new System.Drawing.Size(36, 33);
+            this._saveButton.Text = "save";
+            this._saveButton.Click += new System.EventHandler(this.ClickSaveButton);
+            // 
+            // _loadButton
+            // 
+            this._loadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._loadButton.Image = ((System.Drawing.Image)(resources.GetObject("_loadButton.Image")));
+            this._loadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._loadButton.Name = "_loadButton";
+            this._loadButton.Size = new System.Drawing.Size(37, 33);
+            this._loadButton.Text = "load";
+            this._loadButton.Click += new System.EventHandler(this.ClickLoadButton);
+            // 
+            // _splitContainer1
+            // 
+            this._splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this._splitContainer1.Location = new System.Drawing.Point(0, 60);
+            this._splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this._splitContainer1.Name = "_splitContainer1";
+            // 
+            // _splitContainer1.Panel1
+            // 
+            this._splitContainer1.Panel1.Controls.Add(this._pageList);
+            // 
+            // _splitContainer1.Panel2
+            // 
+            this._splitContainer1.Panel2.Controls.Add(this._splitContainer2);
+            this._splitContainer1.Size = new System.Drawing.Size(1102, 448);
+            this._splitContainer1.SplitterDistance = 188;
+            this._splitContainer1.SplitterWidth = 3;
+            this._splitContainer1.TabIndex = 9;
+            // 
+            // _pageList
+            // 
+            this._pageList.AutoScroll = true;
+            this._pageList.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this._pageList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._pageList.Location = new System.Drawing.Point(0, 0);
+            this._pageList.Name = "_pageList";
+            this._pageList.Size = new System.Drawing.Size(188, 448);
+            this._pageList.TabIndex = 0;
+            // 
+            // _splitContainer2
+            // 
+            this._splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this._splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this._splitContainer2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this._splitContainer2.Name = "_splitContainer2";
+            // 
+            // _splitContainer2.Panel1
+            // 
+            this._splitContainer2.Panel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this._splitContainer2.Panel1.Controls.Add(this._canvas);
+            // 
+            // _splitContainer2.Panel2
+            // 
+            this._splitContainer2.Panel2.Controls.Add(this._groupBox1);
+            this._splitContainer2.Size = new System.Drawing.Size(911, 448);
+            this._splitContainer2.SplitterDistance = 538;
+            this._splitContainer2.SplitterWidth = 3;
+            this._splitContainer2.TabIndex = 4;
+            // 
+            // _canvas
+            // 
+            this._canvas.BackColor = System.Drawing.SystemColors.Control;
+            this._canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._canvas.Location = new System.Drawing.Point(0, 0);
+            this._canvas.Margin = new System.Windows.Forms.Padding(0);
+            this._canvas.Name = "_canvas";
+            this._canvas.Size = new System.Drawing.Size(406, 264);
+            this._canvas.TabIndex = 7;
             // 
             // _chooseShapeLineButton
             // 
@@ -249,17 +342,6 @@ namespace WindowsFormsApp1
             this._chooseShapePointerButton.Text = "➛";
             this._chooseShapePointerButton.Click += new System.EventHandler(this.ClickChooseShapePointerButton);
             // 
-            // _addPageButton
-            // 
-            this._addPageButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this._addPageButton.Font = new System.Drawing.Font("Microsoft JhengHei UI", 15F);
-            this._addPageButton.Image = ((System.Drawing.Image)(resources.GetObject("_addPageButton.Image")));
-            this._addPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._addPageButton.Name = "_addPageButton";
-            this._addPageButton.Size = new System.Drawing.Size(37, 33);
-            this._addPageButton.Text = "📄";
-            this._addPageButton.Click += new System.EventHandler(this.ClickAddPageButton);
-            // 
             // _undoButton
             // 
             this._undoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -284,93 +366,11 @@ namespace WindowsFormsApp1
             this._redoButton.Text = "↪︎";
             this._redoButton.Click += new System.EventHandler(this.ClickRedoButton);
             // 
-            // _saveButton
-            // 
-            this._saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this._saveButton.Image = ((System.Drawing.Image)(resources.GetObject("_saveButton.Image")));
-            this._saveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._saveButton.Name = "_saveButton";
-            this._saveButton.Size = new System.Drawing.Size(36, 33);
-            this._saveButton.Text = "save";
-            this._saveButton.Click += new System.EventHandler(this.ClickSaveButton);
-            // 
-            // _loadButton
-            // 
-            this._loadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this._loadButton.Image = ((System.Drawing.Image)(resources.GetObject("_loadButton.Image")));
-            this._loadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._loadButton.Name = "_loadButton";
-            this._loadButton.Size = new System.Drawing.Size(37, 33);
-            this._loadButton.Text = "load";
-            this._loadButton.Click += new System.EventHandler(this.ClickLoadButton);
-            // 
-            // _splitContainer1
-            // 
-            this._splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this._splitContainer1.Location = new System.Drawing.Point(0, 60);
-            this._splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this._splitContainer1.Name = "_splitContainer1";
-            // 
-            // _splitContainer1.Panel1
-            // 
-            this._splitContainer1.Panel1.Controls.Add(this._pageList);
-            // 
-            // _splitContainer1.Panel2
-            // 
-            this._splitContainer1.Panel2.Controls.Add(this._splitContainer2);
-            this._splitContainer1.Size = new System.Drawing.Size(1081, 506);
-            this._splitContainer1.SplitterDistance = 188;
-            this._splitContainer1.SplitterWidth = 3;
-            this._splitContainer1.TabIndex = 9;
-            // 
-            // _pageList
-            // 
-            this._pageList.AutoScroll = true;
-            this._pageList.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this._pageList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._pageList.Location = new System.Drawing.Point(0, 0);
-            this._pageList.Name = "_pageList";
-            this._pageList.Size = new System.Drawing.Size(188, 506);
-            this._pageList.TabIndex = 0;
-            // 
-            // _splitContainer2
-            // 
-            this._splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this._splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this._splitContainer2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this._splitContainer2.Name = "_splitContainer2";
-            // 
-            // _splitContainer2.Panel1
-            // 
-            this._splitContainer2.Panel1.AutoScroll = true;
-            this._splitContainer2.Panel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this._splitContainer2.Panel1.Controls.Add(this._canvas);
-            // 
-            // _splitContainer2.Panel2
-            // 
-            this._splitContainer2.Panel2.Controls.Add(this._groupBox1);
-            this._splitContainer2.Size = new System.Drawing.Size(890, 506);
-            this._splitContainer2.SplitterDistance = 516;
-            this._splitContainer2.SplitterWidth = 3;
-            this._splitContainer2.TabIndex = 4;
-            // 
-            // _canvas
-            // 
-            this._canvas.BackColor = System.Drawing.SystemColors.Control;
-            this._canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._canvas.Location = new System.Drawing.Point(0, 0);
-            this._canvas.Margin = new System.Windows.Forms.Padding(0);
-            this._canvas.Name = "_canvas";
-            this._canvas.Size = new System.Drawing.Size(406, 264);
-            this._canvas.TabIndex = 7;
-            // 
             // PowerPointForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1081, 566);
+            this.ClientSize = new System.Drawing.Size(1102, 508);
             this.Controls.Add(this._splitContainer1);
             this.Controls.Add(this._chooseShape);
             this.Controls.Add(this._menuStrip);

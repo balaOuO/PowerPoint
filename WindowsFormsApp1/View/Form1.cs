@@ -31,7 +31,8 @@ namespace WindowsFormsApp1
             _presentationModel = presentationModel;
 
             _canvas.Width = _splitContainer2.Panel1.Width;
-            _canvas.Height = (int)((double)_canvas.Width * ((double)ScreenSize.HEIGHT / (double)ScreenSize.WIDTH));
+            _canvas.Height = PresentationModel.Resize(_canvas.Width, ScreenSize.HEIGHT, ScreenSize.WIDTH);
+            _canvas.Location = new System.Drawing.Point(0, PresentationModel.CalculateLocation(_splitContainer2.Panel1.Height , _canvas.Height));
             UpdatePageList();
             UpdatePageChecked();
             ResizePage();
@@ -151,29 +152,23 @@ namespace WindowsFormsApp1
             _model.Draw(new WindowsFormsPreviewGraphicsAdaptor(e.Graphics , ((Button)sender).Width , ((Button)sender).Height) , _pageList.Controls.GetChildIndex((Control)sender));
         }
 
-        //TransformPoint
-        public Point TransformPoint(Point point)
-        {
-            return new Point((point.X / _canvas.Size.Width) * ScreenSize.WIDTH, (point.Y / _canvas.Size.Height) * ScreenSize.HEIGHT);
-        }
-
         //press canvas event method
         public void HandleCanvasPressed(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            _model.PressCanvas(TransformPoint(new Point(e.Location.X, e.Location.Y)));
+            _model.PressCanvas(PresentationModel.TransformPoint(new Point(e.Location.X, e.Location.Y) , new Point(_canvas.Width , _canvas.Height)));
         }
 
         //release canvas event method
         public void HandleCanvasReleased(object sender, System.Windows.Forms.MouseEventArgs e)
         {
 
-            _model.ReleaseCanvas(TransformPoint(new Point(e.X, e.Y)));
+            _model.ReleaseCanvas(PresentationModel.TransformPoint(new Point(e.Location.X, e.Location.Y), new Point(_canvas.Width, _canvas.Height)));
         }
 
         //move on canvas event method
         public void HandleCanvasMoved(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            _model.MoveOnCanvas(TransformPoint(new Point(e.X, e.Y)));
+            _model.MoveOnCanvas(PresentationModel.TransformPoint(new Point(e.Location.X, e.Location.Y), new Point(_canvas.Width, _canvas.Height)));
             Cursor = _presentationModel.GetCursors();
         }
 
@@ -202,12 +197,14 @@ namespace WindowsFormsApp1
             if ((double)_splitContainer2.Panel1.Width / (double)_splitContainer2.Panel1.Height < (double)ScreenSize.WIDTH / (double)ScreenSize.HEIGHT)
             {
                 _canvas.Width = _splitContainer2.Panel1.Width;
-                _canvas.Height = (int)((double)_canvas.Width * ((double)ScreenSize.HEIGHT / (double)ScreenSize.WIDTH));
+                _canvas.Height = PresentationModel.Resize(_canvas.Width, ScreenSize.HEIGHT, ScreenSize.WIDTH);
+                _canvas.Location = new System.Drawing.Point(0, PresentationModel.CalculateLocation(_splitContainer2.Panel1.Height, _canvas.Height));
             }
             else
             {
                 _canvas.Height = _splitContainer2.Panel1.Height;
-                _canvas.Width = (int)((double)_canvas.Height * ((double)ScreenSize.WIDTH / (double)ScreenSize.HEIGHT));
+                _canvas.Width = PresentationModel.Resize(_canvas.Height, ScreenSize.WIDTH, ScreenSize.HEIGHT);
+                _canvas.Location = new System.Drawing.Point(PresentationModel.CalculateLocation(_splitContainer2.Panel1.Width, _canvas.Width), 0);
             }
         }
 
@@ -262,7 +259,7 @@ namespace WindowsFormsApp1
             foreach (Control control in _pageList.Controls)
             {
                 control.Width = _pageList.Width - PAGE_PADDING;
-                control.Height = (int)((double)control.Width * ((double)ScreenSize.HEIGHT / (double)ScreenSize.WIDTH));
+                control.Height = PresentationModel.Resize(control.Width, ScreenSize.HEIGHT, ScreenSize.WIDTH);
             }
         }
 
